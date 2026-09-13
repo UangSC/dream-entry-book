@@ -26,7 +26,9 @@ python -m venv .venv
 
 访问 [http://127.0.0.1:62560/](http://127.0.0.1:62560/)。Vite 将 `/api` 转发到 62561。开发前端可用 `npm run dev -- --host 127.0.0.1 --port 62560 --strictPort`，先停止占用该端口的 preview。
 
-默认为本地模拟授权：右上角“知乎登录”→填写模拟昵称→同意并返回。无需知乎密码。点击头像查看游玩记录、异步织梦任务、入架记录；打开面板暂停配乐。任务产物明确标记为小妖怪定稿的流程演示，尚未调用真实大模型。
+默认为本地模拟授权：右上角“知乎登录”→填写模拟昵称→同意并返回。无需知乎密码。点击头像查看游玩记录、异步织梦任务、入架记录；打开面板暂停配乐。“制作流程演示”仍复用小妖怪定稿；“知乎直答 · 入梦线索分析”真实调用知乎，生成可回看的分析报告，不冒充完整可玩游戏。
+
+“新增入梦书”弹窗已接入官方故事目录、详情及知乎搜索；挑选故事后可建立线索分析任务。Access Secret 只在服务端读取：Windows 可运行 `.venv\Scripts\python -m backend.credentials` 保存到当前用户凭据库，部署环境使用 `ZHIHU_ACCESS_SECRET`。详见 [API 接入与额度说明](docs/submission/API_INTEGRATION.md)。[项目申报填写稿](docs/submission/PROJECT_FORM.md) 包含计划书及封面、ICON 提示词。
 
 后端配置与真实知乎接入边界见 [backend/README.md](backend/README.md)。完整交付、字数核验、资源占位与待决策项见 [DELIVERY.md](DELIVERY.md)。
 
