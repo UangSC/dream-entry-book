@@ -1,0 +1,645 @@
+{
+  "manifestVersion": 1,
+  "status": "draft",
+  "assetSetId": "audio-2026-09-13-variants",
+  "assets": [
+    {
+      "id": "BGM_GATE",
+      "kind": "music",
+      "file": "bgm-gate.mp3",
+      "sha256": "3c115ac968f08a040d2aa35c2187075969dc6625dd55ad6f5bd77de23b364d1b",
+      "bytes": 1591724,
+      "durationSeconds": 99.42,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 99.42,
+        "overlapMs": 1667,
+        "verified": false
+      },
+      "source": {
+        "type": "ai_generated",
+        "name": "bgm_1_1m40s.mp3",
+        "originalPath": "assets/source/audio/bgm_1_1m40s.mp3",
+        "author": "pending",
+        "toolModel": "pending",
+        "date": "2026-09-12"
+      },
+      "rights": {
+        "terms": "pending",
+        "scope": "pending",
+        "attribution": "pending"
+      },
+      "modifications": [
+        "loudnorm 双 pass 线性归一至 I=-20 LUFS / TP=-2.0 dBTP / LRA=11，增益 -11.9 dB",
+        "libmp3lame 128kbps CBR，48kHz 立体声",
+        "未裁切、未改变时长"
+      ],
+      "beatsFile": "bgm-gate.beats.json",
+      "beatsSha256": "1606e531ea0e56d80786a3f72e0bbf81a536e610dd4bdff360cbe9fe393d5369"
+    },
+    {
+      "id": "BGM_THEME",
+      "kind": "music",
+      "file": "bgm-theme.mp3",
+      "sha256": "5082d754e5d9adb9fd9e505fa89163839636375a670d66c2526f906190199e68",
+      "bytes": 944300,
+      "durationSeconds": 58.96,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 58.96,
+        "overlapMs": 2000,
+        "verified": false
+      },
+      "source": {
+        "type": "ai_generated",
+        "name": "bgm_2_1m00s.mp3",
+        "originalPath": "assets/source/audio/bgm_2_1m00s.mp3",
+        "author": "pending",
+        "toolModel": "pending",
+        "date": "2026-09-12"
+      },
+      "rights": {
+        "terms": "pending",
+        "scope": "pending",
+        "attribution": "pending"
+      },
+      "modifications": [
+        "loudnorm 双 pass 线性归一至 I=-20 LUFS / TP=-2.0 dBTP / LRA=11，增益 -11.5 dB",
+        "libmp3lame 128kbps CBR，48kHz 立体声",
+        "未裁切、未改变时长"
+      ]
+    },
+    {
+      "id": "BGM_DREAM",
+      "kind": "music",
+      "file": "bgm-dream.mp3",
+      "sha256": "eb763fff4165c5f40f77d02b854a9420bf023e6023b2dc8eb33b8473078d82e0",
+      "bytes": 928940,
+      "durationSeconds": 58,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 58,
+        "overlapMs": 2000,
+        "verified": false
+      },
+      "source": {
+        "type": "ai_generated",
+        "name": "bgm_3_1m00s.mp3",
+        "originalPath": "assets/source/audio/bgm_3_1m00s.mp3",
+        "author": "pending",
+        "toolModel": "pending",
+        "date": "2026-09-12"
+      },
+      "rights": {
+        "terms": "pending",
+        "scope": "pending",
+        "attribution": "pending"
+      },
+      "modifications": [
+        "loudnorm 双 pass 线性归一至 I=-20 LUFS / TP=-2.0 dBTP / LRA=11，增益 -7.8 dB",
+        "libmp3lame 128kbps CBR，48kHz 立体声",
+        "未裁切、未改变时长"
+      ]
+    },
+    {
+      "id": "BGM_END",
+      "kind": "music",
+      "file": "bgm-end.mp3",
+      "sha256": "1852a6b2dee59521ccc70794a05149c8a3809013d77b28fdbbf5f287fda501c7",
+      "bytes": 463148,
+      "durationSeconds": 28.89,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 28.89,
+        "overlapMs": 2500,
+        "verified": false
+      },
+      "source": {
+        "type": "ai_generated",
+        "name": "bgm_5_30s.mp3",
+        "originalPath": "assets/source/audio/bgm_5_30s.mp3",
+        "author": "pending",
+        "toolModel": "pending",
+        "date": "2026-09-12"
+      },
+      "rights": {
+        "terms": "pending",
+        "scope": "pending",
+        "attribution": "pending"
+      },
+      "modifications": [
+        "loudnorm 双 pass 线性归一至 I=-20 LUFS / TP=-2.0 dBTP，增益 +8.3 dB；LRA 目标设为 20 以强制 Linear 模式",
+        "libmp3lame 128kbps CBR，48kHz 立体声",
+        "未裁切、未改变时长",
+        "动态范围保持 17.2 LU 与母版一致（首次编码误用 LRA=11 触发 loudnorm 回退 Dynamic，把 LRA 压到 11.3，已重做）"
+      ]
+    },
+    {
+      "id": "SFX_PAGE",
+      "kind": "sfx",
+      "file": "sfx-page.wav",
+      "sha256": "355645968a1a3c3f6895fac85969123e50f2279afeb4f92fc8f35bd1a389e197",
+      "bytes": 32718,
+      "durationSeconds": 0.34,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "type": "ai_generated",
+        "name": "翻页声#3.wav",
+        "originalPath": "assets/source/audio/翻页声#3.wav",
+        "author": "pending",
+        "toolModel": "pending",
+        "date": "2026-09-12"
+      },
+      "rights": {
+        "terms": "pending",
+        "scope": "pending",
+        "attribution": "pending"
+      },
+      "modifications": [
+        "裁切窗口 0.380–0.720 秒（去机器补齐静音）",
+        "立体声降为单声道（原件双声道差 ≤0.4 dB，实为单声道内容）",
+        "首 4ms 淡入、尾 8ms 淡出消爆音",
+        "增益 -9.1 dB 用于逐槽配平"
+      ]
+    },
+    {
+      "id": "SFX_CHOICE",
+      "kind": "sfx",
+      "file": "sfx-choice.wav",
+      "sha256": "eb5645e7aaf4fa91827847fb7d1e86f0a9a8e0f39ec7f373cf86d4119d9de697",
+      "bytes": 11118,
+      "durationSeconds": 0.115,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "type": "ai_generated",
+        "name": "轻触确认_文件_#1.wav",
+        "originalPath": "assets/source/audio/轻触确认_文件_#1.wav",
+        "author": "pending",
+        "toolModel": "pending",
+        "date": "2026-09-12"
+      },
+      "rights": {
+        "terms": "pending",
+        "scope": "pending",
+        "attribution": "pending"
+      },
+      "modifications": [
+        "裁切窗口 0.030–0.145 秒（去机器补齐静音）",
+        "立体声降为单声道（原件双声道差 ≤0.4 dB，实为单声道内容）",
+        "首 4ms 淡入、尾 8ms 淡出消爆音",
+        "增益 +5.8 dB 用于逐槽配平"
+      ]
+    },
+    {
+      "id": "SFX_DREAM_IN",
+      "kind": "sfx",
+      "file": "sfx-dream-in.wav",
+      "sha256": "d41e66c9ae61cabfca7ffafe6ae9f4433c6bd4ee14964049547ae305740b6712",
+      "bytes": 82638,
+      "durationSeconds": 0.86,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "type": "ai_generated",
+        "name": "推开梦门__#3.wav",
+        "originalPath": "assets/source/audio/推开梦门__#3.wav",
+        "author": "pending",
+        "toolModel": "pending",
+        "date": "2026-09-12"
+      },
+      "rights": {
+        "terms": "pending",
+        "scope": "pending",
+        "attribution": "pending"
+      },
+      "modifications": [
+        "裁切窗口 0.000–0.860 秒（去机器补齐静音）",
+        "立体声降为单声道（原件双声道差 ≤0.4 dB，实为单声道内容）",
+        "首 4ms 淡入、尾 8ms 淡出消爆音",
+        "增益 +1.8 dB 用于逐槽配平"
+      ]
+    },
+    {
+      "id": "SFX_DREAM_OUT",
+      "kind": "sfx",
+      "file": "sfx-dream-out.wav",
+      "sha256": "e40a6df1ec387b54823a8b4248a03e6adc87eab8c8f0e058d65428b58bf9544f",
+      "bytes": 86478,
+      "durationSeconds": 0.9,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "type": "ai_generated",
+        "name": "合页梦醒_#3.wav",
+        "originalPath": "assets/source/audio/合页梦醒_#3.wav",
+        "author": "pending",
+        "toolModel": "pending",
+        "date": "2026-09-12"
+      },
+      "rights": {
+        "terms": "pending",
+        "scope": "pending",
+        "attribution": "pending"
+      },
+      "modifications": [
+        "裁切窗口 0.000–0.900 秒（去机器补齐静音）",
+        "立体声降为单声道（原件双声道差 ≤0.4 dB，实为单声道内容）",
+        "首 4ms 淡入、尾 8ms 淡出消爆音",
+        "增益 +1.0 dB 用于逐槽配平"
+      ]
+    },
+    {
+      "id": "BGM_LONG_CALM",
+      "kind": "music",
+      "file": "bgm-long-calm.mp3",
+      "label": "舒缓放松·相伴",
+      "sha256": "1560ba06371c173aa7437471d55db78bb3a579d61b57ac6da298c49326ea8fc9",
+      "bytes": 768812,
+      "durationSeconds": 48,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 48,
+        "overlapMs": 2400,
+        "verified": false
+      },
+      "source": {
+        "originalPath": "assets/work/audio/bm96be092dlmtyd53h8.m4a",
+        "startSeconds": 18,
+        "endSeconds": 66
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "第一代 AAC 抽轨裁切；不变速；线性增益；128kbps MP3",
+        "循环重叠由播放器排程；人工听测待验收"
+      ]
+    },
+    {
+      "id": "BGM_LONG_CALM_ALT",
+      "kind": "music",
+      "file": "bgm-long-calm-alt.mp3",
+      "label": "舒缓放松·回望",
+      "sha256": "3174c9f55ebaf431eb67baba0c1ba27bbadb5b88138f7d7e29ce08a303009b56",
+      "bytes": 768812,
+      "durationSeconds": 48,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 48,
+        "overlapMs": 2400,
+        "verified": false
+      },
+      "source": {
+        "originalPath": "assets/work/audio/bm96be092dlmtyd53h8.m4a",
+        "startSeconds": 92,
+        "endSeconds": 140
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "第一代 AAC 抽轨裁切；不变速；线性增益；128kbps MP3",
+        "循环重叠由播放器排程；人工听测待验收"
+      ]
+    },
+    {
+      "id": "BGM_LONG_LIGHT",
+      "kind": "music",
+      "file": "bgm-long-light.mp3",
+      "label": "欢快遗憾·山风",
+      "sha256": "cb97dd54962287bc0c4f7ee72b1c0d5ba3cb71c237b95cd164138c80dae51e90",
+      "bytes": 768812,
+      "durationSeconds": 48,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 48,
+        "overlapMs": 2400,
+        "verified": false
+      },
+      "source": {
+        "originalPath": "assets/work/audio/ceu2aa6gu7smtyd5wjc.m4a",
+        "startSeconds": 32,
+        "endSeconds": 80
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "第一代 AAC 抽轨裁切；不变速；线性增益；128kbps MP3",
+        "循环重叠由播放器排程；人工听测待验收"
+      ]
+    },
+    {
+      "id": "BGM_LONG_LIGHT_ALT",
+      "kind": "music",
+      "file": "bgm-long-light-alt.mp3",
+      "label": "欢快遗憾·迟疑",
+      "sha256": "c7dce56c122d7f66af6c74df5acf011c482c773b93d5dd94a2af68f367d429f0",
+      "bytes": 768812,
+      "durationSeconds": 48,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 48,
+        "overlapMs": 2400,
+        "verified": false
+      },
+      "source": {
+        "originalPath": "assets/work/audio/ceu2aa6gu7smtyd5wjc.m4a",
+        "startSeconds": 102,
+        "endSeconds": 150
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "第一代 AAC 抽轨裁切；不变速；线性增益；128kbps MP3",
+        "循环重叠由播放器排程；人工听测待验收"
+      ]
+    },
+    {
+      "id": "BGM_LONG_FAREWELL",
+      "kind": "music",
+      "file": "bgm-long-farewell.mp3",
+      "label": "诀别感·灯火",
+      "sha256": "f9e4d061de0ee1b4b8a24e55e105b45c621d185139d8f5c0e0870b72853b5659",
+      "bytes": 768812,
+      "durationSeconds": 48,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 48,
+        "overlapMs": 2400,
+        "verified": false
+      },
+      "source": {
+        "originalPath": "assets/work/audio/i0bccnp4zcdmtyd4sld.m4a",
+        "startSeconds": 24,
+        "endSeconds": 72
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "第一代 AAC 抽轨裁切；不变速；线性增益；128kbps MP3",
+        "循环重叠由播放器排程；人工听测待验收"
+      ]
+    },
+    {
+      "id": "BGM_LONG_FAREWELL_ALT",
+      "kind": "music",
+      "file": "bgm-long-farewell-alt.mp3",
+      "label": "诀别感·晨光",
+      "sha256": "058adfe672294f3aa4a9bb7ab0f5da5fe163e0f6234fc10316d7ee6ab7ba58f8",
+      "bytes": 768812,
+      "durationSeconds": 48,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 48,
+        "overlapMs": 2400,
+        "verified": false
+      },
+      "source": {
+        "originalPath": "assets/work/audio/i0bccnp4zcdmtyd4sld.m4a",
+        "startSeconds": 110,
+        "endSeconds": 158
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "第一代 AAC 抽轨裁切；不变速；线性增益；128kbps MP3",
+        "循环重叠由播放器排程；人工听测待验收"
+      ]
+    },
+    {
+      "id": "SFX_PAGE_SOFT",
+      "kind": "sfx",
+      "file": "sfx-page-soft.wav",
+      "sha256": "c1757a22fd1b079d3727a3a09462dc1ded6ff20cac18c1efb07d428e602867fd",
+      "bytes": 40398,
+      "durationSeconds": 0.42,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "originalPath": "assets/source/audio/翻页声#1.wav"
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "裁切 0–0.42s；单声道；目标峰值 -22 dBFS；首尾消爆音"
+      ]
+    },
+    {
+      "id": "SFX_PAGE_DREAM",
+      "kind": "sfx",
+      "file": "sfx-page-dream.wav",
+      "sha256": "f344e8784f2f31691e61a8bc0fe112db8cb429aa51f7136e9580811e6f1598f0",
+      "bytes": 46158,
+      "durationSeconds": 0.48,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "originalPath": "assets/source/audio/翻页声#2.wav"
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "裁切 0–0.48s；单声道；目标峰值 -20 dBFS；首尾消爆音"
+      ]
+    },
+    {
+      "id": "SFX_CHOICE_CLEAR",
+      "kind": "sfx",
+      "file": "sfx-choice-clear.wav",
+      "sha256": "e0beecc88d37e4ff477189acbd7542fbb1f1b69c243ecdd3a7508ae7ee30b5c6",
+      "bytes": 4878,
+      "durationSeconds": 0.05,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "originalPath": "assets/source/audio/轻触确认_文件_#1.wav"
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "裁切 0.14–0.19s；单声道；目标峰值 -18 dBFS；首尾消爆音"
+      ]
+    },
+    {
+      "id": "SFX_CHOICE_LIGHT",
+      "kind": "sfx",
+      "file": "sfx-choice-light.wav",
+      "sha256": "108e79fb152eafadde0d91fe47271319835a4f8aa63a96efcceedb9bf4516887",
+      "bytes": 8718,
+      "durationSeconds": 0.09,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "originalPath": "assets/source/audio/轻触确认_文件_#1.wav"
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "裁切 0.195–0.285s；单声道；目标峰值 -23 dBFS；首尾消爆音"
+      ]
+    },
+    {
+      "id": "SFX_DREAM_IN_SHORT",
+      "kind": "sfx",
+      "file": "sfx-dream-in-short.wav",
+      "sha256": "cb5221851bf054eb6d12b1863a793e2970a848a64bc37cd8d7ae93d267422804",
+      "bytes": 36558,
+      "durationSeconds": 0.38,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "originalPath": "assets/source/audio/推开梦门__#2.wav"
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "裁切 0–0.38s；单声道；目标峰值 -20 dBFS；首尾消爆音"
+      ]
+    },
+    {
+      "id": "SFX_DREAM_IN_SOFT",
+      "kind": "sfx",
+      "file": "sfx-dream-in-soft.wav",
+      "sha256": "88b38a666548cb0e1c9110f441a316bed5553a9d30afcb1d38bc259aeb40f2a6",
+      "bytes": 82638,
+      "durationSeconds": 0.86,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "originalPath": "assets/source/audio/推开梦门__#3.wav"
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "裁切 0–0.86s；单声道；目标峰值 -24 dBFS；首尾消爆音"
+      ]
+    },
+    {
+      "id": "SFX_DREAM_OUT_SHORT",
+      "kind": "sfx",
+      "file": "sfx-dream-out-short.wav",
+      "sha256": "ff5508ad56efeca1e9bf17bcebdd507c27c48cf65a63f3c22568f829747d7a1c",
+      "bytes": 59598,
+      "durationSeconds": 0.62,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "originalPath": "assets/source/audio/合页梦醒_#2.wav"
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "裁切 0–0.62s；单声道；目标峰值 -20 dBFS；首尾消爆音"
+      ]
+    },
+    {
+      "id": "SFX_DREAM_OUT_SOFT",
+      "kind": "sfx",
+      "file": "sfx-dream-out-soft.wav",
+      "sha256": "2e35f83030ac8f50e5fff51939a14c8b6828d2881bd0a3aacf61ed64a0390512",
+      "bytes": 86478,
+      "durationSeconds": 0.9,
+      "loop": {
+        "mode": "none"
+      },
+      "source": {
+        "originalPath": "assets/source/audio/合页梦醒_#3.wav"
+      },
+      "rights": {
+        "status": "pending"
+      },
+      "modifications": [
+        "裁切 0–0.9s；单声道；目标峰值 -24 dBFS；首尾消爆音"
+      ]
+    },
+    {
+      "id": "BGM_NIGHT_AMBIENCE",
+      "kind": "music",
+      "file": "ambience-night.wav",
+      "bytes": 882044,
+      "sha256": "2a050bb8919f6feed93f40db763bdd36f7f3b79ec11194df8aaaecd8c64d3429",
+      "durationSeconds": 20,
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 20,
+        "overlapMs": 600,
+        "verified": false
+      },
+      "source": {
+        "type": "procedural",
+        "name": "本地合成蟋蟀与蛙声",
+        "author": "入梦书制作组"
+      },
+      "rights": {
+        "status": "approved",
+        "reference": "项目本地合成，无外部采样"
+      },
+      "modifications": [
+        "PCM16 单声道 22050Hz；轻声混音；首尾留白"
+      ]
+    }
+  ],
+  "groups": {
+    "SFX_PAGE": [
+      "SFX_PAGE",
+      "SFX_PAGE_SOFT",
+      "SFX_PAGE_DREAM"
+    ],
+    "SFX_CHOICE": [
+      "SFX_CHOICE",
+      "SFX_CHOICE_CLEAR",
+      "SFX_CHOICE_LIGHT"
+    ],
+    "SFX_DREAM_IN": [
+      "SFX_DREAM_IN",
+      "SFX_DREAM_IN_SHORT",
+      "SFX_DREAM_IN_SOFT"
+    ],
+    "SFX_DREAM_OUT": [
+      "SFX_DREAM_OUT",
+      "SFX_DREAM_OUT_SHORT",
+      "SFX_DREAM_OUT_SOFT"
+    ]
+  },
+  "reserves": [
+    {
+      "file": "assets/source/audio/轻触确认_文件_#2.wav",
+      "reason": "信号过弱，保留原件；未抬高噪声作为成品"
+    }
+  ]
+}

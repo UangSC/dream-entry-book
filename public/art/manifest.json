@@ -1,0 +1,229 @@
+{
+  "manifestVersion": 1,
+  "status": "draft",
+  "assets": [
+    {
+      "id": "BG_GATE",
+      "kind": "background",
+      "file": "bg-gate.webp",
+      "sha256": "3ee017da65fe053c95abcc6975e2ce351ebfc51114713a31ccb818b5a373c3f3",
+      "bytes": 151520,
+      "width": 1672,
+      "height": 941,
+      "animated": false,
+      "source": {
+        "type": "ai_generated",
+        "name": "用户提供的二次元梦斋背景",
+        "file": "assets/source/art/bg-gate.png",
+        "sha256": "8a21317bb71b19a0803b8dce136cd1ef11d6d45dc58fb662bf621dfede6f7ebe",
+        "bytes": 1722706,
+        "tool": "gpt-image",
+        "model": "2.0",
+        "generatedAt": "2026-09-12T00:00:00Z",
+        "receivedOn": "2026-09-12",
+        "toolApi": "OpenAI Media Service API",
+        "provenance": "C2PA/JUMBF 内嵌清单，digitalSourceType=trainedAlgorithmicMedia"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "OpenAI 服务条款（具体版本与账号档位待确认）",
+        "scope": null,
+        "attribution": null,
+        "note": "生成工具已由 C2PA 清单确认为 gpt-image 2.0；适用条款与商用范围仍需按实际账号确认，故 status 保持 pending。"
+      },
+      "modifications": [
+        "PNG 转为 WebP，quality=90，method=6；保留原尺寸，未裁切、未放大。"
+      ],
+      "luminance": 0.7182
+    },
+    {
+      "id": "BG_END",
+      "kind": "background",
+      "file": "bg-end.webp",
+      "sha256": "b84b8901f350187d3ac1a0c1de168287ecbf441fa484b441238fb08bdb97b637",
+      "bytes": 161128,
+      "width": 1672,
+      "height": 941,
+      "animated": false,
+      "source": {
+        "type": "ai_generated",
+        "name": "用户提供的二次元梦斋背景",
+        "file": "assets/source/art/bg-end.png",
+        "sha256": "8386e53ba613dff6b740565a9ddaf68958b71e92dcd524df881cdebd4b28f1de",
+        "bytes": 1728115,
+        "tool": "gpt-image",
+        "model": "2.0",
+        "generatedAt": "2026-09-12T00:00:00Z",
+        "receivedOn": "2026-09-12",
+        "toolApi": "OpenAI Media Service API",
+        "provenance": "C2PA/JUMBF 内嵌清单，digitalSourceType=trainedAlgorithmicMedia"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "OpenAI 服务条款（具体版本与账号档位待确认）",
+        "scope": null,
+        "attribution": null,
+        "note": "生成工具已由 C2PA 清单确认为 gpt-image 2.0；适用条款与商用范围仍需按实际账号确认，故 status 保持 pending。"
+      },
+      "modifications": [
+        "PNG 转为 WebP，quality=90，method=6；保留原尺寸，未裁切、未放大。"
+      ],
+      "luminance": 0.7636
+    },
+    {
+      "id": "BG_SHRINE_FIRE",
+      "kind": "background",
+      "file": "bg-shrine-fire.webp",
+      "sha256": "fe057733155706b8fd36e2662999a367887bc1ca89bf9f1011cd5d75fb96fe89",
+      "bytes": 257604,
+      "width": 1672,
+      "height": 940,
+      "animated": false,
+      "source": {
+        "type": "ai_generated",
+        "name": "用户提供的生成背景",
+        "originPath": "assets/source/art/bg-shrine-fire.png",
+        "tool": null,
+        "model": null,
+        "date": "2026-09-13",
+        "note": "生成工具与模型未提供，保持未知，不补造"
+      },
+      "rights": {
+        "termsRef": null,
+        "scope": null,
+        "attribution": null,
+        "status": "pending"
+      },
+      "modifications": [
+        "PNG 母版归档",
+        "转 WebP quality=90 method=6",
+        "未裁切、未放大、保留原尺寸"
+      ],
+      "luminance": 0.2811
+    },
+    {
+      "id": "BG_SHRINE_N",
+      "kind": "background",
+      "file": "bg-shrine-n.webp",
+      "sha256": "94c7a0dd6ec69245b30a99e02e4ab01bf773e83376f47575d6bd9107630b53af",
+      "bytes": 179330,
+      "width": 1672,
+      "height": 941,
+      "animated": false,
+      "source": {
+        "type": "ai_generated",
+        "name": "用户提供的生成背景",
+        "originPath": "assets/source/art/bg-shrine-n.png",
+        "tool": null,
+        "model": null,
+        "date": "2026-09-13",
+        "note": "生成工具与模型未提供，保持未知，不补造"
+      },
+      "rights": {
+        "termsRef": null,
+        "scope": null,
+        "attribution": null,
+        "status": "pending"
+      },
+      "modifications": [
+        "PNG 母版归档",
+        "转 WebP quality=90 method=6",
+        "未裁切、未放大、保留原尺寸"
+      ],
+      "luminance": 0.289
+    },
+    {
+      "id": "BG_COTTAGE_D",
+      "kind": "background",
+      "file": "bg-cottage-d.webp",
+      "sha256": "4a3a59a02e91bc71fbd553c014ccf62f4d12eb89f0d240516528f18f0f4b371f",
+      "bytes": 389690,
+      "width": 1672,
+      "height": 940,
+      "animated": false,
+      "source": {
+        "type": "ai_generated",
+        "name": "用户提供的生成背景",
+        "originPath": "assets/source/art/bg-cottage-d.png",
+        "tool": null,
+        "model": null,
+        "date": "2026-09-13",
+        "note": "生成工具与模型未提供，保持未知，不补造"
+      },
+      "rights": {
+        "termsRef": null,
+        "scope": null,
+        "attribution": null,
+        "status": "pending"
+      },
+      "modifications": [
+        "PNG 母版归档",
+        "转 WebP quality=90 method=6",
+        "未裁切、未放大、保留原尺寸"
+      ],
+      "luminance": 0.6836
+    },
+    {
+      "id": "BG_FOREST_D",
+      "kind": "background",
+      "file": "bg-forest-d.webp",
+      "sha256": "a0fb411bf4f64c69f9ea3ad5d81297c2921e9d07e3b5a1c2cab060a34ae1ed84",
+      "bytes": 521780,
+      "width": 1672,
+      "height": 940,
+      "animated": false,
+      "source": {
+        "type": "ai_generated",
+        "name": "用户提供的生成背景",
+        "originPath": "assets/source/art/bg-forest-d.png",
+        "tool": null,
+        "model": null,
+        "date": "2026-09-13",
+        "note": "生成工具与模型未提供，保持未知，不补造"
+      },
+      "rights": {
+        "termsRef": null,
+        "scope": null,
+        "attribution": null,
+        "status": "pending"
+      },
+      "modifications": [
+        "PNG 母版归档",
+        "转 WebP quality=90 method=6",
+        "未裁切、未放大、保留原尺寸"
+      ],
+      "luminance": 0.5875
+    },
+    {
+      "id": "BG_SUMMIT_DAWN",
+      "kind": "background",
+      "file": "bg-summit-dawn.webp",
+      "sha256": "bbced86b01503b7d2f6f1de5fd758fc079338b7d06e1894327f9beb809a750a0",
+      "bytes": 328826,
+      "width": 1672,
+      "height": 940,
+      "animated": false,
+      "source": {
+        "type": "ai_generated",
+        "name": "用户提供的生成背景",
+        "originPath": "assets/source/art/bg-summit-dawn.png",
+        "tool": null,
+        "model": null,
+        "date": "2026-09-13",
+        "note": "生成工具与模型未提供，保持未知，不补造"
+      },
+      "rights": {
+        "termsRef": null,
+        "scope": null,
+        "attribution": null,
+        "status": "pending"
+      },
+      "modifications": [
+        "PNG 母版归档",
+        "转 WebP quality=90 method=6",
+        "未裁切、未放大、保留原尺寸"
+      ],
+      "luminance": 0.6299
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+.home-companions{display:grid;grid-template-columns:100px minmax(0,1fr);align-items:center;gap:16px;max-width:430px;min-height:140px;margin-top:32px;text-align:left;isolation:isolate}
+.keeper-actor{position:relative;align-self:center;display:grid;place-items:center;min-width:0;width:100%;height:124px}
+.keeper-actor::after{content:"";position:absolute;bottom:11px;left:22%;right:22%;height:8px;border-radius:50%;background:#77899820;filter:blur(4px);z-index:-1}
+.keeper-image{display:block;width:118px;height:118px;max-width:none;object-fit:contain;filter:drop-shadow(0 7px 6px #67798b15)}
+.keeper-sprite{display:grid;place-items:center}
+.keeper-actor[data-veiled=true] .keeper-sprite{animation:keeper-conceal var(--keeper-smoke-duration) ease-in-out both}
+.keeper-quote{position:relative;padding:15px 15px 12px;border:1px solid #fffaf1;border-radius:4px 16px 16px 16px;background:linear-gradient(135deg,#ffffffee,#fffcf1c9);box-shadow:0 5px 24px #5269840b;min-width:0}
+.keeper-quote::before{content:"";position:absolute;top:28px;left:-6px;width:11px;height:11px;transform:rotate(45deg);background:#fffefd;border-left:1px solid #fffaf1;border-bottom:1px solid #fffaf1}
+.keeper-name{font-size:10px;letter-spacing:1px;color:#8b7659;white-space:nowrap}
+.keeper-saying{font-family:var(--serif);font-size:15px;line-height:1.9;letter-spacing:.5px;color:#526578;margin:8px 0 0;overflow-wrap:anywhere;text-wrap:balance}
+.keeper-letter{display:inline}
+.keeper-typewriter .keeper-letter{animation:keeper-letter-in 220ms ease-out both;animation-delay:calc(var(--letter-index)*65ms)}
+.home-companions[data-paused=true] .keeper-letter{animation-play-state:paused}
+.keeper-smoke{position:absolute;inset:0 -20px;pointer-events:none;z-index:2;filter:blur(1px);animation:keeper-smoke-envelope var(--keeper-smoke-duration) ease-in-out both}
+.keeper-smoke::before{content:"";position:absolute;inset:3% -3% 4%;background:radial-gradient(ellipse,#fff 0%,#fffdfcf7 41%,#fffaf2c9 55%,transparent 73%);animation:keeper-smoke-core var(--keeper-smoke-duration) ease-in-out both}
+.keeper-smoke i{position:absolute;left:calc(19% + mod(var(--puff)*23,61)*1%);top:calc(16% + mod(var(--puff)*31,53)*1%);width:49px;height:46px;border-radius:50%;background:radial-gradient(ellipse,#fff 12%,#fffffff5 40%,#ffffff8c 60%,transparent 73%);animation:keeper-puff var(--keeper-smoke-duration) ease-in-out both;--drift-x:calc((var(--puff) - 3)*9px);--drift-y:calc(-12px - var(--puff)*3px)}
+@keyframes keeper-letter-in{from{opacity:0;filter:blur(1px)}to{opacity:1;filter:blur(0)}}
+@keyframes keeper-smoke-envelope{0%{opacity:0}40%,60%{opacity:1}100%{opacity:0}}
+@keyframes keeper-conceal{0%,12%{opacity:1}38%,64%{opacity:0}94%,100%{opacity:1}}
+@keyframes keeper-smoke-core{0%{transform:scale(.7)}40%,60%{transform:scale(1.08)}100%{transform:scale(1.28) translateY(-10px)}}
+@keyframes keeper-puff{0%{transform:translate(-50%,-50%) scale(.55)}45%{transform:translate(-50%,-50%) scale(1.15)}100%{transform:translate(calc(-50% + var(--drift-x)),calc(-50% + var(--drift-y))) scale(1.5)}}
+@media(max-width:1050px){.home-companions{grid-template-columns:84px minmax(0,1fr);gap:14px;margin-top:25px}.keeper-image{width:104px;height:104px}.keeper-quote{padding:13px 12px 10px}.keeper-saying{font-size:14px;letter-spacing:.3px}}
+@media(max-width:740px){.home-companions{width:100%;max-width:400px;margin:24px auto 0;min-height:125px;grid-template-columns:86px minmax(0,1fr);gap:14px}}
+@media(max-width:420px){.home-companions{grid-template-columns:63px minmax(0,1fr);gap:14px;margin-top:20px;min-height:115px}.keeper-image{width:87px;height:87px}.keeper-actor{height:105px}.keeper-quote{padding:12px 10px 10px}.keeper-name{font-size:9px;letter-spacing:.3px}.keeper-saying{font-size:13px;line-height:1.85;letter-spacing:0}.keeper-smoke{inset:0 -24px}.keeper-smoke i{width:42px;height:42px}}
+@media(prefers-reduced-motion:reduce){.keeper-typewriter .keeper-letter,.keeper-sprite{animation:none!important}.keeper-smoke{display:none}}
