@@ -1,0 +1,124 @@
+/* 入梦后，界面退到画面边缘，保留中心的场景与演出空间。 */
+@font-face { font-family: 'Dream Names'; src: url('/fonts/dream-names.woff2') format('woff2'); font-display: swap; font-weight: 400; }
+.brand { view-transition-name: dream-brand; }
+.library-button { view-transition-name: dream-shelf; }
+.topbar nav > .nav-button:nth-child(2) { view-transition-name: dream-album; }
+.sound-button { view-transition-name: dream-sound; }
+.topbar nav > .icon-button:last-child { view-transition-name: dream-settings; }
+::view-transition-group(dream-brand), ::view-transition-group(dream-shelf),
+::view-transition-group(dream-album), ::view-transition-group(dream-sound),
+::view-transition-group(dream-settings) { animation-duration: 1600ms; animation-timing-function: cubic-bezier(.22,.65,.25,1); }
+.brand-subtitle { animation: subtitle-arrive 900ms ease both; }
+.restart-button { border-color: #a5885e80; background: #fffaf0d9; color: #765f43; box-shadow: 0 3px 12px #5b493312; }
+.restart-button:hover { background: #f3ead8; transform: translateY(-2px); }
+.footer { display: grid; grid-template-columns: 1fr auto 1fr; }
+.footer-status { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.footer > :last-child { justify-self: end; }
+.footer > .zhihu-discover { justify-self: center; }
+
+.screen-reading .topbar { position: absolute; inset: 0 0 auto; max-width: none; height: 98px; padding: 24px 28px; align-items: flex-start; z-index: 10; pointer-events: none; }
+.screen-reading .brand { pointer-events: auto; letter-spacing: 4px; }
+.screen-reading .brand-ash { animation: brand-to-ash 2s ease-in both; pointer-events: none; }
+.screen-reading .brand-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.screen-reading .brand small { max-width: min(65vw, 390px); white-space: normal; letter-spacing: 1.4px; }
+.screen-reading .topbar nav { position: absolute; top: 22px; right: 24px; width: 156px; display: grid; grid-template-columns: 1fr; justify-items: end; gap: 9px; pointer-events: none; }
+.screen-reading .topbar nav > button { pointer-events: auto; height: 40px; border: 1px solid #ede6d333; background: #13253965; backdrop-filter: blur(8px); }
+.screen-reading .nav-button { position: relative; display: flex; flex-direction: row; justify-content: flex-start; gap: 0; width: 40px; padding: 0 10px; border-radius: 22px; overflow: hidden; transition: width 650ms cubic-bezier(.22,.65,.25,1), background 300ms; }
+.screen-reading .nav-button span { display: block; white-space: nowrap; opacity: 0; flex: none; margin-left: 12px; transform: translateX(18px); transition: opacity 400ms 100ms, transform 650ms; }
+.screen-reading .nav-button em { display: none; }
+.screen-reading .nav-button:is(:hover, :focus-visible) { width: 156px; background: #20394ee8; }
+.screen-reading .nav-button:is(:hover, :focus-visible) span { opacity: 1; transform: none; }
+.screen-reading .icon-button { width: 40px; }
+.screen-reading .reading-layout { flex: 1; max-width: none; width: 100%; min-height: 100svh; margin: 0; padding: max(320px, 40svh) clamp(18px, 5vw, 80px) 44px; justify-content: flex-end; gap: 0; }
+.screen-reading .reading-dock { position: relative; max-width: 1100px; width: 100%; margin: 0 auto; }
+.screen-reading .dialogue-card { margin: 0; padding: 12px 28px 10px; border-radius: 10px; background: linear-gradient(120deg,#fffdf6f0,#f3f5f2ed); box-shadow: 0 12px 50px #06152140; }
+.screen-reading .dialogue-card::before { left: 255px; width: 38px; }
+.screen-reading .reading-status { padding-left: 245px; padding-bottom: 10px; }
+.screen-reading .text-area { display: flow-root; min-height: 112px; padding: 4px 0 9px; }
+.portrait-clearance { float: left; width: 225px; height: 106px; }
+.screen-reading .story-text { width: auto; line-height: 1.8; }
+.screen-reading .continue-row { padding-top: 0; justify-content: flex-end; border: 0; }
+.screen-reading .continue-button { min-width: 40px; min-height: 32px; padding: 4px 10px; }
+.screen-reading .reader-toolbar { position: static; display: flex; justify-content: flex-end; padding: 10px 4px 0; gap: 26px; background: none; }
+.screen-reading .reader-toolbar button { min-height: 30px; text-shadow: 0 1px 6px #071321; }
+.screen-reading .reading-progress { display: block; position: fixed; inset: auto 0 0; width: 100%; max-width: none; height: 3px; margin: 0; z-index: 20; background: #ffffff18; pointer-events: none; }
+.reading-progress i { background: #dbc08bc9; box-shadow: 0 0 5px #e8ca9450; }
+.screen-reading .footer { position: absolute; inset: auto 0 4px; max-width: none; padding: 5px 28px; min-height: 38px; z-index: 11; color: #e0e5e8; pointer-events: none; }
+.screen-reading .footer > * { opacity: 0; transition: opacity 800ms ease; pointer-events: auto; padding: 8px 0; }
+.screen-reading .footer > :is(:hover, :focus-visible, :focus-within) { opacity: 1; }
+.screen-reading .footer .zhihu-discover { border: 0; }
+
+.dialogue-portrait { position: absolute; top: 0; left: 20px; bottom: auto; width: 220px; height: 240px; transform: translateY(-50%); margin: 0; pointer-events: none; z-index: 2; animation: portrait-blend-in 500ms ease both; }
+.dialogue-portrait img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 6px 14px #07152040); mask-image: linear-gradient(#000 82%, transparent 100%); }
+.dialogue-portrait figcaption { position: absolute; top: 25%; left: -8px; writing-mode: vertical-rl; font-family: 'Dream Names', KaiTi, STKaiti, var(--serif); font-weight: 400; letter-spacing: 6px; font-size: 30px; line-height: 1.2; text-shadow: 0 2px 2px #152332, 0 0 8px #142231b0; color: #fff1d3; }
+.portrait-name-only { display: grid; place-items: center; }
+.portrait-name-only figcaption { position: static; font-size: 46px; letter-spacing: 9px; }
+.screen-reading .chapter-heading { position: absolute; top: 35svh; left: 50%; transform: translate(-50%, -50%); width: min(70vw, 820px); pointer-events: none; z-index: 2; }
+.chapter-heading h1 { font-family: 'Dream Names', KaiTi, STKaiti, var(--serif); font-size: clamp(30px, 3.4vw, 49px); line-height: 1.5; font-weight: 400; letter-spacing: 5px; color: #fff5de; text-shadow: 0 2px 26px #15232acc; }
+.chapter-heading .eyebrow { font-size: 11px; letter-spacing: 3px; }
+.chapter-visible { animation: chapter-arrive 1100ms ease both; }
+.chapter-letter { display: inline-block; }
+.chapter-ash .chapter-letter { animation: letter-to-ash calc(3000ms - var(--delay)) ease-in both; animation-delay: var(--delay); }
+.chapter-ash > .eyebrow, .chapter-ash > .chapter-decoration { animation: ash-fade 3s ease both; }
+.chapter-dust { position: absolute; inset: 37% 0 0; }
+.chapter-dust i { position: absolute; left: var(--x); top: 30%; width: var(--size); height: var(--size); border-radius: 50%; background: #d8d6cc; box-shadow: 0 0 5px #f4e8cbb0; animation: dust-scatter calc(3000ms - var(--delay)) ease-out both; animation-delay: var(--delay); }
+.chapter-dust i:nth-child(3n) { border-radius: 0; clip-path: polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%); width: 7px; height: 7px; }
+@keyframes subtitle-arrive { from { opacity: 0; filter: blur(3px); transform: translateY(5px); } to { opacity: 1; filter: blur(0); transform: none; } }
+@keyframes chapter-arrive { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: none; } }
+@keyframes letter-to-ash { 0% { opacity: 1; } 30% { color: #b8b7b2; text-shadow: 0 0 6px #d8d7d1; } 65% { opacity: .4; filter: blur(2px); } 100% { opacity: 0; color: #9b9c9d; filter: blur(6px); transform: translate(var(--drift), var(--rise)) scale(.8); } }
+@keyframes dust-scatter { 0% { opacity: 0; transform: translateY(12px) scale(.3); } 20% { opacity: .85; } 100% { opacity: 0; transform: translate(var(--drift),var(--rise)) scale(.2); } }
+@keyframes ash-fade { to { opacity: 0; filter: blur(3px); } }
+@keyframes brand-to-ash { 0% { opacity: 1; } 40% { filter: grayscale(1) blur(.5px); opacity: .8; } 100% { opacity: 0; filter: grayscale(1) blur(6px); transform: translateY(-16px); } }
+@keyframes portrait-blend-in { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 740px) {
+  .screen-reading .topbar { padding: 18px 17px; }
+  .screen-reading .brand { font-size: 21px; gap: 9px; }
+  .screen-reading .brand small { font-size: 8px; max-width: 220px; }
+  .screen-reading .topbar nav { top: 18px; right: 14px; gap: 7px; }
+  .screen-reading .topbar nav > button { height: 36px; }
+  .screen-reading .nav-button, .screen-reading .icon-button { width: 36px; }
+  .screen-reading .nav-button { padding: 0 8px; }
+  .screen-reading .reading-layout { padding: max(260px, 36svh) 16px 43px; }
+  .screen-reading .dialogue-card { padding: 10px 17px 8px; }
+  .screen-reading .dialogue-card::before { left: 153px; }
+  .screen-reading .reading-status { padding-left: 155px; font-size: 8px; gap: 8px; }
+  .screen-reading .reading-status > span:last-child { display: none; }
+  .screen-reading .text-area { min-height: 90px; padding: 3px 0 8px; }
+  .portrait-clearance { width: 135px; height: 80px; }
+  .screen-reading .reader-toolbar { gap: 10px; justify-content: space-between; font-size: 10px; }
+  .dialogue-portrait { width: 140px; height: 178px; left: 5px; }
+  .dialogue-portrait figcaption { font-size: 24px; left: -2px; letter-spacing: 4px; }
+  .portrait-name-only figcaption { font-size: 36px; letter-spacing: 6px; }
+  .screen-reading .chapter-heading { top: 29svh; width: 82vw; }
+  .chapter-heading h1 { font-size: 26px; letter-spacing: 2px; }
+  .chapter-heading .eyebrow { font-size: 9px; letter-spacing: 1px; }
+  .footer { grid-template-columns: 1fr auto 1fr; padding: 15px 17px; gap: 8px; letter-spacing: 0; }
+  .screen-reading .footer { padding: 4px 17px; font-size: 8px; gap: 8px; }
+  .footer .zhihu-discover, .footer button { font-size: 8px; }
+}
+@media (hover: none) {
+  .screen-reading .footer > * { opacity: .65; }
+}
+.motion-off .brand-subtitle, .motion-off .chapter-heading, .motion-off .chapter-letter, .motion-off .dialogue-portrait { animation: none; }
+.motion-off .brand-ash { animation: none; }
+.motion-off .chapter-dust { display: none; }
+.motion-off .footer > *, .motion-off .nav-button, .motion-off .nav-button span { transition: none; }
+
+/* 底栏收起时将多余留白还给场景；唤回底栏时为文字重新留出距离。 */
+.screen-reading .reading-layout { transition: padding-bottom 850ms cubic-bezier(.22,.65,.25,1); }
+.screen-reading.footer-quiet .reading-layout { padding-bottom: 28px; }
+.screen-reading:not(.footer-quiet) .footer > * { opacity: 1; }
+.screen-reading.footer-quiet:has(.footer > :hover, .footer > :focus-within) .reading-layout { padding-bottom: 44px; }
+.screen-reading .auto-play-toggle { margin-right: auto; }
+.screen-reading .auto-play-toggle.active { color: #ffe4ad; }
+.screen-reading .auto-play-toggle:disabled { opacity: .4; cursor: default; }
+.auto-read-ring { color: #897248; overflow: visible; }
+.auto-read-ring circle { fill: none; stroke: currentColor; stroke-width: 2; }
+.auto-ring-track { opacity: .18; }
+.auto-ring-progress { stroke-linecap: round; transition: stroke-dashoffset 40ms linear; }
+.dialogue-portrait .portrait-outgoing { position: absolute; inset: 0; animation: portrait-fade-out 520ms ease both; }
+.dialogue-portrait .portrait-incoming { animation: portrait-fade-in 520ms ease both; }
+@keyframes portrait-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes portrait-fade-in { from { opacity: 0; } to { opacity: 1; } }
+.motion-off .reading-layout { transition: none; }

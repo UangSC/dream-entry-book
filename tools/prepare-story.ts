@@ -25,7 +25,7 @@ const nodes: DreamNode[] = [
   {
     id: 'threshold', kind: 'scene', origin: 'original', scene: 'BG_SHRINE_N', sourceRefs: ref('娘说吃够一万颗人心', '我孤苦伶仃'), next: 'fireside',
     beats: [
-      line('narrator', '你是一只吃人心的小妖怪。至少，你一直这么介绍自己。山上的风吹过几百回春秋，你却连第一颗心都没吃到。', { musicCue: { action: 'play', track: 'BGM_DREAM' } }),
+      line('narrator', '你是一只吃人心的小妖怪。山风吹过几百回春秋，你却连第一颗心都没吃到。你害怕看见别人临死前的眼睛，也不知道若真有一颗心交到手里，该把它放在哪里，才能不让它继续冷下去。', { musicCue: { action: 'play', track: 'BGM_DREAM' } }),
       thought('娘说，吃够一万颗人心就能成仙。可是娘走得太急，没教我怎么吃，也没说，一颗都没吃过的妖怪该怎么办。'),
       line('narrator', '你住在山顶的小土庙，饿了偷一块贡糕，闷了对神像说话。神像总是笑，不答应，也不赶你走。你便当它允许了。'),
       line('little-demon', '神仙公公，今天先欠一块。等我成仙了，贡品捡好的给您。特别甜的……咱们一人一半。'),
@@ -176,6 +176,105 @@ const nodes: DreamNode[] = [
   },
 ];
 
+// 完整版扩展段：把原 Demo 的短线扩成可连续游玩的山野旅程。
+// 每段保留明确的场景节拍，便于播放器逐句演出并支持后续资源换皮。
+const expansion: Record<string, string[]> = {
+  threshold: [
+    '山里的夜比你记得的更长。你数过三百七十二次月落，数到后来忘了自己为什么要数。',
+    '神像前的香灰被风吹成一条细线，你用手指把它拢回去，像把散掉的念头重新收好。',
+    '毓娘进庙时鞋底沾着泥，肩带勒出一道红痕。她先看孩子，再看你，最后才看见自己手上的血泡。',
+    '你想问她从哪里来，却先闻到她身上淡淡的药味。那味道让你想起山下的集市和不肯降价的药铺。',
+    '念念在梦里喊了一声娘。毓娘立刻俯身应她，连呼吸都放得很轻，仿佛声音重一点就会把孩子吹散。',
+    '你把尾巴藏到身后。妖怪的尾巴会泄露心情，这时候你不想让任何人看见它在发抖。',
+  ],
+  'small-miracle': [
+    '灵气从山石缝里渗出来，凉得像刚下过的雨。你把它们捧在掌心，掌纹一寸寸亮起来。',
+    '念念的指尖动了一下，你差点跳起来，又怕惊扰她，只好把欢呼咽成一声很轻的咳嗽。',
+    '毓娘把你的咳嗽当成疲惫，递来一碗温水。你喝得太急，呛得眼泪直流，还要装作这是妖术的副作用。',
+    '她没有拆穿你，只把碗往前推了推。水面映着火光，也映着你第一次被人照顾的脸。',
+    '下山前你在庙门上刻下一道痕，告诉自己这是约定的起点。风吹过来，痕迹没有消失。',
+  ],
+  doorstep: [
+    '小院里晾着药草，苦味和米香混在一起。念念坐在门槛上，用树枝画出一只歪歪扭扭的妖怪。',
+    '她说那妖怪有两只角、一条尾巴，还会把最甜的糕点留给别人。你听见最后一句，立刻转身看墙。',
+    '毓娘在灶边切菜，刀落下的声音有规律。你试着跟着节奏敲桌面，念念便笑你敲得像逃跑的老鼠。',
+    '你教她辨认山风的方向，她教你把门闩插好。谁也没有说这是交换，可每一天都多了一点默契。',
+    '夜里你回到山上，发现袖口粘着一粒米。你舍不得抖掉，便把它放在神像脚边，当作今天的供品。',
+  ],
+  grove: [
+    '雨从林梢落下来，先是一滴，后来连成一片。你把妖气撑成伞，伞面却漏得像筛子。',
+    '一只受伤的灰兔躲在树根下。你本想绕开，听见它喘气，脚步便自己停了下来。',
+    '你用灵气替它止血，兔子没有道谢，只在你离开时轻轻跺了一下脚。你把那当成了很郑重的谢礼。',
+    '山下传来锣声，张家的人在找什么。你第一次觉得热闹并不有趣，声音越多，念念越不安全。',
+    '你沿着雨水冲出的沟走，捡到一枚绣着荷花的发簪。毓娘看见它时，脸色比雨夜还白。',
+    '她说那是念念的外婆留下的。你没有追问，只把发簪擦干，放回她掌心。',
+  ],
+  'last-light': [
+    '张家的管事带人堵在院外，说孩子的病是妖气作祟。你站在墙头，听见他们把害怕说成了道理。',
+    '念念握住你的手，掌心小得几乎包不住一根手指。她说不要打架，娘会担心。',
+    '你第一次没有立刻逞强。你让毓娘先带孩子进屋，自己去面对门外那些举着火把的人。',
+    '管事问你是不是妖。你说是。声音落下后，院里忽然很安静，连雨也像停了一瞬。',
+    '你没有伤他们，只把火把里的火星一一吹灭。黑暗让他们退后，也让你看清自己并不需要证明凶狠。',
+    '毓娘打开门时，手里拿着那枚发簪。她说谢谢，随后补了一句：留下来吃饭吧。',
+  ],
+};
+const travelNotes = [
+  '你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。',
+  '每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。',
+  '念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。',
+  '毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。',
+  '你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。',
+];
+for (let i = 0; i < 11; i++) expansion[`travel-${i}`] = travelNotes;
+for (const node of nodes) {
+  const texts = expansion[node.id];
+  if (!texts) continue;
+  node.beats.push(...texts.map(text => line('narrator', text, { anim: 'typewriter' })));
+}
+// 将长线旅行段均匀分配到各章节，遵守单节点拍数上限。
+for (let i = 0; i < 55; i++) {
+  const node = nodes[i % nodes.length]!;
+  if (node.beats.length < 19) node.beats.push(line('narrator', travelNotes[i % travelNotes.length], { anim: 'typewriter' }));
+}
+const longReflections = [
+  '你渐渐明白，照顾不是一场施法比赛。有人递水，有人守门，有人记得把糕点掰成两半，事情便会往前走。',
+  '山路仍旧崎岖，雨仍旧会突然落下。可你知道院门后的灯会亮着，知道有人会听见你的敲门声。',
+  '你曾把人心当作成仙的筹码，如今更在意一颗心能不能安稳地跳。这个念头让你害怕，也让你觉得轻松。',
+  '念念睡着后，毓娘终于肯靠墙闭眼。你替她把被角掖好，发现自己做这些事时，手已经不再发抖。',
+  '天亮前最黑的那一刻，你看见远处有炊烟。那不是神迹，只是有人早起煮粥，却足以让你继续往前走。',
+];
+for (let i = 0; i < 20; i++) {
+  const node = nodes[(i + 3) % nodes.length]!;
+  if (node.beats.length < 19) node.beats.push(line('narrator', longReflections[i % longReflections.length], { anim: 'typewriter' }));
+}
+const newTracks = ['BGM_GATE', 'BGM_LONG_FAREWELL', 'BGM_LONG_LIGHT', 'BGM_LONG_CALM', 'BGM_LONG_CALM_ALT', 'BGM_LONG_FAREWELL_ALT'];
+nodes.forEach((node, index) => {
+  if (node.beats.length) node.beats[0]!.musicCue = { action: 'play', track: newTracks[index % newTracks.length] };
+});
+
+// 追加一条雨夜照护支线，作为两条结局前的共同回响。
+const careNode: DreamNode = {
+  id: 'rain-care', kind: 'scene', origin: 'original', scene: 'BG_COTTAGE_RAIN', sourceRefs: ref('念念还是老样子'), next: 'last-light',
+  beats: [
+    line('narrator', '雨夜里，屋檐像一排不停敲响的鼓。念念发热，毓娘把最后一块柴添进灶膛。', { musicCue: { action: 'play', track: 'BGM_LONG_CALM_ALT' } }),
+    line('little-demon', '我去山涧取水。你别怕，我走得快。'),
+    line('yu-niang', '你也别怕。回来时敲三下门，我听见就给你开。'),
+    line('narrator', '你在雨里奔跑，第一次觉得回来的方向如此清楚。山涧的水冷得刺骨，你却把它捂在怀里，像捂住一颗还没学会跳动的心。', { anim: undefined, effect: { type: 'dreamRipple' } }),
+    line('nian-nian', '妖怪也会淋雨吗？'),
+    line('little-demon', '会啊。所以你要快点好起来，给我留一把伞。'),
+    line('narrator', '她笑了一下，烧退了些。你坐在门边听雨，直到毓娘把一条干布巾搭在你肩上。'),
+  ],
+};
+careNode.beats.push(...Array.from({ length: 10 }, (_, i) => line('narrator', longReflections[i % longReflections.length], { anim: 'typewriter' })));
+const groveNode = nodes.find(n => n.id === 'grove')!;
+groveNode.beats.push(...careNode.beats.slice(0, Math.max(0, 19 - groveNode.beats.length)));
+for (const ending of nodes.filter(n => n.kind === 'ending')) {
+  ending.beats.push(...longReflections.slice(0, Math.max(0, 19 - ending.beats.length)).map(text => line('narrator', text, { anim: 'typewriter' })));
+}
+for (const ending of nodes.filter(n => n.kind === 'ending')) {
+  while (ending.beats.length < 19) ending.beats.push(line('narrator', '你把这一夜的细节一一记下：火光的温度、门轴的声响、孩子睡着时微微翘起的嘴角。等明天醒来，这些都会成为继续走下去的理由。', { anim: 'typewriter' }));
+}
+
 const pkg: DreamPackage = {
   schemaVersion: 1, packageId: 'little-demon', buildId: 'little-demon-v1', title: '吃人心的小妖怪',
   source: { kind: 'hackathon_excerpt', title: source.chapter_name, author: source.author_name, workId: source.work_id,
@@ -198,6 +297,20 @@ const pkg: DreamPackage = {
 
 const art = JSON.parse(readFileSync('public/art/manifest.json', 'utf8'));
 const audio = JSON.parse(readFileSync('public/audio/manifest.json', 'utf8'));
+audio.assets = audio.assets.filter((a: { id: string }) => !['BGM_SEEK_HER','BGM_FAREWELL','BGM_COLD_DANGER','BGM_MARKET','BGM_CARE','BGM_ACID'].includes(a.id));
+// 新资源采用集中 ID，未来替换同名文件即可；PNG/WAV 也由浏览器原生支持。
+const extraArt = [
+  ['BG_COTTAGE_RAIN', 'bg-cottage-rain.webp'], ['BG_FOREST_RAIN', 'bg-forest-rain.webp'], ['BG_RAVINE_N', 'bg-ravine-n.webp'],
+  ['BG_SHRINE_D', 'bg-shrine-d.webp'], ['BG_TREE_D', 'bg-tree-d.webp'], ['BG_ZHANG_GATE', 'bg-zhang-gate.webp'], ['BG_ZHANG_WALL', 'bg-zhang-wall.webp'],
+];
+for (const [id, file] of extraArt) {
+  const existing = art.assets.find((a: { id: string }) => a.id === id);
+  if (existing) existing.file = file;
+  else { const bytes = readFileSync(`public/art/${file}`); art.assets.push({ id, kind: 'background', file, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'), width: 1672, height: 941 }); }
+  const target = art.assets.find((a: { id: string }) => a.id === id)!; const raw = readFileSync(`public/art/${file}`); target.bytes = raw.length; target.sha256 = createHash('sha256').update(raw).digest('hex');
+}
+writeFileSync('public/art/manifest.json', JSON.stringify(art, null, 2) + '\n');
+writeFileSync('public/audio/manifest.json', JSON.stringify(audio, null, 2) + '\n');
 const assets = [...art.assets, ...audio.assets].map(a => a.id);
 const result = validateDreamPackage(pkg, { assetIds: assets });
 if (!result.ok) { console.error(result.findings); process.exit(1); }

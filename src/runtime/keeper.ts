@@ -8,7 +8,7 @@ export const KEEPER_ACTIONS = [
 ] as const;
 
 /** 为入梦书主题拟写的守梦短句，不是名人引言或原作台词。 */
-export const KEEPER_QUOTES = [
+export const KEEPER_QUOTES: readonly { text: string; kind?: 'zhihu' }[] = [
   { text: '如果身在书中，我会怎样选择？' },
   { text: '这一页，能不能换个结局？' },
   { text: '梦醒以后，我会记得谁？' },
@@ -21,7 +21,26 @@ export const KEEPER_QUOTES = [
   { text: '换作是我，会为谁留下？' },
   { text: '渺小也没关系，真心自有回响。' },
   { text: '这一场梦，让我更懂自己的心。' },
+  { text: '吃人心？桂花糕不香吗？' },
+  { text: '我没打盹，是梦先动的手。' },
+  { text: '妖力不足，卖萌来补？' },
+  { text: '今天也有认真发呆！' },
+  { text: '这页好暖，能打包吗？' },
+  { text: '你负责入梦，我负责可爱。' },
+  { text: '先别成仙，饭还没吃呢。' },
+  { text: '这么难选？尾巴都打结了。' },
+  { text: '去知乎捡本入梦书，再梦一场。', kind: 'zhihu' },
+  { text: '知乎还有新故事，我先占个位？', kind: 'zhihu' },
+  { text: '梦粮告急！去知乎补点故事。', kind: 'zhihu' },
+  { text: '去知乎翻翻，下场梦就拜托你啦。', kind: 'zhihu' },
+  { text: '带本知乎故事回来，我陪你入梦。', kind: 'zhihu' },
+  { text: '下一扇梦门？去知乎找找看。', kind: 'zhihu' },
 ] as const;
+
+export function randomZhihuQuote(random: Random = Math.random) {
+  const indices = KEEPER_QUOTES.flatMap((quote, index) => quote.kind === 'zhihu' ? [index] : []);
+  return indices[Math.min(indices.length - 1, Math.floor(random() * indices.length))]!;
+}
 
 export const KEEPER_SMOKE = { durationMs: 3600, swapMs: 1800 } as const;
 
@@ -37,7 +56,7 @@ export function startKeeperSchedule(callbacks: {
   action: (index: number) => void;
   quote: (index: number) => void;
   veil: (visible: boolean) => void;
-}, current: { action: number; quote: number }, random: Random = Math.random): () => void {
+}, current: { action: number; quote: number }, random: Random = Math.random, options: { motion?: boolean; intro?: boolean; introDelayMs?: number } = {}): () => void {
   const timers = new Set<ReturnType<typeof setTimeout>>();
   let stopped = false, action = current.action, quote = current.quote;
   const later = (callback: () => void, delay: number) => {
@@ -60,7 +79,12 @@ export function startKeeperSchedule(callbacks: {
     later(speak, randomKeeperDelay(random));
   };
   // 初次换图也在 5–30 秒范围内；以后从烟幕开始计算下一次时间。
-  later(animate, randomKeeperDelay(random) - KEEPER_SMOKE.swapMs);
-  later(speak, randomKeeperDelay(random));
+  if (options.motion !== false) later(animate, randomKeeperDelay(random) - KEEPER_SMOKE.swapMs);
+  if (options.intro) later(() => {
+    quote = randomZhihuQuote(random);
+    callbacks.quote(quote);
+    later(speak, randomKeeperDelay(random));
+  }, options.introDelayMs === undefined ? 3000 + Math.floor(random() * 3001) : Math.max(0, Math.min(6000, options.introDelayMs)));
+  else later(speak, randomKeeperDelay(random));
   return () => { stopped = true; timers.forEach(clearTimeout); timers.clear(); };
 }

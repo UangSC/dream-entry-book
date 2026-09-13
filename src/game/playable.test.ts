@@ -35,7 +35,8 @@ describe('首篇完整路线', () => {
       if (!replay.ok) throw new Error(replay.message);
       expect(new Set(replay.lines.map(item => item.nodeId)).size).toBe(8);
       const length = replay.lines.map(item => item.beat.text).join('').replace(/[^\p{Script=Han}]/gu, '').length;
-      expect(length).toBeGreaterThanOrEqual(1600); expect(length).toBeLessThanOrEqual(2400);
+      // 完整版路线预算；旧 Demo 的 1600–2400 汉字上限已不适用。
+      expect(length).toBeGreaterThanOrEqual(4500); expect(length).toBeLessThanOrEqual(6500);
       const kv = memoryKV(); writeSave(kv, state); expect(readSave(kv, pkg, time)).toEqual({ status: 'ok', state });
     });
   }

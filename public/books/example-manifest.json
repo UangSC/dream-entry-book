@@ -2,11 +2,813 @@
   "format": "rumengshu.dreambook",
   "formatVersion": 1,
   "story": "story.json",
-  "storySha256": "6a469d92f97f980025c6e2bf2f11453afe302f8bf7449a94cb8a76daf0b933b9",
+  "storySha256": "09765525991ec45f6922f1f311399c4b28ac5394c29220e598a1f010ed2c9ea5",
   "creator": "入梦书制作组",
   "description": "第一本入梦书：女巫《吃人心的小妖怪》，取材于知乎节选；含完整分支剧情、背景、音乐与音效。",
   "simulation": false,
   "presentation": {
+    "performances": {
+      "line-001": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_IDLE",
+        "label": "小妖怪 · 无袄 · 出神"
+      },
+      "line-002": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_HUNGRY",
+        "label": "小妖怪 · 无袄 · 惦念人心"
+      },
+      "line-003": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_HUNGRY",
+        "label": "小妖怪 · 无袄 · 惦念人心"
+      },
+      "line-004": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SMUG",
+        "label": "小妖怪 · 无袄 · 得意"
+      },
+      "line-005": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 无袄 · 平静"
+      },
+      "line-006": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 无袄 · 平静"
+      },
+      "line-007": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_PANIC",
+        "label": "小妖怪 · 无袄 · 慌张"
+      },
+      "line-008": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_PANIC",
+        "label": "小妖怪 · 无袄 · 慌张"
+      },
+      "line-071": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 无袄 · 平静"
+      },
+      "line-072": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 无袄 · 平静"
+      },
+      "line-073": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 无袄 · 平静"
+      },
+      "line-074": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 无袄 · 平静"
+      },
+      "line-075": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-076": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-099": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-109": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-119": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-129": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-139": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-009": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_HUNGRY",
+        "label": "小妖怪 · 无袄 · 惦念人心"
+      },
+      "line-010": {
+        "portrait": "BG_PORTRAIT_YU_NIANG",
+        "label": "毓娘 · 半身立绘"
+      },
+      "line-011": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_PANIC",
+        "label": "小妖怪 · 无袄 · 慌张"
+      },
+      "line-012": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_PANIC",
+        "label": "小妖怪 · 无袄 · 慌张"
+      },
+      "line-013": {
+        "portrait": "BG_PORTRAIT_YU_NIANG",
+        "label": "毓娘 · 半身立绘"
+      },
+      "line-014": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-015": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-100": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-110": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-120": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-130": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-140": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-149": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-158": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-163": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-016": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-017": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_FIERCE",
+        "label": "小妖怪 · 无袄 · 逞强"
+      },
+      "line-018": {
+        "portrait": "BG_PORTRAIT_YU_NIANG",
+        "label": "毓娘 · 半身立绘"
+      },
+      "line-019": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 无袄 · 平静"
+      },
+      "line-020": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 无袄 · 平静"
+      },
+      "line-021": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_PANIC",
+        "label": "小妖怪 · 无袄 · 慌张"
+      },
+      "line-101": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-111": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-121": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-131": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-141": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-150": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-159": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-164": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-022": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_FIERCE",
+        "label": "小妖怪 · 无袄 · 逞强"
+      },
+      "line-023": {
+        "portrait": "BG_PORTRAIT_YU_NIANG",
+        "label": "毓娘 · 半身立绘"
+      },
+      "line-024": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_FIERCE",
+        "label": "小妖怪 · 无袄 · 逞强"
+      },
+      "line-025": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_HUNGRY",
+        "label": "小妖怪 · 无袄 · 惦念人心"
+      },
+      "line-026": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-027": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-102": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-112": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-122": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-132": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-142": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-151": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-153": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-160": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-028": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 无袄 · 平静"
+      },
+      "line-029": {
+        "portrait": "BG_PORTRAIT_YU_NIANG",
+        "label": "毓娘 · 半身立绘"
+      },
+      "line-030": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SMUG",
+        "label": "小妖怪 · 无袄 · 得意"
+      },
+      "line-031": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-032": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-033": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SMUG",
+        "label": "小妖怪 · 无袄 · 得意"
+      },
+      "line-034": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-077": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-078": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-079": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-080": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-081": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-103": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-113": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-123": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-133": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-143": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-152": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-154": {
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 无袄 · 温柔"
+      },
+      "line-035": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-036": {
+        "portrait": "BG_PORTRAIT_YU_NIANG",
+        "label": "毓娘 · 半身立绘"
+      },
+      "line-037": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-038": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-039": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-040": {
+        "portrait": "BG_PORTRAIT_NIAN_NIAN",
+        "label": "念念 · 半身立绘"
+      },
+      "line-041": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE",
+        "label": "小妖怪 · 红袄 · 逞强"
+      },
+      "line-042": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-082": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-083": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-084": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-085": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-086": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-104": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-114": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-124": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-134": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-144": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-155": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-043": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-044": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_PANIC",
+        "label": "小妖怪 · 红袄 · 慌张"
+      },
+      "line-045": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-046": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-047": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-048": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-049": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-050": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-087": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-088": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-089": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-090": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-091": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-092": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-105": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-115": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-125": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-135": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-145": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-051": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_IDLE",
+        "label": "小妖怪 · 红袄 · 出神"
+      },
+      "line-052": {
+        "portrait": "BG_PORTRAIT_NIAN_NIAN",
+        "label": "念念 · 半身立绘"
+      },
+      "line-053": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-054": {
+        "portrait": "BG_PORTRAIT_YU_NIANG",
+        "label": "毓娘 · 半身立绘"
+      },
+      "line-055": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-056": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-057": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-058": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-093": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE",
+        "label": "小妖怪 · 红袄 · 逞强"
+      },
+      "line-094": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_PANIC",
+        "label": "小妖怪 · 红袄 · 慌张"
+      },
+      "line-095": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-096": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-097": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-098": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-106": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-116": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-126": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-136": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-146": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-059": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-060": {
+        "portrait": "BG_PORTRAIT_NIAN_NIAN",
+        "label": "念念 · 半身立绘"
+      },
+      "line-061": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-062": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-063": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-064": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-107": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-117": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-127": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-137": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-147": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-156": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-161": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-182": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-183": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-184": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-185": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-186": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-192": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-065": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_IDLE",
+        "label": "小妖怪 · 红袄 · 出神"
+      },
+      "line-066": {
+        "portrait": "BG_PORTRAIT_NIAN_NIAN",
+        "label": "念念 · 半身立绘"
+      },
+      "line-067": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-068": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-069": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-070": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-108": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-118": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-128": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-138": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-148": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-157": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-162": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-187": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-188": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-189": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-190": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-191": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      },
+      "line-193": {
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 红袄 · 平静"
+      }
+    },
+    "asides": {
+      "line-004": {
+        "options": [
+          {
+            "id": "cake-account",
+            "text": "给神仙公公认真记一笔糕账",
+            "mood": "resolute",
+            "replies": [
+              {
+                "speaker": "little-demon",
+                "text": "一块糕，半块利息……不对，利息也要分一半吗？",
+                "portrait": "BG_PORTRAIT_DEMON_BARE_SMUG"
+              },
+              {
+                "speaker": "narrator",
+                "text": "你拿树枝算了半天，决定先欠着。做神仙，果然也不能不会算账。",
+                "portrait": "BG_PORTRAIT_DEMON_BARE_SMUG"
+              }
+            ]
+          },
+          {
+            "id": "cake-smaller",
+            "text": "悄悄把更大的半块留给他",
+            "mood": "bashful",
+            "replies": [
+              {
+                "speaker": "little-demon",
+                "text": "才不是怕您饿。我这块……比较好拿！",
+                "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT"
+              },
+              {
+                "speaker": "narrator",
+                "text": "神像照旧笑着。你咬了一小口，觉得这块糕好像也没那么小。",
+                "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT"
+              }
+            ]
+          }
+        ]
+      },
+      "line-036": {
+        "options": [
+          {
+            "id": "door-practice",
+            "text": "退回门外，郑重地再走一遍",
+            "mood": "warm",
+            "replies": [
+              {
+                "speaker": "little-demon",
+                "text": "咳。请问，这回像个会做客的妖怪了吗？",
+                "portrait": "BG_PORTRAIT_DEMON_COAT_CALM"
+              },
+              {
+                "speaker": "yu-niang",
+                "text": "像了。就是不用给门作揖，它不会还礼。",
+                "portrait": "BG_PORTRAIT_YU_NIANG"
+              },
+              {
+                "speaker": "narrator",
+                "text": "你收回刚抬起来的手，假装是在理袖口。",
+                "portrait": "BG_PORTRAIT_DEMON_COAT_CALM"
+              }
+            ]
+          },
+          {
+            "id": "wall-shortcut",
+            "text": "小声辩解：墙比较近嘛",
+            "mood": "guarded",
+            "replies": [
+              {
+                "speaker": "little-demon",
+                "text": "妖怪走近路，省下来的力气……可以多帮点忙。",
+                "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE"
+              },
+              {
+                "speaker": "yu-niang",
+                "text": "那我把凳子挪到门边。下回够近了吧？",
+                "portrait": "BG_PORTRAIT_YU_NIANG"
+              },
+              {
+                "speaker": "narrator",
+                "text": "你找不到反驳的话，只好很有气势地点了点头。",
+                "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "choiceMoods": {
+      "feed-fire": "warm",
+      "name-price": "resolute",
+      "tell-limit": "hesitant",
+      "keep-front": "guarded",
+      "stay-tonight": "bashful",
+      "return-tomorrow": "breezy"
+    },
     "cover": "BG_SHRINE_N",
     "subtitle": "想成为神仙的你，却先学会了怎样做一个小小的妖。",
     "description": "娘说，吃够一万颗人心，就能成仙。可遇见念念以后，你发现事情好像没那么简单。一段关于善意、承诺与自我照顾的山野奇遇。",
@@ -147,6 +949,206 @@
       "luminance": 0.6299,
       "credit": "用户提供的生成背景",
       "rights": "pending · 使用依据待核对"
+    },
+    {
+      "id": "BG_COTTAGE_RAIN",
+      "kind": "image",
+      "path": "art/bg-cottage-rain.webp",
+      "mime": "image/webp",
+      "bytes": 163400,
+      "sha256": "a8e1f45becbd47591fdc76afea54e24fdc7695e6691bdc3da784788296703a22",
+      "credit": "用户提供素材",
+      "rights": "pending · 使用依据待核对"
+    },
+    {
+      "id": "BG_FOREST_RAIN",
+      "kind": "image",
+      "path": "art/bg-forest-rain.webp",
+      "mime": "image/webp",
+      "bytes": 213280,
+      "sha256": "cc3955167213773206293eb5c7de2282ff7bf1c736b79b2e16702539f29c9c4f",
+      "credit": "用户提供素材",
+      "rights": "pending · 使用依据待核对"
+    },
+    {
+      "id": "BG_RAVINE_N",
+      "kind": "image",
+      "path": "art/bg-ravine-n.webp",
+      "mime": "image/webp",
+      "bytes": 151144,
+      "sha256": "9452d80be68c3cc77646ef297f8034fffc823de1e6cc421c46a023ee8177880c",
+      "credit": "用户提供素材",
+      "rights": "pending · 使用依据待核对"
+    },
+    {
+      "id": "BG_SHRINE_D",
+      "kind": "image",
+      "path": "art/bg-shrine-d.webp",
+      "mime": "image/webp",
+      "bytes": 119576,
+      "sha256": "41895b1e30f48da19cc9d3133eb2013ab417d980b8702ce073cde78f9c674962",
+      "credit": "用户提供素材",
+      "rights": "pending · 使用依据待核对"
+    },
+    {
+      "id": "BG_TREE_D",
+      "kind": "image",
+      "path": "art/bg-tree-d.webp",
+      "mime": "image/webp",
+      "bytes": 250876,
+      "sha256": "1fb352a44ef4223e1a0860bbdf7dc53339d01e9683bdf4b74c70788e88d22879",
+      "credit": "用户提供素材",
+      "rights": "pending · 使用依据待核对"
+    },
+    {
+      "id": "BG_ZHANG_GATE",
+      "kind": "image",
+      "path": "art/bg-zhang-gate.webp",
+      "mime": "image/webp",
+      "bytes": 135366,
+      "sha256": "976147c63449c9c199cff323e064236886e8f34eb7573a9c4aaf3ef1791e1e3b",
+      "credit": "用户提供素材",
+      "rights": "pending · 使用依据待核对"
+    },
+    {
+      "id": "BG_ZHANG_WALL",
+      "kind": "image",
+      "path": "art/bg-zhang-wall.webp",
+      "mime": "image/webp",
+      "bytes": 115850,
+      "sha256": "1e9d6062025faf1642a1fa377f6ed22bee601485fefde14e6995f378f7381f44",
+      "credit": "用户提供素材",
+      "rights": "pending · 使用依据待核对"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_CALM",
+      "kind": "image",
+      "path": "art/portraits/demon-bare-calm.webp",
+      "mime": "image/webp",
+      "bytes": 106096,
+      "sha256": "a47ec9a8b45800dcc072cd6b6956b11daf5e84f70486a9d851c5101ab02c93d7",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_FIERCE",
+      "kind": "image",
+      "path": "art/portraits/demon-bare-fierce.webp",
+      "mime": "image/webp",
+      "bytes": 102556,
+      "sha256": "c8c81cf3d0d32a8d40d945860182100b04a1595d5a073bdd3cc75bc2ccabaf58",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_HUNGRY",
+      "kind": "image",
+      "path": "art/portraits/demon-bare-hungry.webp",
+      "mime": "image/webp",
+      "bytes": 91156,
+      "sha256": "9252f9f6290c8482b92827da562b804dc2d0c7b0e78b43f01dd0a92bd18f2472",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_IDLE",
+      "kind": "image",
+      "path": "art/portraits/demon-bare-idle.webp",
+      "mime": "image/webp",
+      "bytes": 85254,
+      "sha256": "309b372021b457ec670f2093ace6097f460bdd1617358b3d4799076f1ee146a4",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_PANIC",
+      "kind": "image",
+      "path": "art/portraits/demon-bare-panic.webp",
+      "mime": "image/webp",
+      "bytes": 110066,
+      "sha256": "7bd05146166e0f90eff44a83656ccc40e1171c7baa391ea8a2e75d3d81851bb8",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_SMUG",
+      "kind": "image",
+      "path": "art/portraits/demon-bare-smug.webp",
+      "mime": "image/webp",
+      "bytes": 87934,
+      "sha256": "8b8b4734410009bff23429f2c4c3f645a5bec20aa06708d2afff97094ed1de29",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_SOFT",
+      "kind": "image",
+      "path": "art/portraits/demon-bare-soft.webp",
+      "mime": "image/webp",
+      "bytes": 92694,
+      "sha256": "017da7d7f657575012face49f01fd7a67d224685c2c58747715e6435e1e45d34",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_COAT_CALM",
+      "kind": "image",
+      "path": "art/portraits/demon-coat-calm.webp",
+      "mime": "image/webp",
+      "bytes": 99054,
+      "sha256": "753f51fbe49cd5b04c7c16ad43e36bcd8b9def65a71851992a3990bdff28351d",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_COAT_FIERCE",
+      "kind": "image",
+      "path": "art/portraits/demon-coat-fierce.webp",
+      "mime": "image/webp",
+      "bytes": 129278,
+      "sha256": "9d80a2b6ee310c31307d14952c60c90ff5f90bb13e9a071168c5c510ebd33601",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_COAT_IDLE",
+      "kind": "image",
+      "path": "art/portraits/demon-coat-idle.webp",
+      "mime": "image/webp",
+      "bytes": 79610,
+      "sha256": "5f1b9c76c394191c32ec8333c79a983f230be90f10ddd5a6dd6ff769ae7a990c",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_COAT_PANIC",
+      "kind": "image",
+      "path": "art/portraits/demon-coat-panic.webp",
+      "mime": "image/webp",
+      "bytes": 102168,
+      "sha256": "df9d8d11dd8f55df732c200bf7289bea1b5460b6d84101ef8d20ea953e1bc116",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_NIAN_NIAN",
+      "kind": "image",
+      "path": "art/portraits/nian-nian.webp",
+      "mime": "image/webp",
+      "bytes": 60360,
+      "sha256": "1b9a288c2ffcdbd576c2bd7a4c70696d3bfba173c3910fbeb4a851e5f4fcaf4c",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
+    },
+    {
+      "id": "BG_PORTRAIT_YU_NIANG",
+      "kind": "image",
+      "path": "art/portraits/yu-niang.webp",
+      "mime": "image/webp",
+      "bytes": 44712,
+      "sha256": "87f48f076d78349a6b5c28e9b00daa820a5de7002599ce9b329622077d4e5ddc",
+      "credit": "用户提供角色立绘",
+      "rights": "pending · 沿用项目素材使用记录"
     },
     {
       "id": "BGM_GATE",

@@ -1,6 +1,8 @@
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, renameSync } from 'node:fs';
 import { packDreamBook, readDreamBook, sha256 } from '../src/books/archive';
 import type { BookManifest, BookAsset } from '../src/books/schema';
+import { createPerformances } from './story-performances';
+import { storyAsides } from './story-asides';
 
 // 可重复生成的轻声环境层：蟋蟀短鸣、低频蛙声，首尾留白，避免循环接缝。
 const rate = 22050, seconds = 20, pcm = new Float32Array(rate * seconds);
@@ -37,6 +39,9 @@ const manifest: BookManifest = {
   format: 'rumengshu.dreambook', formatVersion: 1, story: 'story.json', storySha256: await sha256(new TextEncoder().encode(JSON.stringify(pkg, null, 2))),
   creator: '入梦书制作组', description: '第一本入梦书：女巫《吃人心的小妖怪》，取材于知乎节选；含完整分支剧情、背景、音乐与音效。', simulation: false,
   presentation: {
+    performances: createPerformances(pkg),
+    asides: storyAsides,
+    choiceMoods: { 'feed-fire': 'warm', 'name-price': 'resolute', 'tell-limit': 'hesitant', 'keep-front': 'guarded', 'stay-tonight': 'bashful', 'return-tomorrow': 'breezy' },
     cover: 'BG_SHRINE_N', subtitle: '想成为神仙的你，却先学会了怎样做一个小小的妖。', description: '娘说，吃够一万颗人心，就能成仙。可遇见念念以后，你发现事情好像没那么简单。一段关于善意、承诺与自我照顾的山野奇遇。',
     tags: ['治愈奇幻', '山野来信'], contentNote: '亲人离别、儿童患病、温暖奇幻。对白与新增分支为 AI 衍生，并非原作后续。',
     chapters: { threshold: '一 · 庙中借宿', fireside: '二 · 火边的人心', warmth: '三 · 一点暖意', promise: '三 · 一桩买卖', 'small-miracle': '四 · 小小的神通', doorstep: '五 · 一扇留着的门', grove: '六 · 山风里的疑问', 'last-light': '七 · 今夜与明日', 'ending-lantern': '终 · 留一盏灯', 'ending-path': '终 · 明日再赴约' },
@@ -47,6 +52,8 @@ const manifest: BookManifest = {
 const archive = packDreamBook(manifest, pkg, files);
 await readDreamBook(archive);
 mkdirSync('public/books', { recursive: true });
-writeFileSync('public/books/little-demon.dreambook', archive);
-writeFileSync('public/books/example-manifest.json', JSON.stringify(manifest, null, 2));
+writeFileSync('public/books/little-demon.dreambook.tmp', archive);
+renameSync('public/books/little-demon.dreambook.tmp', 'public/books/little-demon.dreambook');
+writeFileSync('public/books/example-manifest.json.tmp', JSON.stringify(manifest, null, 2));
+renameSync('public/books/example-manifest.json.tmp', 'public/books/example-manifest.json');
 console.log(`首本入梦书已打包并回读验证：${assets.length} 个素材，${(archive.length / 1024 / 1024).toFixed(1)} MiB。`);

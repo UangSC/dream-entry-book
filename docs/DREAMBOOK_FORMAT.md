@@ -50,6 +50,7 @@ little-demon.dreambook
 | `tags` | 最多 5 个短标签 |
 | `contentNote` | 题材与改编说明，最多 400 字符 |
 | `chapters` | `{节点 ID: 章节标题}`，必须指向真实节点 |
+| `performances` | 可选，`{拍 ID: {portrait: 图片素材 ID, label: 中文替代文字}}`；立绘随包携带，引用必须存在 |
 | `scenes` | `{图片 ID: {label, time, particles, ambience?}}` |
 | `dreamMusic` | 可选，梦内默认音乐 ID；不填则不提供默认配乐 |
 | `endingMusic` | 可选，梦醒页面音乐 ID |
@@ -130,3 +131,15 @@ npm run book:pack -- --input ./my-book-source --output ./my-new-book.dreambook
 输出文件必须尚不存在，工具不覆盖旧包。封面、章节和素材路径的契约必须仍然满足本规范；不要手改完文件却沿用旧哈希。
 
 生成入口的当前实现与后续服务端接口见 [DREAM_WEAVER.md](DREAM_WEAVER.md)。
+
+### 选择的情绪演出
+
+可选 `presentation.choiceMoods` 以选项 ID 为键，值为 `warm`（温暖）、`resolute`（笃定）、`hesitant`（犹豫）、`guarded`（撑住面子）、`bashful`（害羞接受）或 `breezy`（轻松）。选项 ID 必须存在于剧情中；没有配置时使用温暖样式。配置仅改变选择外观、适度交互及收尾动画，不改变选项文本、条件或分支结果。
+
+播放器将选项放在中央。犹豫仅对鼠标短暂小幅闪躲，点击范围不移动；触屏、键盘和减少动态效果模式保持直接可选。所有动画均可随动态效果设置关闭。
+
+### 日常闲话
+
+可选 `presentation.asides` 以主线台词 ID 为键。每段包含 2–3 个 `options`，每个选项指定 `id`、`text`、`mood`，以及 1–4 句 `replies`（`speaker`、`text` 和可选的 `portrait`）。播放器在该句之后展示选择，逐句播放选定回应，再继续下一句主线。它不写入主线旗标，不改变节点与结局。角色、素材、触发台词引用和选项 ID 唯一性均在导入时验证。
+
+闲话停留位置另存本书的本地书签，刷新或保存离梦后能接续；从头入梦或回望产生新的阅读位置时重新选择。跨设备导入仍按主线存档恢复，停在闲话中导出的存档会回到触发它的那句主线。

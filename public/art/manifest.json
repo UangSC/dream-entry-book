@@ -224,6 +224,263 @@
         "未裁切、未放大、保留原尺寸"
       ],
       "luminance": 0.6299
+    },
+    {
+      "id": "BG_COTTAGE_RAIN",
+      "kind": "background",
+      "file": "bg-cottage-rain.webp",
+      "bytes": 163400,
+      "sha256": "a8e1f45becbd47591fdc76afea54e24fdc7695e6691bdc3da784788296703a22"
+    },
+    {
+      "id": "BG_FOREST_RAIN",
+      "kind": "background",
+      "file": "bg-forest-rain.webp",
+      "bytes": 213280,
+      "sha256": "cc3955167213773206293eb5c7de2282ff7bf1c736b79b2e16702539f29c9c4f"
+    },
+    {
+      "id": "BG_RAVINE_N",
+      "kind": "background",
+      "file": "bg-ravine-n.webp",
+      "bytes": 151144,
+      "sha256": "9452d80be68c3cc77646ef297f8034fffc823de1e6cc421c46a023ee8177880c"
+    },
+    {
+      "id": "BG_SHRINE_D",
+      "kind": "background",
+      "file": "bg-shrine-d.webp",
+      "bytes": 119576,
+      "sha256": "41895b1e30f48da19cc9d3133eb2013ab417d980b8702ce073cde78f9c674962"
+    },
+    {
+      "id": "BG_TREE_D",
+      "kind": "background",
+      "file": "bg-tree-d.webp",
+      "bytes": 250876,
+      "sha256": "1fb352a44ef4223e1a0860bbdf7dc53339d01e9683bdf4b74c70788e88d22879"
+    },
+    {
+      "id": "BG_ZHANG_GATE",
+      "kind": "background",
+      "file": "bg-zhang-gate.webp",
+      "bytes": 135366,
+      "sha256": "976147c63449c9c199cff323e064236886e8f34eb7573a9c4aaf3ef1791e1e3b"
+    },
+    {
+      "id": "BG_ZHANG_WALL",
+      "kind": "background",
+      "file": "bg-zhang-wall.webp",
+      "bytes": 115850,
+      "sha256": "1e9d6062025faf1642a1fa377f6ed22bee601485fefde14e6995f378f7381f44"
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_CALM",
+      "kind": "portrait",
+      "file": "portraits/demon-bare-calm.webp",
+      "bytes": 106096,
+      "sha256": "a47ec9a8b45800dcc072cd6b6956b11daf5e84f70486a9d851c5101ab02c93d7",
+      "width": 600,
+      "height": 627,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_FIERCE",
+      "kind": "portrait",
+      "file": "portraits/demon-bare-fierce.webp",
+      "bytes": 102556,
+      "sha256": "c8c81cf3d0d32a8d40d945860182100b04a1595d5a073bdd3cc75bc2ccabaf58",
+      "width": 600,
+      "height": 611,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_HUNGRY",
+      "kind": "portrait",
+      "file": "portraits/demon-bare-hungry.webp",
+      "bytes": 91156,
+      "sha256": "9252f9f6290c8482b92827da562b804dc2d0c7b0e78b43f01dd0a92bd18f2472",
+      "width": 542,
+      "height": 680,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_IDLE",
+      "kind": "portrait",
+      "file": "portraits/demon-bare-idle.webp",
+      "bytes": 85254,
+      "sha256": "309b372021b457ec670f2093ace6097f460bdd1617358b3d4799076f1ee146a4",
+      "width": 600,
+      "height": 680,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_PANIC",
+      "kind": "portrait",
+      "file": "portraits/demon-bare-panic.webp",
+      "bytes": 110066,
+      "sha256": "7bd05146166e0f90eff44a83656ccc40e1171c7baa391ea8a2e75d3d81851bb8",
+      "width": 600,
+      "height": 611,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_SMUG",
+      "kind": "portrait",
+      "file": "portraits/demon-bare-smug.webp",
+      "bytes": 87934,
+      "sha256": "8b8b4734410009bff23429f2c4c3f645a5bec20aa06708d2afff97094ed1de29",
+      "width": 600,
+      "height": 611,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_BARE_SOFT",
+      "kind": "portrait",
+      "file": "portraits/demon-bare-soft.webp",
+      "bytes": 92694,
+      "sha256": "017da7d7f657575012face49f01fd7a67d224685c2c58747715e6435e1e45d34",
+      "width": 600,
+      "height": 613,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_COAT_CALM",
+      "kind": "portrait",
+      "file": "portraits/demon-coat-calm.webp",
+      "bytes": 99054,
+      "sha256": "753f51fbe49cd5b04c7c16ad43e36bcd8b9def65a71851992a3990bdff28351d",
+      "width": 600,
+      "height": 622,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_COAT_FIERCE",
+      "kind": "portrait",
+      "file": "portraits/demon-coat-fierce.webp",
+      "bytes": 129278,
+      "sha256": "9d80a2b6ee310c31307d14952c60c90ff5f90bb13e9a071168c5c510ebd33601",
+      "width": 568,
+      "height": 680,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_COAT_IDLE",
+      "kind": "portrait",
+      "file": "portraits/demon-coat-idle.webp",
+      "bytes": 79610,
+      "sha256": "5f1b9c76c394191c32ec8333c79a983f230be90f10ddd5a6dd6ff769ae7a990c",
+      "width": 600,
+      "height": 612,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_DEMON_COAT_PANIC",
+      "kind": "portrait",
+      "file": "portraits/demon-coat-panic.webp",
+      "bytes": 102168,
+      "sha256": "df9d8d11dd8f55df732c200bf7289bea1b5460b6d84101ef8d20ea953e1bc116",
+      "width": 600,
+      "height": 609,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_NIAN_NIAN",
+      "kind": "portrait",
+      "file": "portraits/nian-nian.webp",
+      "bytes": 60360,
+      "sha256": "1b9a288c2ffcdbd576c2bd7a4c70696d3bfba173c3910fbeb4a851e5f4fcaf4c",
+      "width": 600,
+      "height": 517,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
+    },
+    {
+      "id": "BG_PORTRAIT_YU_NIANG",
+      "kind": "portrait",
+      "file": "portraits/yu-niang.webp",
+      "bytes": 44712,
+      "sha256": "87f48f076d78349a6b5c28e9b00daa820a5de7002599ce9b329622077d4e5ddc",
+      "width": 600,
+      "height": 517,
+      "source": {
+        "name": "用户提供角色立绘"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "沿用项目素材使用记录"
+      }
     }
   ]
 }

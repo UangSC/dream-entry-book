@@ -6,7 +6,20 @@ async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   return (await Promise.all(entries.map(entry => entry.isDirectory() ? walk(join(directory, entry.name)) : [join(directory, entry.name)]))).flat();
 }
-const files = (await walk('dist')).filter(path => !path.endsWith('sw.js'));
+// 只缓存发布清单引用的素材。public 中可能保留未使用的原始 WAV、重复图片，
+// 其中带 # 的旧文件名在部分静态服务器上不可寻址，不应阻断整本书的更新。
+const required = new Set(['index.html', 'favicon.svg', 'audio/bgm-gate.beats.json']);
+for (const folder of ['art', 'audio', 'mascot']) {
+  const path = `${folder}/manifest.json`;
+  required.add(path);
+  const manifest = JSON.parse(await readFile(join('dist', path), 'utf8'));
+  for (const asset of manifest.assets) required.add(`${folder}/${asset.file}`);
+}
+for (const file of await walk('dist')) {
+  const path = file.slice(5).replaceAll('\\', '/');
+  if (/^(assets\/.*\.(js|css)|books\/.*\.(dreambook|json)|dreams\/.*\.json|fonts\/.*\.(woff2|txt))$/.test(path)) required.add(path);
+}
+const files = [...required].sort().map(path => join('dist', path));
 const assets = [];
 for (const file of files) {
   const data = await readFile(file);
@@ -17,7 +30,7 @@ const build = createHash('sha256').update(await readFile(new URL(import.meta.url
 const code = `/* 由 prepare-offline.mjs 生成，按实际构建文件与哈希缓存。 */
 const CACHE = 'rumengshu-${build}';
 const ASSETS = ${JSON.stringify(assets)};
-const urlFor = path => new URL(path, self.registration.scope).href;
+const urlFor = path => new URL(path.split('/').map(encodeURIComponent).join('/'), self.registration.scope).href;
 const digest = async bytes => [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(n => n.toString(16).padStart(2, '0')).join('');
 self.addEventListener('install', event => event.waitUntil((async () => {
   const cache = await caches.open(CACHE);

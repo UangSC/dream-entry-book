@@ -6,7 +6,7 @@ const publicMode = process.argv.includes('--public');
 const lists = ['art', 'audio', 'mascot'].map(folder => ({ folder, manifest: JSON.parse(readFileSync(`public/${folder}/manifest.json`, 'utf8')) }));
 let failed = false;
 for (const { folder, manifest } of lists) for (const asset of manifest.assets) {
-  if (!/^[a-z0-9-]+\.(webp|svg|mp3|wav)$/.test(asset.file)) throw new Error(`非法资源路径：${asset.id}`);
+  if (!/^(?:[a-z0-9-]+\/)*[a-z0-9-]+\.(webp|svg|mp3|wav)$/.test(asset.file)) throw new Error(`非法资源路径：${asset.id}`);
   const bytes = readFileSync(`public/${folder}/${asset.file}`);
   if (bytes.byteLength !== asset.bytes || createHash('sha256').update(bytes).digest('hex') !== asset.sha256) throw new Error(`资源哈希或体积不符：${asset.id}`);
   if (publicMode && asset.rights?.status !== 'approved') { console.error(`公开发布前需记录素材使用依据：${asset.id}`); failed = true; }

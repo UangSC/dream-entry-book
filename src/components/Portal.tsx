@@ -24,5 +24,5 @@ export function usePortal(motion: boolean) {
       flushSync(update); fallback.current = setTimeout(skip, 2100);
     }
   };
-  return { busy, cross, layer: busy ? <><div className={`portal-water portal-${direction}`} aria-hidden="true"><i /><i /><i /></div><button className="portal-skip" onClick={skip}>跳过转场</button></> : null };
+  return { busy, cross, layer: busy ? <div className={`portal-water portal-${direction}`} aria-hidden="true"><i /><i /><i /></div> : null };
 }

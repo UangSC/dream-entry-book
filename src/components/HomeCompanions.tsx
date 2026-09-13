@@ -9,7 +9,9 @@ export function HomeCompanions({ motion, active }: { motion: boolean; active: bo
   const [veiled, setVeiled] = useState(false);
   const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden');
   const current = useRef({ action: 0, quote: 0 });
-  const running = motion && active && visible;
+  const introDelivered = useRef(false);
+  const [introAt] = useState(() => Date.now() + 3000 + Math.floor(Math.random() * 3001));
+  const running = active && visible;
   useEffect(() => {
     const onVisibility = () => setVisible(document.visibilityState !== 'hidden');
     document.addEventListener('visibilitychange', onVisibility);
@@ -26,13 +28,14 @@ export function HomeCompanions({ motion, active }: { motion: boolean; active: bo
     return () => { images.forEach(image => image.removeAttribute('src')); };
   }, [motion]);
   useEffect(() => {
-    if (!running) { setVeiled(false); return; }
+    if (!running || !motion) setVeiled(false);
+    if (!running) return;
     return startKeeperSchedule({
       action: index => { current.current.action = index; setAction(index); },
-      quote: index => { current.current.quote = index; setQuote(index); },
+      quote: index => { introDelivered.current = true; current.current.quote = index; setQuote(index); },
       veil: setVeiled,
-    }, current.current);
-  }, [running]);
+    }, current.current, Math.random, { motion, intro: !introDelivered.current, introDelayMs: introAt - Date.now() });
+  }, [running, motion, introAt]);
   const saying = KEEPER_QUOTES[quote]!;
   const pose = KEEPER_ACTIONS[action]!;
   return <aside className="home-companions" aria-label="梦斋的陪伴" data-paused={!running}

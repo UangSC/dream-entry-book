@@ -15,6 +15,46 @@ const memory = (): KV => { const map = new Map<string, string>(); return { get: 
 afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
 
 describe('入梦书 v1 的真实示例和不可信文件', () => {
+  it('日常闲话随梦包携带，拒绝缺失人物、立绘和重复选项', async () => {
+    const book = await readDreamBook(archive);
+    expect(Object.keys(book.manifest.presentation.asides ?? {})).toEqual(['line-004', 'line-036']);
+    for (const kind of ['character', 'portrait', 'duplicate', 'beat']) {
+      const invalid = structuredClone(manifest);
+      const aside = invalid.presentation.asides['line-004'];
+      if (kind === 'character') aside.options[0].replies[0].speaker = 'missing-person';
+      if (kind === 'portrait') aside.options[0].replies[0].portrait = 'BG_MISSING';
+      if (kind === 'duplicate') aside.options[1].id = aside.options[0].id;
+      if (kind === 'beat') invalid.presentation.asides['missing-beat'] = aside;
+      await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(invalid)) }))).rejects.toThrow();
+    }
+  });
+  it('六种情绪演出跟随梦包，并拒绝无效选择引用', async () => {
+    const book = await readDreamBook(archive);
+    expect(new Set(Object.values(book.manifest.presentation.choiceMoods ?? {})).size).toBe(6);
+    const invalid = structuredClone(manifest);
+    invalid.presentation.choiceMoods = { 'missing-choice': 'hesitant' };
+    await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(invalid)) }))).rejects.toThrow('选择演出引用不存在的选项');
+  });
+  it('每拍立绘随梦包携带，主角的七种表情可用，旧 Demo 仍可读取', async () => {
+    const book = await readDreamBook(archive);
+    const performances = book.manifest.presentation.performances!;
+    for (const beat of book.pkg.nodes.flatMap(node => node.beats)) {
+      const asset = book.manifest.assets.find(asset => asset.id === performances[beat.id]?.portrait);
+      expect(asset?.kind).toBe('image');
+      expect(book.files[asset!.path]?.length).toBeGreaterThan(0);
+    }
+    expect(new Set(Object.values(performances).filter(item => item.portrait.includes('DEMON_BARE')).map(item => item.portrait)).size).toBe(7);
+    const demo = await readDreamBook(new Uint8Array(readFileSync('public/books/little-demon-demo.dreambook')));
+    expect(demo.pkg.title).toBe(book.pkg.title);
+  });
+  it('拒绝丢失的立绘和不存在的演出台词引用', async () => {
+    const missing = structuredClone(manifest);
+    missing.presentation.performances['line-002'].portrait = 'BG_MISSING_PORTRAIT';
+    await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(missing)) }))).rejects.toThrow('素材引用类别错误');
+    const invalid = structuredClone(manifest);
+    invalid.presentation.performances['missing-beat'] = invalid.presentation.performances['line-002'];
+    await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(invalid)) }))).rejects.toThrow('立绘演出引用不存在的拍');
+  });
   it('作者主页与发布日期可省略；提供时拒绝危险链接、伪造知乎域名和无效日期', () => {
     const { authorUrl, publishedAt, ...legacy } = pkg.source;
     expect(sourceSchema.safeParse(legacy).success).toBe(true);

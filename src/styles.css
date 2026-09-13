@@ -25,7 +25,6 @@
 @keyframes stream-letter{from{opacity:0;filter:blur(2px)}to{opacity:1;filter:blur(0)}}
 @keyframes orbit{to{transform:rotate(360deg)}}
 .cover-content h2{text-wrap:balance}
-
 /* 整页入梦/出梦：新页面从水滴中心柔化展开，旧页面逐渐化开。 */
 @property --portal-radius{syntax:'<length>';inherits:false;initial-value:0px}
 html[data-portal]::view-transition{pointer-events:none}

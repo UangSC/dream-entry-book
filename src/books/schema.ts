@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const BOOK_LIMITS = { archive: 80 * 1024 * 1024, unpacked: 120 * 1024 * 1024, file: 24 * 1024 * 1024, json: 1024 * 1024, files: 180 };
 const assetId = z.string().regex(/^(BG|BGM|SFX)_[A-Z0-9_]+$/);
+const choiceMood = z.enum(['warm', 'resolute', 'hesitant', 'guarded', 'bashful', 'breezy']);
 export const safePath = (path: string) => path.length < 180 && /^[a-zA-Z0-9][a-zA-Z0-9_./-]*$/.test(path) && !path.split('/').some(p => !p || p === '.' || p === '..');
 const path = z.string().refine(safePath, '素材路径必须是包内相对路径');
 const loop = z.object({ mode: z.enum(['fadeLoop', 'seamless', 'once']), startSeconds: z.number().min(0), endSeconds: z.number().positive(), overlapMs: z.number().min(0).max(8000), verified: z.boolean().optional() }).strict();
@@ -18,6 +19,12 @@ export const presentationSchema = z.object({
   cover: assetId, subtitle: z.string().max(100), description: z.string().max(800),
   tags: z.array(z.string().max(24)).max(5), contentNote: z.string().max(400),
   chapters: z.record(z.string().max(80), z.string().max(80)),
+  choiceMoods: z.record(z.string().max(80), choiceMood).optional(),
+  asides: z.record(z.string().max(80), z.object({ options: z.array(z.object({
+    id: z.string().min(1).max(80), text: z.string().min(1).max(100), mood: choiceMood,
+    replies: z.array(z.object({ speaker: z.string().max(80), text: z.string().min(1).max(240), portrait: assetId.optional() }).strict()).min(1).max(4),
+  }).strict()).min(2).max(3) }).strict()).optional(),
+  performances: z.record(z.string().max(80), z.object({ portrait: assetId, label: z.string().max(80) }).strict()).optional(),
   scenes: z.record(assetId, z.object({ label: z.string().max(60), time: z.enum(['day', 'night', 'dawn', 'indoor']), particles: z.enum(['fireflies', 'leaves', 'none']), ambience: assetId.optional() }).strict()),
   dreamMusic: assetId.optional(), endingMusic: assetId.optional(), endingScene: assetId.optional(),
 }).strict();

@@ -38,7 +38,7 @@ runInNewContext(await readFile('dist/sw.js', 'utf8'), {
     networkCalls++;
     if (!online) throw new Error('模拟网络断开');
     const url = typeof request === 'string' ? request : request.url;
-    const path = new URL(url).pathname.slice(new URL(scope).pathname.length);
+    const path = decodeURIComponent(new URL(url).pathname.slice(new URL(scope).pathname.length));
     try { return new Response(await readFile('dist/' + path), { headers: { Vary: 'Origin' } }); } catch { return new Response('', { status: 404 }); }
   },
 });
@@ -57,6 +57,8 @@ const home = await request(scope, 'navigate'); assert.match(await home.text(), /
 const pkg = await (await request(scope + 'dreams/little-demon.json')).json();
 assert.equal(pkg.nodes.length, 10);
 const store = [...stores.values()][0];
+assert.equal([...store.keys()].some(url => url.includes('sfx-new')), false, '未引用原件不应阻断缓存更新');
+assert.ok(store.has(scope + 'art/portraits/demon-bare-panic.webp'), '对白立绘必须支持离线读取');
 for (const url of store.keys()) {
   assert.equal((await request(url)).status, 200);
   assert.equal((await request(url, 'cors', { Origin: new URL(scope).origin })).status, 200, '模块脚本的 Origin 请求头不应使离线缓存失配');

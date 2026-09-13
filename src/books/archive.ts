@@ -61,9 +61,24 @@ async function parseDreamBook(archive: Uint8Array): Promise<LoadedBook> {
   const assertKind = (id: string | undefined, kind: 'image' | 'music' | 'sfx') => { if (id && byId.get(id)?.kind !== kind) throw new Error(`素材引用类别错误：${id}`); };
   assertKind(manifest.presentation.cover, 'image'); assertKind(manifest.presentation.endingScene, 'image');
   assertKind(manifest.presentation.dreamMusic, 'music'); assertKind(manifest.presentation.endingMusic, 'music');
-  for (const [id, scene] of Object.entries(manifest.presentation.scenes)) { assertKind(id, 'image'); assertKind(scene.ambience, 'music'); }
+    for (const [id, scene] of Object.entries(manifest.presentation.scenes)) { assertKind(id, 'image'); assertKind(scene.ambience, 'music'); }
+    const beatIds = new Set(result.data.nodes.flatMap(node => node.beats.map(beat => beat.id)));
+    for (const [id, performance] of Object.entries(manifest.presentation.performances ?? {})) {
+      if (!beatIds.has(id)) throw new Error(`立绘演出引用不存在的拍：${id}`);
+      assertKind(performance.portrait, 'image');
+    }
+    for (const [id, aside] of Object.entries(manifest.presentation.asides ?? {})) {
+      if (!beatIds.has(id)) throw new Error(`闲话引用不存在的拍：${id}`);
+      if (new Set(aside.options.map(option => option.id)).size !== aside.options.length) throw new Error('闲话选项 ID 重复');
+      for (const option of aside.options) for (const reply of option.replies) {
+        if (reply.speaker !== 'narrator' && !result.data.characters.some(character => character.id === reply.speaker)) throw new Error(`闲话引用不存在的人物：${reply.speaker}`);
+        assertKind(reply.portrait, 'image');
+      }
+    }
   for (const node of result.data.nodes) { assertKind(node.scene, 'image'); for (const beat of node.beats) { if (beat.musicCue?.action === 'play') assertKind(beat.musicCue.track, 'music'); if (beat.sfx) assertKind(beat.sfx, 'sfx'); } }
   for (const id of Object.keys(manifest.presentation.chapters)) if (!result.data.nodes.some(node => node.id === id)) throw new Error(`章节名称引用不存在的节点：${id}`);
+  const choiceIds = new Set(result.data.nodes.flatMap(node => node.kind === 'scene' ? node.choices?.map(choice => choice.id) ?? [] : []));
+  for (const id of Object.keys(manifest.presentation.choiceMoods ?? {})) if (!choiceIds.has(id)) throw new Error(`选择演出引用不存在的选项：${id}`);
   return { manifest, pkg: result.data, files, archive, fingerprint: await sha256(new TextEncoder().encode(JSON.stringify(manifest))) };
 }
 export function packDreamBook(manifest: BookManifest, pkg: DreamPackage, assets: Record<string, Uint8Array>): Uint8Array {
