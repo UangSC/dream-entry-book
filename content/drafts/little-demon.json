@@ -2203,7 +2203,8 @@
           "kind": "narration",
           "speaker": "narrator",
           "text": "风把院门吹得吱呀响了一声。你的指尖，离她的衣襟只有一寸。",
-          "anim": "typewriter"
+          "anim": "typewriter",
+          "sfx": "SFX_DOOR"
         }
       ],
       "kind": "scene",
@@ -3814,8 +3815,7 @@
           "musicCue": {
             "action": "play",
             "track": "BGM_SEEK_HER"
-          },
-          "sfx": "SFX_CALL"
+          }
         },
         {
           "id": "search-251",
@@ -3824,7 +3824,8 @@
           "text": "忽然，呼喊声从山脚升起来，一点一点，铺满整座山。",
           "effect": {
             "type": "particleGather"
-          }
+          },
+          "sfx": "SFX_CALL"
         },
         {
           "id": "search-252",
@@ -6139,9 +6140,8 @@
           "anim": "typewriter",
           "musicCue": {
             "action": "play",
-            "track": "BGM_SEEK_HER"
-          },
-          "sfx": "SFX_CALL"
+            "track": "BGM_COLD_DANGER"
+          }
         },
         {
           "id": "burn-mountain-218",
@@ -6176,7 +6176,8 @@
           "kind": "narration",
           "speaker": "narrator",
           "text": "夜里，火起了。风一转，火往林子深处卷。",
-          "anim": "typewriter"
+          "anim": "typewriter",
+          "sfx": "SFX_FIRE"
         },
         {
           "id": "burn-mountain-223",
@@ -6197,7 +6198,12 @@
           "kind": "narration",
           "speaker": "narrator",
           "text": "念念上来了。她抱着那件朱红的小袄子，一头扎进了烟里。",
-          "anim": "typewriter"
+          "anim": "typewriter",
+          "sfx": "SFX_CALL",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_SEEK_HER"
+          }
         },
         {
           "id": "burn-mountain-226",

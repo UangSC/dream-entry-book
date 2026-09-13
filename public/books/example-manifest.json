@@ -2,7 +2,7 @@
   "format": "rumengshu.dreambook",
   "formatVersion": 1,
   "story": "story.json",
-  "storySha256": "cf674028014e92fb4e6321cf53e31675c07a5e097f558c8f8dd4e1f18b0edaf2",
+  "storySha256": "c5c40d67ff0b920d613f7155990bafaf22ce16d7154f9623593942c6d761ab4e",
   "creator": "入梦书制作组",
   "description": "第一本入梦书：女巫《吃人心的小妖怪》，取材于知乎节选；含完整分支剧情、背景、音乐与音效。",
   "simulation": false,
@@ -133,7 +133,8 @@
         "label": "小妖怪 · 惦念人心"
       },
       "fireside-052": {
-        "label": "你现在能做的只有一件"
+        "portrait": "BG_PORTRAIT_DEMON_BARE_HUNGRY",
+        "label": "小妖怪 · 惦念人心"
       },
       "ember-065": {
         "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
@@ -232,7 +233,8 @@
         "label": "小妖怪 · 平静"
       },
       "first-breath-107": {
-        "label": "天快亮了。你让她背孩子下山，嘱咐"
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 平静"
       },
       "first-breath-108": {
         "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
@@ -663,7 +665,8 @@
         "label": "毓娘 · 全身"
       },
       "chicken-leg-261": {
-        "label": "你连连摆手"
+        "portrait": "BG_PORTRAIT_DEMON_BARE_HUNGRY",
+        "label": "小妖怪 · 惦念人心"
       },
       "chicken-leg-262": {
         "portrait": "BG_PORTRAIT_DEMON_BARE_HUNGRY",
@@ -746,7 +749,8 @@
         "label": "小妖怪 · 平静"
       },
       "grove-echo-300": {
-        "label": "小鹿抱怨你吵醒了它的觉。獐子冷哼一声"
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 平静"
       },
       "grove-echo-301": {
         "label": "野鸡"
@@ -844,15 +848,15 @@
         "label": "小妖怪 · 慌张"
       },
       "red-jacket-013": {
-        "portrait": "BG_PORTRAIT_DEMON_COAT_FULL",
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
         "label": "小妖怪 · 温柔"
       },
       "red-jacket-014": {
-        "portrait": "BG_PORTRAIT_DEMON_COAT_FULL",
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
         "label": "小妖怪 · 温柔"
       },
       "red-jacket-015": {
-        "portrait": "BG_PORTRAIT_DEMON_COAT_FULL",
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
         "label": "小妖怪 · 温柔"
       },
       "red-jacket-016": {
@@ -864,12 +868,12 @@
         "label": "毓娘 · 全身"
       },
       "red-jacket-018": {
-        "portrait": "BG_PORTRAIT_DEMON_COAT_FULL",
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
         "label": "小妖怪 · 温柔"
       },
       "red-jacket-019": {
         "portrait": "BG_PORTRAIT_DEMON_COAT_FULL",
-        "label": "小妖怪 · 温柔"
+        "label": "小妖怪 · 平静"
       },
       "red-jacket-020": {
         "portrait": "BG_PORTRAIT_CHILD_FULL",
@@ -877,27 +881,27 @@
       },
       "red-jacket-021": {
         "portrait": "BG_PORTRAIT_DEMON_COAT_FULL",
-        "label": "小妖怪 · 温柔"
+        "label": "小妖怪 · 平静"
       },
       "red-jacket-022": {
         "portrait": "BG_PORTRAIT_YU_NIANG_FULL",
         "label": "毓娘 · 全身"
       },
       "red-jacket-023": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_FULL",
+        "label": "小妖怪 · 平静"
       },
       "red-jacket-024": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_FULL",
+        "label": "小妖怪 · 平静"
       },
       "red-jacket-025": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 平静"
       },
       "red-jacket-026": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 平静"
       },
       "red-jacket-027": {
         "portrait": "BG_PORTRAIT_YU_NIANG_FULL",
@@ -908,11 +912,12 @@
         "label": "毓娘 · 全身"
       },
       "red-jacket-029": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 平静"
       },
       "red-jacket-030": {
-        "label": "你还有点不放心"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 平静"
       },
       "red-jacket-031": {
         "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
@@ -943,7 +948,8 @@
         "label": "小妖怪 · 平静"
       },
       "red-jacket-038": {
-        "label": "下山的时候，你听见念念问"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 平静"
       },
       "red-jacket-039": {
         "portrait": "BG_PORTRAIT_CHILD_FULL",
@@ -1048,7 +1054,8 @@
         "label": "小妖怪 · 逞强"
       },
       "pit-rescue-088": {
-        "label": "这时候才有人想起你"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE",
+        "label": "小妖怪 · 逞强"
       },
       "pit-rescue-089": {
         "label": "赵大叔"
@@ -1252,7 +1259,8 @@
         "label": "小妖怪 · 逞强"
       },
       "street-kids-159": {
-        "label": "你眼珠一转，陡然拔高嗓门，张牙舞爪"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE",
+        "label": "小妖怪 · 逞强"
       },
       "street-kids-160": {
         "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE",
@@ -1630,14 +1638,16 @@
         "label": "小妖怪 · 温柔"
       },
       "ending-ascend-313": {
-        "label": "百姓说"
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 温柔"
       },
       "ending-ascend-314": {
         "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
         "label": "小妖怪 · 温柔"
       },
       "ending-ascend-315": {
-        "label": "许多许多年过去，有人不懂"
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 温柔"
       },
       "ending-ascend-316": {
         "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
@@ -2259,7 +2269,8 @@
         "label": "小妖怪 · 慌张"
       },
       "taoist-danger-195": {
-        "label": "赵大叔看见你，腿一软，却冲着全家吼"
+        "portrait": "BG_PORTRAIT_DEMON_BARE_PANIC",
+        "label": "小妖怪 · 慌张"
       },
       "taoist-danger-196": {
         "label": "赵大叔"
@@ -2424,12 +2435,12 @@
         "label": "小妖怪 · 温柔"
       },
       "ending-aftertaste-259": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-260": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-261": {
         "portrait": "BG_PORTRAIT_ADULT_FULL",
@@ -2440,40 +2451,40 @@
         "label": "念念 · 全身"
       },
       "ending-aftertaste-263": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-264": {
         "portrait": "BG_PORTRAIT_ADULT_FULL",
         "label": "念念 · 全身"
       },
       "ending-aftertaste-265": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-266": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-267": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-268": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-269": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-270": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-271": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-272": {
         "label": "娘"
@@ -2482,15 +2493,15 @@
         "label": "娘"
       },
       "ending-aftertaste-274": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-275": {
         "label": "老神仙"
       },
       "ending-aftertaste-276": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-277": {
         "label": "老神仙"
@@ -2499,23 +2510,24 @@
         "label": "老神仙"
       },
       "ending-aftertaste-280": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-281": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-282": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-283": {
-        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
-        "label": "小妖怪 · 温柔"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-284": {
-        "label": "放供品的人说"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "ending-aftertaste-285": {
         "portrait": "BG_PORTRAIT_ADULT_FULL",
@@ -2621,7 +2633,8 @@
         "label": "小妖怪 · 平静"
       },
       "ending-bitter-328": {
-        "label": "很多年后，山下的孩子夜里哭，大人吓唬"
+        "portrait": "BG_PORTRAIT_DEMON_BARE_CALM",
+        "label": "小妖怪 · 平静"
       },
       "ending-bitter-329": {
         "label": "村人"
@@ -2743,7 +2756,8 @@
         "label": "小妖怪 · 温柔"
       },
       "ending-bitter-echo-378": {
-        "label": "念念问过你多少次"
+        "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
+        "label": "小妖怪 · 温柔"
       },
       "ending-bitter-echo-379": {
         "portrait": "BG_PORTRAIT_DEMON_BARE_SOFT",
@@ -2762,10 +2776,12 @@
         "label": "小妖怪 · 逞强"
       },
       "blood-words-017": {
-        "label": "一句是"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE",
+        "label": "小妖怪 · 逞强"
       },
       "blood-words-018": {
-        "label": "一句是"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE",
+        "label": "小妖怪 · 逞强"
       },
       "blood-words-019": {
         "portrait": "BG_PORTRAIT_DEMON_COAT_FIERCE",
@@ -3063,7 +3079,8 @@
         "label": "小妖怪 · 平静"
       },
       "demon-road-128": {
-        "label": "你告诉自己"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 平静"
       },
       "demon-road-129": {
         "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
@@ -3344,7 +3361,8 @@
         "label": "小妖怪 · 受伤"
       },
       "master-comes-225": {
-        "label": "你只知道一件事"
+        "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
+        "label": "小妖怪 · 受伤"
       },
       "master-comes-226": {
         "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
@@ -3652,10 +3670,12 @@
         "label": "小妖怪 · 平静"
       },
       "ending-willing-330": {
-        "label": "村里的孩子问"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 平静"
       },
       "ending-willing-331": {
-        "label": "大人说"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 平静"
       },
       "ending-willing-332": {
         "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
@@ -3674,7 +3694,8 @@
         "label": "小妖怪 · 平静"
       },
       "ending-willing-336": {
-        "label": "她跟儿孙们说"
+        "portrait": "BG_PORTRAIT_DEMON_COAT_CALM",
+        "label": "小妖怪 · 平静"
       },
       "ending-willing-337": {
         "portrait": "BG_PORTRAIT_ADULT_FULL",

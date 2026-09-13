@@ -26,9 +26,11 @@ import { StoryChoices } from './components/StoryChoices';
 import { AutoReadRing, useAutoReader } from './components/AutoReader';
 import { autoReadDuration, type AutoPace } from './runtime/autoReader';
 import { useStoryAside } from './components/useStoryAside';
+import { SessionProvider, useAccount, api } from './account/session';
+import { AccountButton, AccountPanel } from './components/AccountPanel';
 
 type Screen = 'home' | 'reading' | 'ending';
-type Panel = 'intro' | 'settings' | 'album' | 'history' | 'chapters' | 'source' | 'restart' | 'save-problem' | null;
+type Panel = 'intro' | 'settings' | 'album' | 'history' | 'chapters' | 'source' | 'restart' | 'save-problem' | 'account' | null;
 interface Preferences { motion: boolean; particles: boolean; audioEnabled: boolean; textAnimation: 'authored' | 'typewriter' | 'instant'; autoPace: AutoPace; pulse: 'subtle' | 'normal' | 'strong'; fontSize: number; textSpeed: number; master: number; bgm: number; sfx: number; ambience: number }
 const DEFAULTS: Preferences = { motion: true, particles: true, audioEnabled: true, textAnimation: 'authored', autoPace: 'normal', pulse: 'normal', fontSize: 22, textSpeed: 24, master: .8, bgm: .75, sfx: .45, ambience: .18 };
 function preferences(): Preferences {
@@ -46,13 +48,15 @@ const unavailableKV: KV = { get: () => null, set: () => { throw new Error('浏�
 const now = () => new Date().toISOString();
 
 export function App() {
-  return <LibraryHost>{(data, library) => <Game key={bookKey(data.pkg)} data={data} library={library} />}</LibraryHost>;
+  return <SessionProvider><LibraryHost>{(data, library) => <Game key={bookKey(data.pkg)} data={data} library={library} />}</LibraryHost></SessionProvider>;
 }
 
 function Game({ data, library }: { data: GameData; library: LibraryActions }) {
+  const { user } = useAccount();
   const { pkg, presentation } = data;
   const chapterNames = presentation.chapters;
   const [kv] = useState(() => bookKV(localStorageKV() ?? unavailableKV, pkg));
+  const runId = useRef(kv.get('rumengshu:run-id') ?? crypto.randomUUID());
   const [initialSave] = useState(() => readSave(kv, pkg, now()));
   const [state, setState] = useState<SaveState | null>(initialSave.status === 'ok' ? initialSave.state : null);
   const stateRef = useRef(state);
@@ -100,11 +104,26 @@ function Game({ data, library }: { data: GameData; library: LibraryActions }) {
     for (const asset of Object.values(data.art)) { const image = new Image(); image.src = asset.src; void image.decode().catch(() => {}); }
     const query = matchMedia('(prefers-reduced-motion: reduce)');
     const change = () => setReduced(query.matches); query.addEventListener('change', change);
-    const visibility = () => { setPageVisible(!document.hidden); if (document.hidden) { void audio.pause(); void ambienceAudio.pause(); } else { void audio.resume(); void ambienceAudio.resume(); } };
+    const visibility = () => setPageVisible(!document.hidden);
     document.addEventListener('visibilitychange', visibility);
     const unsubscribe = registerOffline(message => { if (alive.current) setOffline(message); }, activate => { if (alive.current) setAvailableUpdate(() => activate); });
     return () => { alive.current = false; query.removeEventListener('change', change); document.removeEventListener('visibilitychange', visibility); unsubscribe(); void audio.dispose(); void ambienceAudio.dispose(); };
   }, [audio, ambienceAudio, data.audio, data.art]);
+
+  useEffect(() => {
+    const open = () => setPanel('account'); window.addEventListener('dream-account-open', open);
+    return () => window.removeEventListener('dream-account-open', open);
+  }, []);
+  useEffect(() => {
+    if (!pageVisible || panel === 'account' || library.panelOpen) { void audio.pause(); void ambienceAudio.pause(); }
+    else { void audio.resume(); void ambienceAudio.resume(); }
+  }, [pageVisible, panel, library.panelOpen, audio, ambienceAudio]);
+  useEffect(() => {
+    if (!user || !state || screen === 'home') return;
+    try { kv.set('rumengshu:run-id', runId.current); } catch { /* 当前会话仍可记录 */ }
+    void api('/plays', { run_id: runId.current, package_id: pkg.packageId, build_id: pkg.buildId, title: pkg.title,
+      node_id: state.nodeId, chapter: chapterNames[state.nodeId] ?? '梦中一页', ending: state.phase === 'finished' ? ending?.title ?? null : null }).catch(() => {});
+  }, [user, state?.nodeId, state?.phase, screen, pkg.packageId, pkg.buildId, pkg.title, chapterNames, ending?.title, kv]);
 
   useEffect(() => {
     try { localStorage.setItem('rumengshu:preferences', JSON.stringify(settings)); } catch { /* 设置不阻止本次阅读 */ }
@@ -176,6 +195,7 @@ function Game({ data, library }: { data: GameData; library: LibraryActions }) {
     if (!restored && sound) for (const event of result.events) if (event.type === 'sfx') audio.playSfx(event.assetId);
   };
   const start = () => {
+    runId.current = crypto.randomUUID();
     setPanel(null); portal.cross(() => { apply(startPackage(pkg, now())); setScreen('reading'); }, 'enter');
     if (sound) audio.playSfx('SFX_DREAM_IN');
     readerRef.current?.focus();
@@ -195,7 +215,7 @@ function Game({ data, library }: { data: GameData; library: LibraryActions }) {
     if (sound) audio.playSfx('SFX_DREAM_OUT'); portal.cross(() => setScreen('ending'), 'exit');
   };
   const advanceStory = () => {
-    if (panel || portal.busy || screen !== 'reading' || !stateRef.current) return;
+    if (panel || library.panelOpen || portal.busy || screen !== 'reading' || !stateRef.current) return;
     if (!textReady && motion && !instant) { setInstant(true); setTextReady(true); return; }
     if (performance.now() - clickAt.current < 180) return;
     clickAt.current = performance.now();
@@ -280,7 +300,7 @@ function Game({ data, library }: { data: GameData; library: LibraryActions }) {
     if (screen !== 'reading' || choices.length > 0 || state?.phase === 'finished') setAutoPlay(false);
   }, [screen, choices.length, state?.phase]);
   const autoProgress = useAutoReader(`${state?.revision}:${beat?.id}`, autoReadDuration(beat?.text ?? '', settings.autoPace), autoPlay,
-    screen === 'reading' && ready && !panel && !portal.busy && pageVisible && !choices.length && state?.phase !== 'finished', advanceStory);
+    screen === 'reading' && ready && !panel && !library.panelOpen && !portal.busy && pageVisible && !choices.length && state?.phase !== 'finished', advanceStory);
   useEffect(() => {
     setFooterQuiet(false);
     if (screen !== 'reading' || portal.busy) return;
@@ -303,7 +323,7 @@ function Game({ data, library }: { data: GameData; library: LibraryActions }) {
     {portal.layer}
     <header className="topbar">
       <button className={`brand ${screen === 'reading' ? `brand-${brandPhase}` : ''}`} aria-hidden={screen === 'reading' && brandPhase !== 'visible'} tabIndex={screen === 'reading' && brandPhase !== 'visible' ? -1 : undefined} aria-label="返回梦斋" onClick={leaveDream}><span className="brand-mark"><Icon name="book" size={24} /></span><span>入梦书<small key={brandSubtitle} className="brand-subtitle">{brandSubtitle}</small></span></button>
-      <nav aria-label="主要导航"><button className="nav-button library-button" aria-label="打开入梦书架" onClick={() => { if (!stateRef.current || save(stateRef.current)) library.openShelf(); }}><Icon name="book" /><span>入梦书架</span></button><button className="nav-button" aria-label={`我的梦册，已收集 ${collectionCount} 枚梦签`} onClick={() => setPanel('album')}><Icon name="bookmark" /><span>我的梦册</span><em>{collectionCount}</em></button><button className="icon-button sound-button" aria-label={sound ? '关闭声音' : '开启声音'} title={soundState} onClick={() => void enableSound()}><Icon name={sound ? 'sound' : 'mute'} /></button><button className="icon-button" aria-label="打开设置" onClick={() => setPanel('settings')}><Icon name="settings" /></button></nav>
+      <nav aria-label="主要导航"><button className="nav-button library-button" aria-label="打开入梦书架" onClick={() => { if (!stateRef.current || save(stateRef.current)) library.openShelf(); }}><Icon name="book" /><span>入梦书架</span></button><button className="nav-button" aria-label={`我的梦册，已收集 ${collectionCount} 枚梦签`} onClick={() => setPanel('album')}><Icon name="bookmark" /><span>我的梦册</span><em>{collectionCount}</em></button><button className="icon-button sound-button" aria-label={sound ? '关闭声音' : '开启声音'} title={soundState} onClick={() => void enableSound()}><Icon name={sound ? 'sound' : 'mute'} /></button><button className="icon-button" aria-label="打开设置" onClick={() => setPanel('settings')}><Icon name="settings" /></button><AccountButton onOpen={() => setPanel('account')} /></nav>
     </header>
 
     {screen === 'home' && <main className="home-layout">
@@ -330,6 +350,7 @@ function Game({ data, library }: { data: GameData; library: LibraryActions }) {
     {screen === 'ending' && ending && state && <main className="ending-layout"><div className="ending-intro"><span className="eyebrow">这一次，你把梦留成了这样</span><div className="ending-emblem"><Icon name={ending.id === 'a-lamp-kept' ? 'spark' : 'moon'} size={40} /></div><h1>{ending.title}</h1><p>{ending.summary}</p><span className="ending-collected"><Icon name="check" size={16} />{savedOk ? '梦签已收入梦册' : '梦签暂存于本次会话，请导出备份'}</span></div><section className="echo-card"><h2>你的选择，故事记得</h2>{ending.reflections?.filter(item => evaluateCondition(item.when, state)).map((item, i) => <p key={i}><span>0{i + 1}</span>{item.text}</p>)}<div className="outcomes">{ending.outcomes?.filter(item => evaluateCondition(item.when, state)).map(item => <div key={item.characterId}><b>{pkg.characters.find(c => c.id === item.characterId)?.name}</b><span>{item.text}</span></div>)}</div></section><div className="ending-actions"><button className="primary" onClick={() => setPanel('chapters')}>回到某个选择 <Icon name="history" /></button><button className="secondary" onClick={() => setScreen('home')}>回梦斋</button></div><p className="ending-note">{sourceCredit}<br />AI 衍生的局部终幕 · 原作的故事仍在书页之外<br /><a href={pkg.source.sourceUrl ?? sourceSearch} target="_blank" rel="noopener noreferrer">去知乎，发现更多好故事 ↗</a></p></main>}
 
     <footer className="footer"><div className="footer-status"><span><i className={offline === '离线就绪' ? 'status-dot ready' : 'status-dot'} />{offline}</span>{availableUpdate && screen === 'home' && <button onClick={() => { if (stateRef.current) save(stateRef.current); availableUpdate(); }}>新版本已备好，更新书页</button>}</div><a className="zhihu-discover" href="https://www.zhihu.com/" target="_blank" rel="noopener noreferrer">去知乎，发现更多故事 ↗</a><button onClick={() => setPanel('source')}>关于这场梦</button></footer>
+    {panel === 'account' && user && <AccountPanel onClose={() => setPanel(null)} library={library} />}
     {!savedOk && <div className="save-warning" role="alert"><span>本次进度尚未保存</span><button onClick={() => { if (stateRef.current) save(stateRef.current); }}>重试保存</button><button onClick={exportBackup}>导出备份</button></div>}
     {notice && <div className="toast" role="status">{notice}<button onClick={() => setNotice('')} aria-label="关闭提示"><Icon name="close" size={16} /></button></div>}
 

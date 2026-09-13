@@ -7,10 +7,12 @@ import { GENERATION_STAGES, generationInputSchema, simulatedWeaver, snapshotJob,
 import { Dialog } from './Dialog';
 import { Icon } from './Icon';
 import { BookDownload } from './BookDownload';
+import { api, useAccount } from '../account/session';
 
-export interface LibraryActions { openShelf: () => void; addBook: () => void; bookCount: number }
+export interface LibraryActions { openShelf: () => void; addBook: () => void; bookCount: number; panelOpen: boolean; importArchive: (book: LoadedBook) => Promise<void> }
 function Cover({ blob }: { blob: Blob }) { const [url, setUrl] = useState(''); useEffect(() => { const url = URL.createObjectURL(blob); setUrl(url); return () => URL.revokeObjectURL(url); }, [blob]); return <img src={url || undefined} alt="入梦书封面" />; }
 export function LibraryHost({ children }: { children: (data: GameData, actions: LibraryActions) => ReactNode }) {
+  const { user } = useAccount();
   const [data, setData] = useState<GameData | null>(null), [builtin, setBuiltin] = useState<GameData | null>(null);
   const [books, setBooks] = useState<BookRecord[]>([]), [panel, setPanel] = useState<'shelf' | 'add' | 'generate' | null>(null);
   const [error, setError] = useState(''), [message, setMessage] = useState(''), [busy, setBusy] = useState(''), [attempt, setAttempt] = useState(0);
@@ -51,23 +53,28 @@ export function LibraryHost({ children }: { children: (data: GameData, actions: 
     setData(next); try { localStorage.setItem('rumengshu:selected-book', key); } catch { /* 本次选择有效 */ }
     setPanel(null);
   });
-  const addLoaded = async (book: LoadedBook) => {
+  const addLoaded = async (book: LoadedBook, reveal = true) => {
     if (builtin && bookKey(book.pkg) === bookKey(builtin.pkg)) {
       if (book.manifest.storySha256 !== builtin.book.manifest.storySha256 || JSON.stringify(book.manifest.assets) !== JSON.stringify(builtin.book.manifest.assets)) throw new Error('内置入梦书的同一版本内容不同，请更换 buildId');
       setMessage('这本入梦书已在书库中，已有进度已保留'); setPanel('shelf'); return;
     }
-    const record = await storeBook(book); setBooks(previous => [...previous.filter(b => b.id !== record.id), record]); setMessage('入梦书已收进书库，可以打开游玩或再次导出'); setPanel('shelf');
+    const record = await storeBook(book); setBooks(previous => [...previous.filter(b => b.id !== record.id), record]); setMessage('入梦书已收进书库，可以打开游玩或再次导出'); if (reveal) setPanel('shelf');
+    if (user && reveal) await api('/imports', { package_id: book.pkg.packageId, build_id: book.pkg.buildId, title: book.pkg.title }).catch(() => setMessage('入梦书已收好，账号入架记录暂未同步。'));
     if (book.manifest.simulation && job && book.pkg.packageId === `weave-demo-${job.id}`) { setCollectedJob(job.id); try { localStorage.setItem('rumengshu:weave-collected', job.id); } catch { /* 本次已收取仍有效 */ } }
   };
   const importBook = (file?: File) => { if (file) void run('正在检查剧情与素材', async () => { if (file.size > 80 * 1024 * 1024) throw new Error('入梦书不得超过 80 MiB'); await addLoaded(await readDreamBook(new Uint8Array(await file.arrayBuffer()))); }); };
   const generate = () => void run('正在建立模拟任务', async () => {
     const parsed = generationInputSchema.safeParse({ title, text: story, url, attachments: files.map(file => ({ name: file.name, type: file.type, size: file.size })) });
     if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? '请检查输入');
+    if (user) {
+      await api('/jobs', { title: parsed.data.title, text: story || (files.length ? '模拟附件：' + files.map(file => file.name).join('、') : ''), url });
+      setPanel(null); window.dispatchEvent(new Event('dream-account-open')); return;
+    }
     const next = await simulatedWeaver.start(parsed.data); setJob(next); setClock(Date.now()); setPreparedBook(null);
   });
   if (!data || !builtin) return <main className="loading-page"><Icon name="book" size={40} /><h1>入梦书</h1><p>{error || '正在翻开书页……'}</p>{error && <button className="primary" onClick={() => { setError(''); setAttempt(value => value + 1); }}>重新载入</button>}</main>;
   const imported = books.filter(book => book.id !== bookKey(builtin.pkg));
-  return <>{children(data, { openShelf: () => { setError(''); setPanel('shelf'); }, addBook: () => { setError(''); setPanel('add'); }, bookCount: imported.length + 1 })}
+  return <>{children(data, { openShelf: () => { setError(''); setPanel('shelf'); }, addBook: () => { setError(''); setPanel('add'); }, bookCount: imported.length + 1, panelOpen: panel !== null, importArchive: book => addLoaded(book, false) })}
     {job && job.status === 'running' && job.id !== collectedJob && !books.some(book => book.packageId === `weave-demo-${job.id}`) && panel !== 'generate' && <button className={`weave-task ${progress?.ready ? 'complete' : ''}`} onClick={() => setPanel('generate')}><Icon name={progress?.ready ? 'check' : 'spark'} size={16} /><span>{progress?.ready ? '入梦书演示已完成，查看结果' : `织梦中 · ${Math.floor((progress?.progress ?? 0) * 100)}%`}<small>{progress?.ready ? '待收进书库' : GENERATION_STAGES[progress?.stage ?? 0]!.name}</small></span></button>}
     {panel === 'shelf' && <Dialog title="你的入梦书架" onClose={() => setPanel(null)} wide><div className="shelf-heading"><p className="muted">每本入梦书都是一段完整的世界。切换故事，书签会留在原来的地方。</p><button className="secondary" onClick={() => setPanel('add')}><Icon name="spark" size={16} />新增入梦书</button></div><div className="shelf-grid"><article className="shelf-card"><img src={builtin.art[builtin.presentation.cover]?.src} alt="吃人心的小妖怪封面" /><div><small>内置 · 第一册</small><h3>{builtin.pkg.title}</h3><p>{builtin.pkg.source.author} · 来自知乎</p><div className="button-row"><button className="primary" disabled={!!busy} onClick={() => choose(bookKey(builtin.pkg))}>{bookKey(data.pkg) === bookKey(builtin.pkg) ? '返回这本书' : '打开入梦书'}</button><BookDownload archive={builtin.book.archive} name="little-demon.dreambook">导出入梦书</BookDownload></div></div></article>{imported.map(book => <article className="shelf-card" key={book.id}><Cover blob={book.cover} /><div><small>{book.simulation ? '生成流程演示' : '已导入'} · {book.buildId.slice(-10)}</small><h3>{book.title}</h3><p>{book.author}</p><div className="button-row"><button className="primary" disabled={!!busy} onClick={() => choose(book.id)}>{bookKey(data.pkg) === book.id ? '返回这本书' : '打开入梦书'}</button><BookDownload archive={book.archive} name={`${book.packageId}.dreambook`}>导出入梦书</BookDownload></div></div></article>)}</div>{message && <p className="form-success" role="status">{message}</p>}{(busy || error) && <p className={error ? 'form-error' : 'muted'} role="status">{error || busy}</p>}</Dialog>}
     {panel === 'add' && <Dialog title="为书架添一场新梦" onClose={() => setPanel(null)} wide><p className="dialog-lead">一本入梦书，装下一整个故事世界。</p><div className="add-options"><section><Icon name="download" size={28} /><h3>导入入梦书</h3><p>把创作者打包好的剧情、背景、音乐与音效，一起收进书库。</p><label className={`primary file-button ${busy ? 'disabled' : ''}`}>选择入梦书文件<input aria-label="选择入梦书文件" type="file" accept=".dreambook,.zip" disabled={!!busy} onChange={event => { importBook(event.target.files?.[0]); event.target.value = ''; }} /></label><small>支持 .dreambook / .zip · 最大 80 MiB</small></section><section><Icon name="spark" size={28} /><h3>让 Agent 织梦</h3><p>从故事、链接或图片出发，预览多位 Agent 协作制作入梦书的过程。</p><button className="secondary" onClick={() => setPanel('generate')}>体验生成流程 <Icon name="arrow" size={17} /></button><small>流程模拟 · 约 1 分 36 秒</small></section></div><p className="fine-print">素材包包含数据与媒体，不运行其中的脚本。导入后可以离线游玩；存档与原作者署名会分别保留。</p><BookDownload archive={builtin.book.archive} name="little-demon.dreambook">下载首本示例入梦书 ↗</BookDownload>{(busy || error) && <p role="status" className={error ? 'form-error' : 'muted'}>{error || busy}</p>}</Dialog>}

@@ -53,7 +53,7 @@ def main():
     image.save(output, 'WEBP', quality=86)
     art['assets'] = [item for item in art['assets'] if item['id'] != 'BG_COTTAGE_N'] + [dict(id='BG_COTTAGE_N', kind='background', file=output.name, bytes=output.stat().st_size, sha256=hashlib.sha256(output.read_bytes()).hexdigest(), width=image.width, height=image.height, source={'name': '现有小院昼景调暗占位'}, rights={'status': 'pending'})]
     art_path.write_text(json.dumps(art, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    full = ROOT / 'new_TMP_SPR/部分人物完整身体立绘'
+    full = ROOT / 'assets/source/art/portrait-originals/部分人物完整身体立绘'
     for stem, original in [('zhang-full', '张老爷'), ('taoist-full', '老道士'), ('child-full', '念念_7岁时'), ('adult-full', '念念_长达后'), ('yu-niang-full', '毓娘'), ('demon-bare-full', '小怪物_无袄'), ('demon-coat-full', '小怪物_有袄'), ('demon-injured-full', '小怪物_受伤有袄')]:
         source = full / f'TMP_SPR_{original}.png'
         if source.exists(): shutil.copy2(source, ROOT / f'assets/source/art/characters/{stem}.png')

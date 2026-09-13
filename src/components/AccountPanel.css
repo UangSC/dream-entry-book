@@ -1,0 +1,40 @@
+.account-avatar,.account-login { flex:none; display:flex; align-items:center; justify-content:center; position:relative; width:46px; height:46px; border:1px solid #ad976164; border-radius:50%; padding:3px; color:inherit; background:#f5e9d744; transition:width 1.4s,height 1.4s,transform 300ms,box-shadow 300ms; view-transition-name:dream-account; }
+.account-avatar { cursor:pointer; order:10; }
+.account-avatar img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
+.account-avatar i { position:absolute; width:7px; height:7px; background:#d0b074; border:2px solid #f5eee0; border-radius:50%; right:0; bottom:2px; }
+.account-avatar:hover,.account-avatar:focus-visible { transform:scale(1.12); box-shadow:0 0 0 4px #d4c29825; }
+.account-login { width:auto; padding:10px 15px; border-radius:24px; gap:8px; order:10; font-size:13px; text-decoration:none; }
+.account-login svg { width:20px; height:20px; }
+.screen-reading .topbar nav > .account-avatar,.screen-reading .topbar nav > .account-login { order:-1; width:34px; height:34px; padding:2px; margin-right:3px; pointer-events:auto; }
+.screen-reading .account-login span { display:none; }
+::view-transition-group(dream-account) { animation-duration:1600ms; }
+.account-heading { display:flex; align-items:center; gap:16px; padding:4px 0 24px; }
+.account-heading img { width:58px; height:58px; border-radius:50%; border:3px solid #f0e6d5; }
+.account-heading h3,.account-entry h3,.account-job h3 { margin:0; font-size:18px; }
+.account-heading p { margin:5px 0 0; font-size:13px; color:#897b66; }
+.account-heading > button { margin-left:auto; }
+.account-tabs { display:flex; gap:24px; border-bottom:1px solid #d8cbb7; }
+.account-tabs button { background:none; border:0; border-bottom:2px solid transparent; padding:13px 0; color:#8d7e66; cursor:pointer; font:inherit; }
+.account-tabs button[aria-selected=true] { color:#456b56; border-bottom-color:#456b56; }
+.account-tabs span { font-size:11px; margin-left:8px; opacity:.7; }
+.account-content { min-height:220px; padding-top:18px; }
+.account-entry { display:flex; align-items:center; gap:17px; border-bottom:1px solid #e4d9c740; padding:20px 3px; }
+.account-entry > svg { color:#799078; flex:none; }
+.account-entry p { margin:5px 0; color:#786b59; font-size:14px; }
+.account-entry small,.job-footer small { font-size:11px; color:#9a8b76; }
+.account-entry button { margin-left:auto; white-space:nowrap; display:flex; align-items:center; gap:7px; }
+.account-empty { text-align:center; padding:40px 20px; color:#a69780; font-size:14px; }
+.account-weave { padding:20px; border-radius:14px; background:linear-gradient(120deg,#edf0e7,#f7edda); margin-bottom:18px; }
+.account-weave p { font-size:13px; line-height:1.8; color:#80745d; }
+.account-job-form { display:grid; gap:10px; }
+.account-job-form input,.account-job-form textarea { width:100%; padding:11px 14px; font:inherit; font-size:14px; border:1px solid #cabea744; border-radius:8px; background:#fffcf5b0; color:#443f35; }
+.account-job-form button { justify-self:end; min-height:40px; }
+.account-job { padding:18px 22px; border:1px solid #d9ccb650; background:#fffcf633; border-radius:12px; margin:12px 0; }
+.job-heading,.job-footer { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.job-heading > span { color:#5e7c65; font-variant-numeric:tabular-nums; }
+.account-job p { font-size:13px; color:#7b725e; margin:8px 0; }
+.account-job progress { width:100%; height:4px; accent-color:#68876c; border-radius:3px; }
+.job-footer { margin-top:10px; }
+.job-footer button { min-height:30px; padding:5px 12px; font-size:12px; }
+.account-footnote { color:#9c8e76; font-size:11px; text-align:center; margin:22px 0 0; }
+.motion-off .account-avatar { transition:none; }

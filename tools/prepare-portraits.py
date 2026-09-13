@@ -51,7 +51,7 @@ def prepare():
     assets = []
     sources = [('bare', '小怪物_无袄_表情立绘'), ('coat', '小怪物_红袄_表情立绘')]
     for costume, folder in sources:
-        for image_path in sorted((ROOT / 'new_TMP_SPR' / folder).glob('*.png')):
+        for image_path in sorted((ROOT / 'assets/source/art/portrait-originals' / folder).glob('*.png')):
             target = SOURCE / f'demon-{costume}-{image_path.stem}.png'
             target.parent.mkdir(parents=True, exist_ok=True)
             if not target.exists():
@@ -59,7 +59,7 @@ def prepare():
     for name, original in [('yu-niang', 'TMP_SPR_毓娘.png'), ('nian-nian', 'TMP_SPR_念念_7岁时.png')]:
         target = SOURCE / f'{name}.png'
         if not target.exists():
-            shutil.copy2(ROOT / 'new_TMP_SPR/部分人物完整身体立绘' / original, target)
+            shutil.copy2(ROOT / 'assets/source/art/portrait-originals/部分人物完整身体立绘' / original, target)
     for image_path in sorted(SOURCE.glob('*.png')):
         image = Image.open(image_path).convert('RGBA')
         if image.getchannel('A').getextrema() == (255, 255):

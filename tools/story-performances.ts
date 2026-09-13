@@ -1,5 +1,6 @@
 import type { DreamPackage } from '../src/game/schema';
 import type { Presentation } from '../src/books/schema';
+import { readFileSync } from 'node:fs';
 
 const moods: Record<string, string> = {
   threshold: 'idle', fireside: 'panic', ember: 'soft', price: 'smug', 'first-breath': 'calm', doorstep: 'fierce',
@@ -24,24 +25,29 @@ const childNodes = new Set([...bareNodes].filter(id => !['guarding', 'taoist-dan
 
 export function createPerformances(pkg: DreamPackage): NonNullable<Presentation['performances']> {
   const result: NonNullable<Presentation['performances']> = {};
+  const sourceSpeakers = new Map<string, string>((JSON.parse(readFileSync('content/final/import-audit.json', 'utf8')) as { id?: string; raw: string }[]).flatMap(line => {
+    const speaker = line.raw.match(/^\*\*([^*]+)\*\*[^：]*：/);
+    return line.id && speaker ? [[line.id, speaker[1]!.replace(/（.*）/, '')] as [string, string]] : [];
+  }));
   for (const node of pkg.nodes) {
     const id = node.id.replace(/-after$/, '');
-    let costume = bareNodes.has(id) ? 'BARE' : 'COAT';
+    let costume = bareNodes.has(id) || id === 'red-jacket' ? 'BARE' : 'COAT';
     let held = moods[id] ?? 'calm';
     let injured = ['search', 'farewell-ask', 'master-comes', 'ten-thousand-shield'].includes(id);
     for (const [index, beat] of node.beats.entries()) {
       if (cues[beat.id]) held = cues[beat.id]!;
-      if (id === 'ending-aftertaste' && beat.text.includes('披')) costume = 'COAT';
+      if (id === 'red-jacket' && beat.id === 'red-jacket-019') { costume = 'COAT'; held = 'calm'; }
+      if (id === 'ending-aftertaste' && beat.id === 'ending-aftertaste-259') { costume = 'COAT'; held = 'calm'; injured = true; }
       if (id === 'taoist' && beat.effect?.type === 'shatter') injured = true;
       // 师祖只有声音；未提供立绘的人用艺术姓名承接。
-      const offscreen = beat.speaker === 'narrator' ? beat.text.match(/^([^：]{1,18}?)(?:（[^）]*）)?：/)?.[1] : undefined;
+      const offscreen = beat.speaker === 'narrator' ? sourceSpeakers.get(beat.id) : undefined;
       if (offscreen) { result[beat.id] = { label: offscreen }; continue; }
       if (beat.speaker === 'immortal') { result[beat.id] = { label: '老神仙' }; continue; }
       const other = { 'yu-niang': ['YU_NIANG_FULL', '毓娘'], 'nian-nian': [childNodes.has(id) ? 'CHILD_FULL' : 'ADULT_FULL', '念念'], zhang: ['ZHANG_FULL', '张老爷'], taoist: ['TAOIST_FULL', '老道士'] }[beat.speaker];
       if (other) { result[beat.id] = { portrait: `BG_PORTRAIT_${other[0]}`, label: `${other[1]} · 全身` }; continue; }
       // 红袄缺 hungry/smug/soft，按契约用无袄同表情顶替，明确登记。
       const outfit = costume === 'COAT' && ['hungry', 'smug', 'soft'].includes(held) ? 'BARE' : costume;
-      const portrait = injured ? 'DEMON_INJURED_FULL' : id === 'threshold' && index < 3 ? 'DEMON_BARE_FULL' : id === 'red-jacket' && index < 9 ? 'DEMON_COAT_FULL' : `DEMON_${outfit}_${held.toUpperCase()}`;
+      const portrait = injured ? 'DEMON_INJURED_FULL' : id === 'threshold' && index < 3 ? 'DEMON_BARE_FULL' : id === 'red-jacket' && costume === 'COAT' && index < 12 ? 'DEMON_COAT_FULL' : `DEMON_${outfit}_${held.toUpperCase()}`;
       result[beat.id] = { portrait: `BG_PORTRAIT_${portrait}`, label: `小妖怪 · ${injured ? '受伤' : labels[held]}` };
     }
   }

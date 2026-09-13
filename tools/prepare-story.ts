@@ -116,9 +116,9 @@ for (const file of readdirSync(sourceDir).filter(file => /^0[2-5]_.*\.md$/.test(
 const tracks: Record<string, string[]> = {
   BGM_CARE: ['threshold', 'fireside', 'ember', 'price', 'first-breath', 'doorstep', 'zhang-gate', 'chicken-leg', 'grove-echo', 'promise-day', 'years-call', 'fame', 'street-kids'],
   BGM_MARKET: ['night-theft', 'zhang-chaos', 'pit-rescue', 'zhang-return'],
-  BGM_COLD_DANGER: ['taoist', 'taoist-danger', 'blood-words', 'patient-trap', 'master-comes'],
+  BGM_COLD_DANGER: ['taoist', 'taoist-danger', 'burn-mountain', 'blood-words', 'patient-trap', 'master-comes'],
   BGM_ACID: ['bitter-heart', 'empty-house', 'funeral', 'crack-money', 'guarding', 'ending-bitter', 'ending-bitter-echo', 'heart-taste', 'fork-c8', 'demon-road', 'ending-demon-king'],
-  BGM_SEEK_HER: ['search', 'burn-mountain', 'ten-thousand-shield'],
+  BGM_SEEK_HER: ['search', 'ten-thousand-shield'],
   BGM_FAREWELL: ['red-jacket', 'farewell-ask', 'ending-ascend', 'ending-deferred', 'ending-aftertaste', 'ending-willing'],
 };
 const shifts: Record<string, [string, string][]> = {
@@ -129,13 +129,17 @@ const shifts: Record<string, [string, string][]> = {
 shifts['ending-aftertaste'] = [['吃人心的小妖怪死了。', 'BG_SHRINE_N']];
 shifts['ending-bitter-echo'] = [['从那以后', 'BG_COTTAGE_RAIN']];
 shifts['ending-deferred'] = [['后来的事', 'BG_TREE_D']];
-const sfx: Record<string, string> = { fireside: 'FIRE', ember: 'FIRE', price: 'FIRE', 'first-breath': 'SPIRIT', 'zhang-gate': 'GATE', 'chicken-leg': 'OFFER', 'pit-rescue': 'ROPE', taoist: 'COMPASS', 'patient-trap': 'COMPASS', 'master-comes': 'COMPASS', search: 'CALL', 'burn-mountain': 'CALL', 'ten-thousand-shield': 'CALL' };
+const sfx: Record<string, string> = { fireside: 'FIRE', ember: 'FIRE', price: 'FIRE', 'first-breath': 'SPIRIT', 'zhang-gate': 'GATE', 'chicken-leg': 'OFFER', 'pit-rescue': 'ROPE', taoist: 'COMPASS', 'patient-trap': 'COMPASS', 'master-comes': 'COMPASS', 'ten-thousand-shield': 'CALL' };
 for (const node of nodes) {
   const track = Object.entries(tracks).find(([, ids]) => ids.includes(node.id))?.[0];
   if (track) for (const beat of node.beats) { beat.musicCue = { action: 'play', track }; if (!beat.when) break; }
   if (node.id === 'taoist') node.beats.at(-1)!.sceneShift = 'BG_FOREST_RAIN';
   if (sfx[node.id]) node.beats[0]!.sfx = `SFX_${sfx[node.id]}`;
   for (const beat of node.beats) {
+    if (node.id === 'promise-day' && beat.text.startsWith('风把院门吹得')) beat.sfx = 'SFX_DOOR';
+    if (beat.id === 'search-251') beat.sfx = 'SFX_CALL';
+    if (beat.id === 'burn-mountain-222') beat.sfx = 'SFX_FIRE';
+    if (beat.id === 'burn-mountain-225') { beat.sfx = 'SFX_CALL'; beat.musicCue = { action: 'play', track: 'BGM_SEEK_HER' }; }
     for (const [prefix, scene] of shifts[node.id] ?? []) if (beat.text.startsWith(prefix)) beat.sceneShift = scene;
     if (beat.effect?.type === 'shatter') beat.sfx = 'SFX_SHATTER';
     if (node.kind === 'ending' && beat.text.includes('供桌')) beat.sfx = 'SFX_OFFER';

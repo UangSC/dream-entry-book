@@ -46,6 +46,8 @@ self.addEventListener('install', event => event.waitUntil((async () => {
 self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return;
+  // 授权页面、回调、账号资料与任务结果始终交给后端，不能套用离线首页。
+  if (new URL(event.request.url).pathname.startsWith('/api/')) return;
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => (await caches.open(CACHE)).match(urlFor('index.html')).then(cached => cached || fetch(event.request)))());
   } else event.respondWith((async () => {
