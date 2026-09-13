@@ -36,7 +36,7 @@ for (const file of readdirSync(sourceDir).filter(file => /^0[2-5]_.*\.md$/.test(
       originalId = heading[2]!;
       const base = { id: originalId, scene: '', origin: 'original' as const, sourceRefs: [] as string[], beats: [] as Beat[] };
       node = originalId.startsWith('ending-') ? { ...base, kind: 'ending', ending: { id: originalId, title: '', summary: '', reflections: [], outcomes: [] } } : { ...base, kind: 'scene', next: next[originalId] };
-      chapters[originalId] = `${heading[1]} · ${heading[3]!.replace(/·选择点.*|（.*?）/g, '')}`;
+      chapters[originalId] = `${heading[1]} · ${originalId === 'fork-c8' ? '第二颗心' : heading[3]!.replace(/·选择点.*|（.*?）/g, '')}`;
       nodes.push(node); mode = 'body'; side = undefined; afterChoice = false; continue;
     }
     if (/^## /.test(line)) { node = undefined; mode = 'outside'; }
