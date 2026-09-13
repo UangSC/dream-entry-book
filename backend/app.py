@@ -18,6 +18,8 @@ import httpx
 from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse, Response, FileResponse
 from pydantic import BaseModel, Field, ConfigDict
+from backend.credentials import access_secret
+from backend.zhihu_api import ZhihuGateway
 
 ROOT = Path(__file__).resolve().parents[1]
 WEEK = 7 * 86400
@@ -30,7 +32,7 @@ class Settings:
     mode: str = field(default_factory=lambda: os.getenv('OAUTH_MODE', 'mock'))
     app_id: str = field(default_factory=lambda: os.getenv('ZHIHU_OAUTH_APP_ID', ''))
     app_key: str = field(default_factory=lambda: os.getenv('ZHIHU_OAUTH_APP_KEY', ''))
-    access_secret: str = field(default_factory=lambda: os.getenv('ZHIHU_ACCESS_SECRET', ''))
+    access_secret: str = field(default_factory=access_secret, repr=False)
     # 项目文档未给出稳定用户资料协议；配置已获平台确认的 HTTPS 接口后才启用真实登录。
     profile_url: str = field(default_factory=lambda: os.getenv('ZHIHU_PROFILE_URL', ''))
     stage_seconds: float = field(default_factory=lambda: float(os.getenv('MOCK_STAGE_SECONDS', '2')))
@@ -42,6 +44,8 @@ class JobInput(StrictModel):
     title: str = Field(min_length=1, max_length=60)
     text: str = Field(default='', max_length=20000)
     url: str = Field(default='', max_length=2000)
+    mode: str = Field(default='simulation', pattern='^(simulation|analysis)$')
+    author: str = Field(default='', max_length=80)
 
 class PlayInput(StrictModel):
     run_id: str = Field(min_length=1, max_length=80)
@@ -96,6 +100,10 @@ def create_app(settings: Settings | None = None):
         ''')
         if 'attempt' not in {row[1] for row in db.execute('PRAGMA table_info(jobs)')}:
             db.execute('ALTER TABLE jobs ADD COLUMN attempt INTEGER NOT NULL DEFAULT 0')
+        if 'result_kind' not in {row[1] for row in db.execute('PRAGMA table_info(jobs)')}:
+            db.execute("ALTER TABLE jobs ADD COLUMN result_kind TEXT NOT NULL DEFAULT 'book'")
+
+    zhihu = ZhihuGateway(config.access_secret, database)
 
     def patch_job(job_id, attempt=None, **values):
         with database() as db:
@@ -108,6 +116,16 @@ def create_app(settings: Settings | None = None):
                 if row: db.execute("UPDATE jobs SET status='running' WHERE id=?", (row['id'],))
             if row:
                 try:
+                    if row['result_kind'] == 'analysis':
+                        body = json.loads(row['input'])
+                        patch_job(row['id'], attempt=row['attempt'], progress=20, stage='知乎直答正在梳理人物与分歧')
+                        report = await zhihu.analyze(row['title'], body['text'])
+                        report.update(author=body.get('author', ''), source_url=body.get('url', ''))
+                        result_path = config.database.parent / 'results' / f"{row['id']}.json"
+                        result_path.parent.mkdir(exist_ok=True)
+                        result_path.write_text(json.dumps(report, ensure_ascii=False), encoding='utf-8')
+                        patch_job(row['id'], attempt=row['attempt'], status='succeeded', progress=100, stage='入梦线索已备好')
+                        continue
                     for index, stage in enumerate(STAGES):
                         with database() as db:
                             current = db.execute('SELECT status,attempt FROM jobs WHERE id=?', (row['id'],)).fetchone()
@@ -120,6 +138,8 @@ def create_app(settings: Settings | None = None):
                         patch_job(row['id'], attempt=row['attempt'], status='succeeded', progress=100, stage='演示入梦书已备好')
                 except asyncio.CancelledError:
                     raise
+                except HTTPException as error:
+                    patch_job(row['id'], attempt=row['attempt'], status='failed', error=str(error.detail), stage='分析暂未完成')
                 except Exception:
                     patch_job(row['id'], attempt=row['attempt'], status='failed', error='书页暂时没有装订好，可以重试。', stage='未完成')
             else:
@@ -147,11 +167,14 @@ def create_app(settings: Settings | None = None):
     async def lifespan(app):
         # 任务持久化，进程意外结束后的运行任务从头重试；Token 不落盘。
         with database() as db:
-            db.execute("UPDATE jobs SET status='queued',progress=0,stage='接着装订书页' WHERE status='running'")
+            db.execute("UPDATE jobs SET status='failed',error='服务中断，分析结果未确认；可手动重试。',stage='分析暂未完成' WHERE status='running' AND result_kind='analysis'")
+            db.execute("UPDATE jobs SET status='queued',progress=0,stage='接着装订书页' WHERE status='running' AND result_kind='book'")
             cutoff = time.time() - WEEK
             expired = [row[0] for row in db.execute('SELECT id FROM jobs WHERE updated_at<?', (cutoff,))]
             for table in ['plays', 'imports', 'jobs']: db.execute(f'DELETE FROM {table} WHERE updated_at<?', (cutoff,))
-        for job_id in expired: (config.database.parent / 'results' / f'{job_id}.dreambook').unlink(missing_ok=True)
+        for job_id in expired:
+            for extension in ['dreambook', 'json']:
+                (config.database.parent / 'results' / f'{job_id}.{extension}').unlink(missing_ok=True)
         task = asyncio.create_task(worker())
         yield
         task.cancel()
@@ -162,6 +185,7 @@ def create_app(settings: Settings | None = None):
     app = FastAPI(title='入梦书', lifespan=lifespan)
     app.state.database = database
     app.state.config = config
+    app.state.zhihu = zhihu
 
     @app.middleware('http')
     async def headers(request, call_next):
@@ -189,7 +213,16 @@ def create_app(settings: Settings | None = None):
         response.set_cookie(name, value, max_age=age, httponly=True, secure=config.origin.startswith('https:'), samesite='lax', path=path)
 
     @app.get('/api/health')
-    def health(): return {'status': 'ok', 'oauth_mode': config.mode, 'tasks': 'simulation'}
+    def health(): return {'status': 'ok', 'oauth_mode': config.mode, 'tasks': 'simulation', 'zhihu_configured': bool(config.access_secret)}
+
+    @app.get('/api/zhihu/stories')
+    async def story_catalog(): return {'items': await zhihu.stories()}
+
+    @app.get('/api/zhihu/stories/{work_id}')
+    async def story_detail(work_id: str): return await zhihu.story(work_id)
+
+    @app.get('/api/zhihu/search')
+    async def story_search(q: str, user=Depends(session)): return await zhihu.search(q, user['id'])
 
     @app.get('/api/auth/start')
     def auth_start():
@@ -294,7 +327,7 @@ def create_app(settings: Settings | None = None):
         result = {}
         with database() as db:
             for table in ['plays', 'jobs', 'imports']:
-                columns = '*' if table != 'jobs' else 'id,title,status,progress,stage,error,created_at,updated_at'
+                columns = '*' if table != 'jobs' else 'id,title,status,progress,stage,error,created_at,updated_at,result_kind'
                 result[table] = [dict(row) for row in db.execute(f'SELECT {columns} FROM {table} WHERE user_id=? AND updated_at>=? ORDER BY updated_at DESC LIMIT 100', (user['id'], time.time() - WEEK))]
         return result
 
@@ -306,12 +339,16 @@ def create_app(settings: Settings | None = None):
     @app.post('/api/jobs', status_code=201)
     def start_job(body: JobInput, user=Depends(session)):
         if not body.text.strip() and not body.url.strip(): raise HTTPException(422, '请留下一段故事或一个链接')
+        if not body.title.strip(): raise HTTPException(422, '请给这场梦起个名字')
+        if body.mode == 'analysis':
+            if not config.access_secret: raise HTTPException(503, '知乎直答暂未配置')
+            if not body.text.strip() or len(body.text) > 12000: raise HTTPException(422, '线索分析需要 1–12000 字的故事片段')
         job_id, stamp = uuid.uuid4().hex, time.time()
         with database() as db:
             db.execute('BEGIN IMMEDIATE')
             if db.execute("SELECT COUNT(*) FROM jobs WHERE user_id=? AND status IN ('queued','running')", (user['id'],)).fetchone()[0] >= 3: raise HTTPException(429, '先等手上的三本书装订好吧')
-            db.execute('INSERT INTO jobs (id,user_id,title,input,status,progress,stage,error,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?)', (job_id, user['id'], body.title.strip(), body.model_dump_json(), 'queued', 0, '等候织梦', None, stamp, stamp))
-        return {'id': job_id, 'simulation': True}
+            db.execute('INSERT INTO jobs (id,user_id,title,input,status,progress,stage,error,created_at,updated_at,result_kind) VALUES (?,?,?,?,?,?,?,?,?,?,?)', (job_id, user['id'], body.title.strip(), body.model_dump_json(), 'queued', 0, '等候线索分析' if body.mode == 'analysis' else '等候织梦', None, stamp, stamp, 'analysis' if body.mode == 'analysis' else 'book'))
+        return {'id': job_id, 'simulation': body.mode != 'analysis'}
 
     def owned_job(job_id, user):
         with database() as db: row = db.execute('SELECT * FROM jobs WHERE id=? AND user_id=? AND updated_at>=?', (job_id, user['id'], time.time() - WEEK)).fetchone()
@@ -335,13 +372,15 @@ def create_app(settings: Settings | None = None):
     def result(job_id: str, user=Depends(session)):
         job = owned_job(job_id, user)
         if job['status'] != 'succeeded': raise HTTPException(409, '入梦书还没有装订好')
+        if job['result_kind'] == 'analysis':
+            return json.loads((config.database.parent / 'results' / f'{job_id}.json').read_text(encoding='utf-8'))
         return FileResponse(config.database.parent / 'results' / f'{job_id}.dreambook', filename=f'weave-demo-{job_id}.dreambook', media_type='application/zip')
 
     @app.post('/api/imports', status_code=204)
     def record_import(body: ImportInput, user=Depends(session)):
         if body.job_id:
             job = owned_job(body.job_id, user)
-            if job['status'] != 'succeeded' or body.package_id != f'weave-demo-{body.job_id}': raise HTTPException(409, '请等待这本入梦书完成')
+            if job['status'] != 'succeeded' or job['result_kind'] != 'book' or body.package_id != f'weave-demo-{body.job_id}': raise HTTPException(409, '请等待这本入梦书完成')
         with database() as db:
             db.execute('INSERT INTO imports VALUES (?,?,?,?,?,?) ON CONFLICT(user_id,package_id,build_id) DO UPDATE SET updated_at=excluded.updated_at,job_id=COALESCE(excluded.job_id,imports.job_id)', (user['id'], body.package_id, body.build_id, body.title, body.job_id, time.time()))
 

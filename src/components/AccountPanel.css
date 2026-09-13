@@ -27,7 +27,8 @@
 .account-weave { padding:20px; border-radius:14px; background:linear-gradient(120deg,#edf0e7,#f7edda); margin-bottom:18px; }
 .account-weave p { font-size:13px; line-height:1.8; color:#80745d; }
 .account-job-form { display:grid; gap:10px; }
-.account-job-form input,.account-job-form textarea { width:100%; padding:11px 14px; font:inherit; font-size:14px; border:1px solid #cabea744; border-radius:8px; background:#fffcf5b0; color:#443f35; }
+.account-job-form input,.account-job-form textarea,.account-job-form select { width:100%; padding:11px 14px; font:inherit; font-size:14px; border:1px solid #cabea744; border-radius:8px; background:#fffcf5b0; color:#443f35; }
+.account-job-form label { display:grid; gap:7px; color:#80745d; font-size:13px; }
 .account-job-form button { justify-self:end; min-height:40px; }
 .account-job { padding:18px 22px; border:1px solid #d9ccb650; background:#fffcf633; border-radius:12px; margin:12px 0; }
 .job-heading,.job-footer { display:flex; align-items:center; justify-content:space-between; gap:20px; }
