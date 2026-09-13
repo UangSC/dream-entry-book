@@ -1,0 +1,1912 @@
+{
+  "schemaVersion": 1,
+  "packageId": "little-demon",
+  "buildId": "little-demon-v1",
+  "title": "吃人心的小妖怪",
+  "source": {
+    "kind": "hackathon_excerpt",
+    "title": "吃人心的小妖怪",
+    "author": "女巫",
+    "workId": "2025954672918163637",
+    "authorUrl": "https://www.zhihu.com/people/cc09d82355e21162462ba02ac9717dba",
+    "publishedAt": "2026-04-10",
+    "completeness": "excerpt",
+    "trailingFragment": true,
+    "sourceHash": "11e02bb6d56881af6175bf1682a7590dad9f610910359d85064afdcbcfbd9b9b",
+    "paragraphIds": [
+      "p-0001",
+      "p-0002",
+      "p-0003",
+      "p-0004",
+      "p-0005",
+      "p-0006",
+      "p-0007",
+      "p-0008",
+      "p-0009",
+      "p-0010",
+      "p-0011",
+      "p-0012",
+      "p-0013",
+      "p-0014",
+      "p-0015",
+      "p-0016",
+      "p-0017",
+      "p-0018",
+      "p-0019",
+      "p-0020",
+      "p-0021",
+      "p-0022",
+      "p-0023",
+      "p-0024",
+      "p-0025",
+      "p-0026",
+      "p-0027",
+      "p-0028",
+      "p-0029",
+      "p-0030",
+      "p-0031",
+      "p-0032",
+      "p-0033",
+      "p-0034",
+      "p-0035",
+      "p-0036",
+      "p-0037",
+      "p-0038",
+      "p-0039",
+      "p-0040",
+      "p-0041",
+      "p-0042",
+      "p-0043",
+      "p-0044",
+      "p-0045",
+      "p-0046",
+      "p-0047",
+      "p-0048",
+      "p-0049",
+      "p-0050",
+      "p-0051",
+      "p-0052",
+      "p-0053",
+      "p-0054",
+      "p-0055",
+      "p-0056",
+      "p-0057",
+      "p-0058",
+      "p-0059",
+      "p-0060",
+      "p-0061",
+      "p-0062",
+      "p-0063",
+      "p-0064",
+      "p-0065",
+      "p-0066",
+      "p-0067",
+      "p-0068",
+      "p-0069",
+      "p-0070",
+      "p-0071",
+      "p-0072",
+      "p-0073",
+      "p-0074",
+      "p-0075",
+      "p-0076",
+      "p-0077",
+      "p-0078",
+      "p-0079",
+      "p-0080",
+      "p-0081",
+      "p-0082",
+      "p-0083",
+      "p-0084",
+      "p-0085",
+      "p-0086",
+      "p-0087",
+      "p-0088",
+      "p-0089",
+      "p-0090",
+      "p-0091",
+      "p-0092",
+      "p-0093",
+      "p-0094",
+      "p-0095",
+      "p-0096",
+      "p-0097",
+      "p-0098",
+      "p-0099",
+      "p-0100",
+      "p-0101",
+      "p-0102",
+      "p-0103",
+      "p-0104",
+      "p-0105",
+      "p-0106",
+      "p-0107",
+      "p-0108",
+      "p-0109",
+      "p-0110",
+      "p-0111",
+      "p-0112",
+      "p-0113",
+      "p-0114",
+      "p-0115",
+      "p-0116",
+      "p-0117",
+      "p-0118",
+      "p-0119",
+      "p-0120",
+      "p-0121",
+      "p-0122",
+      "p-0123",
+      "p-0124",
+      "p-0125",
+      "p-0126",
+      "p-0127",
+      "p-0128",
+      "p-0129",
+      "p-0130",
+      "p-0131",
+      "p-0132",
+      "p-0133",
+      "p-0134",
+      "p-0135",
+      "p-0136",
+      "p-0137",
+      "p-0138"
+    ],
+    "sourceUrl": "https://www.zhihu.com/market/paid_column/2025960728138401447/section/2025954672918163637",
+    "linkStatus": "verified",
+    "rightsRef": "zhihu-hackathon-local-review"
+  },
+  "review": {
+    "status": "draft",
+    "reviewedBuildId": null,
+    "reviewedAt": null,
+    "reviewer": null
+  },
+  "theme": "warm",
+  "characters": [
+    {
+      "id": "little-demon",
+      "name": "小妖怪",
+      "bio": "你扮演的角色。嘴上惦记成仙，心里装不下别人的冷。天真、爱逞强，也很怕丢脸。"
+    },
+    {
+      "id": "yu-niang",
+      "name": "毓娘",
+      "bio": "念念的母亲。说话急切而实在，会害怕，却不会退开。"
+    },
+    {
+      "id": "nian-nian",
+      "name": "念念",
+      "bio": "七岁的孩子。她关心一块糕、一扇门，也关心照顾她的人会不会累。"
+    }
+  ],
+  "resources": [],
+  "relationships": [],
+  "flags": [
+    {
+      "id": "warmed",
+      "label": "先为她们拨旺了火",
+      "kind": "commitment"
+    },
+    {
+      "id": "bargained",
+      "label": "说好了救人的报酬",
+      "kind": "commitment"
+    },
+    {
+      "id": "honest",
+      "label": "坦诚自己的极限",
+      "kind": "knowledge"
+    },
+    {
+      "id": "kept-front",
+      "label": "独自记下恢复规律",
+      "kind": "knowledge"
+    },
+    {
+      "id": "stayed",
+      "label": "留下守这一夜",
+      "kind": "commitment"
+    },
+    {
+      "id": "rested",
+      "label": "约好明日再来",
+      "kind": "commitment"
+    }
+  ],
+  "entryNodeId": "threshold",
+  "nodes": [
+    {
+      "id": "threshold",
+      "kind": "scene",
+      "origin": "original",
+      "scene": "BG_SHRINE_N",
+      "sourceRefs": [
+        "p-0002",
+        "p-0004"
+      ],
+      "next": "fireside",
+      "beats": [
+        {
+          "id": "line-001",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你是一只吃人心的小妖怪。山风吹过几百回春秋，你却连第一颗心都没吃到。你害怕看见别人临死前的眼睛，也不知道若真有一颗心交到手里，该把它放在哪里，才能不让它继续冷下去。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_GATE"
+          }
+        },
+        {
+          "id": "line-002",
+          "kind": "thought",
+          "speaker": "little-demon",
+          "text": "娘说，吃够一万颗人心就能成仙。可是娘走得太急，没教我怎么吃，也没说，一颗都没吃过的妖怪该怎么办。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-003",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你住在山顶的小土庙，饿了偷一块贡糕，闷了对神像说话。神像总是笑，不答应，也不赶你走。你便当它允许了。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-004",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "神仙公公，今天先欠一块。等我成仙了，贡品捡好的给您。特别甜的……咱们一人一半。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-005",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "这夜，一个妇人背着孩子上山。她叫毓娘，孩子叫念念，才七岁。她在神像前求了很久，嗓子从响亮求成了一丝气。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-006",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "后来妇人暂时离开，小姑娘还蜷在庙里。你蹲下来，隔着破旧衣裳，看见她胸口微弱的起伏。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-007",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "你……你好。请问，我能吃你的心吗？你不说话……不说话，我也不知道算不算答应啊。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-008",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你等来一阵冷风，没有等来回答。",
+          "effect": {
+            "type": "focusIn"
+          }
+        },
+        {
+          "id": "line-071",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "山里的夜比你记得的更长。你数过三百七十二次月落，数到后来忘了自己为什么要数。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-072",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "神像前的香灰被风吹成一条细线，你用手指把它拢回去，像把散掉的念头重新收好。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-073",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘进庙时鞋底沾着泥，肩带勒出一道红痕。她先看孩子，再看你，最后才看见自己手上的血泡。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-074",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你想问她从哪里来，却先闻到她身上淡淡的药味。那味道让你想起山下的集市和不肯降价的药铺。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-075",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念在梦里喊了一声娘。毓娘立刻俯身应她，连呼吸都放得很轻，仿佛声音重一点就会把孩子吹散。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-076",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你把尾巴藏到身后。妖怪的尾巴会泄露心情，这时候你不想让任何人看见它在发抖。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-099",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-109",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-119",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-129",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-139",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        }
+      ]
+    },
+    {
+      "id": "fireside",
+      "kind": "scene",
+      "origin": "original",
+      "scene": "BG_SHRINE_FIRE",
+      "sourceRefs": [
+        "p-0022",
+        "p-0030",
+        "p-0041"
+      ],
+      "beats": [
+        {
+          "id": "line-009",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你在庙外生起火，把孩子安置在背风处。火星慢慢升上去，你的肚子叫了一声，听起来实在不像个有本事的妖怪。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_LONG_FAREWELL"
+          }
+        },
+        {
+          "id": "line-010",
+          "kind": "dialogue",
+          "speaker": "yu-niang",
+          "text": "你要吃，就吃我的心！别碰我女儿！",
+          "anim": "fade"
+        },
+        {
+          "id": "line-011",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘跌跌撞撞扑过来，一把将念念抱紧。她分明怕得发抖，却把整个后背挡在你面前，没有挪开半寸。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-012",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "可我等了几百年……我又没说现在就吃。你先别哭，她的脸都被你的眼泪打湿了。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-013",
+          "kind": "dialogue",
+          "speaker": "yu-niang",
+          "text": "她还活着。你听，她还喘气。只要还喘气，我就不能让。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-014",
+          "kind": "thought",
+          "speaker": "little-demon",
+          "text": "娘从前也是这样护着我的吗？记不清了。只记得她最后一直说冷。那时我连一堆像样的火都点不起来。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-015",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "现在，你的指尖能拢来一点火。毓娘在等你的回答，念念也需要暖和些。你得先做一件事。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-100",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-110",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-120",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-130",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-140",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-149",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-158",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念睡着后，毓娘终于肯靠墙闭眼。你替她把被角掖好，发现自己做这些事时，手已经不再发抖。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-163",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念睡着后，毓娘终于肯靠墙闭眼。你替她把被角掖好，发现自己做这些事时，手已经不再发抖。",
+          "anim": "typewriter"
+        }
+      ],
+      "choices": [
+        {
+          "id": "feed-fire",
+          "text": "先把火拨旺，暂且不提人心的事",
+          "target": "warmth",
+          "effects": {
+            "resourceDeltas": {},
+            "relationshipDeltas": {},
+            "setFlags": [
+              "warmed"
+            ]
+          }
+        },
+        {
+          "id": "name-price",
+          "text": "先说清想要的报酬，再答应救她",
+          "target": "promise",
+          "effects": {
+            "resourceDeltas": {},
+            "relationshipDeltas": {},
+            "setFlags": [
+              "bargained"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "warmth",
+      "kind": "scene",
+      "origin": "original",
+      "scene": "BG_SHRINE_FIRE",
+      "sourceRefs": [
+        "p-0041",
+        "p-0048"
+      ],
+      "next": "small-miracle",
+      "beats": [
+        {
+          "id": "line-016",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你轻轻一拨，火光便旺起来。毓娘先缩了一下，随后看见你把窜高的火苗压低，只把暖意送向念念冻白的手。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_LONG_LIGHT"
+          }
+        },
+        {
+          "id": "line-017",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "别怕。是给她暖手的，又不是要烤她。我还是分得清的！",
+          "anim": "fade"
+        },
+        {
+          "id": "line-018",
+          "kind": "dialogue",
+          "speaker": "yu-niang",
+          "text": "你会法术……那你能不能救她？我没有钱，我能给的只有……",
+          "anim": "fade"
+        },
+        {
+          "id": "line-019",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "知道了，知道了，你的心。先收好吧。你哭得太响，我都听不见她喘气了。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-020",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "她没有再叫你妖怪，也没敢叫你神仙，只往旁边让出一个位置。你挪过去，发现有人给你留地方，是一件新鲜事。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-021",
+          "kind": "thought",
+          "speaker": "little-demon",
+          "text": "话说得这么满，待会儿要是救不好，多丢妖怪的脸。可是火已经暖了，总不能再让她冷下去。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-101",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-111",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-121",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-131",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-141",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-150",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-159",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "天亮前最黑的那一刻，你看见远处有炊烟。那不是神迹，只是有人早起煮粥，却足以让你继续往前走。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-164",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "天亮前最黑的那一刻，你看见远处有炊烟。那不是神迹，只是有人早起煮粥，却足以让你继续往前走。",
+          "anim": "typewriter"
+        }
+      ]
+    },
+    {
+      "id": "promise",
+      "kind": "scene",
+      "origin": "original",
+      "scene": "BG_SHRINE_FIRE",
+      "sourceRefs": [
+        "p-0056",
+        "p-0060"
+      ],
+      "next": "small-miracle",
+      "beats": [
+        {
+          "id": "line-022",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "先说清楚，我不是什么神仙。我想要你的心。救了她，你可不能反悔。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_LONG_CALM"
+          }
+        },
+        {
+          "id": "line-023",
+          "kind": "dialogue",
+          "speaker": "yu-niang",
+          "text": "好。我记得。只要念念活下来，我都记得。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-024",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "她答得太快，你准备好的讨价还价一句也没用上。她把念念抱得更紧些，仿佛刚答应交出去的是一件旧衣裳。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-025",
+          "kind": "thought",
+          "speaker": "little-demon",
+          "text": "人心这么要紧的东西，她怎么一点也不还价？我娘不在了，没人教我，这种买卖究竟算不算划算。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-026",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "也……也不用现在给。你先照顾她。等她好了，咱们再说。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-027",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你伸手时，毓娘的肩仍然绷着。承诺留住了她，也把一段距离留在你们中间。你只好把声音放得更轻。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-102",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-112",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-122",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-132",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-142",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-151",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-153",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你渐渐明白，照顾不是一场施法比赛。有人递水，有人守门，有人记得把糕点掰成两半，事情便会往前走。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-160",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你渐渐明白，照顾不是一场施法比赛。有人递水，有人守门，有人记得把糕点掰成两半，事情便会往前走。",
+          "anim": "typewriter"
+        }
+      ]
+    },
+    {
+      "id": "small-miracle",
+      "kind": "scene",
+      "origin": "original",
+      "scene": "BG_SHRINE_N",
+      "sourceRefs": [
+        "p-0062",
+        "p-0067",
+        "p-0084"
+      ],
+      "next": "doorstep",
+      "beats": [
+        {
+          "id": "line-028",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你把山中的灵气一点点聚到指尖，渡给念念。她胸口的起伏终于清楚了些，毓娘捂住嘴，像怕一声哭就把这点生机惊散。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_LONG_CALM_ALT"
+          }
+        },
+        {
+          "id": "line-029",
+          "kind": "dialogue",
+          "speaker": "yu-niang",
+          "text": "她动了！可她怎么还不醒？是不是还要……",
+          "anim": "fade"
+        },
+        {
+          "id": "line-030",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "慢慢来！我是妖，用猛了会染上妖气，对孩子不好。你看，连火都要一点一点添柴呢。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-031",
+          "kind": "thought",
+          "speaker": "little-demon",
+          "text": "其实是我只有这么点本事。再挤，就得把自己也挤空了。可她方才看我的眼神，那么亮。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-032",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "夜深了，你让毓娘背孩子下山，叮嘱她按时照顾。她一步一回头，你一直挥手，直到那一点身影被山路收走。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-033",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "两天后不用你上来！我去！……妖怪走山路快，这点事可难不倒我。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-034",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "回到土庙，你连贡糕都拿不稳，只好靠着供台坐下。神像还是笑。你把剩下半块糕摆正，小声说，今天先欠着。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-077",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "灵气从山石缝里渗出来，凉得像刚下过的雨。你把它们捧在掌心，掌纹一寸寸亮起来。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-078",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念的指尖动了一下，你差点跳起来，又怕惊扰她，只好把欢呼咽成一声很轻的咳嗽。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-079",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把你的咳嗽当成疲惫，递来一碗温水。你喝得太急，呛得眼泪直流，还要装作这是妖术的副作用。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-080",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "她没有拆穿你，只把碗往前推了推。水面映着火光，也映着你第一次被人照顾的脸。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-081",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "下山前你在庙门上刻下一道痕，告诉自己这是约定的起点。风吹过来，痕迹没有消失。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-103",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-113",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-123",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-133",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-143",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-152",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-154",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "山路仍旧崎岖，雨仍旧会突然落下。可你知道院门后的灯会亮着，知道有人会听见你的敲门声。",
+          "anim": "typewriter"
+        }
+      ]
+    },
+    {
+      "id": "doorstep",
+      "kind": "scene",
+      "origin": "original",
+      "scene": "BG_COTTAGE_D",
+      "sourceRefs": [
+        "p-0098",
+        "p-0112",
+        "p-0100"
+      ],
+      "beats": [
+        {
+          "id": "line-035",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "两天后，你找到了山下的小院。毓娘早早开了院门，你却一抬腿跨过院墙。她看看门，又看看你，终于没忍住叹了一口气。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_LONG_FAREWELL_ALT"
+          }
+        },
+        {
+          "id": "line-036",
+          "kind": "dialogue",
+          "speaker": "yu-niang",
+          "text": "门不是摆着看的。下回来，走这里。我会一直留着。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-037",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "她把热水放在你手边。第一次火边留下的那个位置，似乎一直跟着你，下了山，来到了这张小板凳上。",
+          "anim": "fade",
+          "when": {
+            "all": [
+              {
+                "kind": "flag",
+                "id": "warmed",
+                "equals": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "line-038",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "她把热水放在你手边，却没有坐下。你知道，她还记着那桩买卖；杯子是热的，她的指尖却是凉的。",
+          "anim": "fade",
+          "when": {
+            "all": [
+              {
+                "kind": "flag",
+                "id": "bargained",
+                "equals": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "line-039",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "此后隔两天你就来一次。念念睁了眼，会说话了，也能坐起来。你每回都说不费事，回山时却越走越慢。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-040",
+          "kind": "dialogue",
+          "speaker": "nian-nian",
+          "text": "你是不是也生病了？你上回来，尾音还翘着。这回，说到最后都没声音啦。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-041",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "妖怪的事，小孩子少操心！我这是……话说多了，省着点用。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-042",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘听见了，没有接话。她等你说实情。承认自己做不到，会失去神通广大的样子；不说，她们便不知道该怎样帮你。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-082",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "小院里晾着药草，苦味和米香混在一起。念念坐在门槛上，用树枝画出一只歪歪扭扭的妖怪。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-083",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "她说那妖怪有两只角、一条尾巴，还会把最甜的糕点留给别人。你听见最后一句，立刻转身看墙。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-084",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘在灶边切菜，刀落下的声音有规律。你试着跟着节奏敲桌面，念念便笑你敲得像逃跑的老鼠。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-085",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你教她辨认山风的方向，她教你把门闩插好。谁也没有说这是交换，可每一天都多了一点默契。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-086",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "夜里你回到山上，发现袖口粘着一粒米。你舍不得抖掉，便把它放在神像脚边，当作今天的供品。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-104",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-114",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-124",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-134",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-144",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着山脊走过一整夜，听见松针落地，也听见自己终于不再急着证明什么。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-155",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你曾把人心当作成仙的筹码，如今更在意一颗心能不能安稳地跳。这个念头让你害怕，也让你觉得轻松。",
+          "anim": "typewriter"
+        }
+      ],
+      "choices": [
+        {
+          "id": "tell-limit",
+          "text": "承认妖力有限，请她一起分担照护",
+          "target": "grove",
+          "effects": {
+            "resourceDeltas": {},
+            "relationshipDeltas": {},
+            "setFlags": [
+              "honest"
+            ]
+          }
+        },
+        {
+          "id": "keep-front",
+          "text": "暂时撑住面子，独自记下恢复的规律",
+          "target": "grove",
+          "effects": {
+            "resourceDeltas": {},
+            "relationshipDeltas": {},
+            "setFlags": [
+              "kept-front"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "grove",
+      "kind": "scene",
+      "origin": "original",
+      "scene": "BG_FOREST_D",
+      "sourceRefs": [
+        "p-0121",
+        "p-0125",
+        "p-0136"
+      ],
+      "next": "last-light",
+      "beats": [
+        {
+          "id": "line-043",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "山风带着新叶的气味。你本想化作一阵威风凛凛的妖风，最后只卷起几片落叶，连路边打瞌睡的小兽都没吵醒。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_GATE"
+          }
+        },
+        {
+          "id": "line-044",
+          "kind": "thought",
+          "speaker": "little-demon",
+          "text": "它们总笑我，连野鸡都不敢杀，还说要吃人心。我明明是在等……等一个合适的时候。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-045",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "可你记住的，偏偏不是心能吃几顿。是毓娘往火边让出的那一点空地，是念念问你累不累时，认真皱起的眉头。",
+          "anim": "fade",
+          "when": {
+            "all": [
+              {
+                "kind": "flag",
+                "id": "warmed",
+                "equals": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "line-046",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "可你一想起毓娘答应交出人心的样子，便高兴不起来。她每回说谢谢，都像是在提醒你：那张欠条，还握在你手里。",
+          "anim": "fade",
+          "when": {
+            "all": [
+              {
+                "kind": "flag",
+                "id": "bargained",
+                "equals": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "line-047",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘答应记下念念每日的情况，也答应不再催你施法。第一次，你回山不是去躲疲惫，而是去好好歇息。",
+          "anim": "fade",
+          "when": {
+            "all": [
+              {
+                "kind": "flag",
+                "id": "honest",
+                "equals": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "line-048",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你在树枝上刻了几道痕，记下每次渡气和恢复的日子。规律慢慢有了，疲惫却还在。那句“不费事”，越来越难说出口。",
+          "anim": "fade",
+          "when": {
+            "all": [
+              {
+                "kind": "flag",
+                "id": "kept-front",
+                "equals": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "line-049",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "后来念念的恢复慢了下来。原来并非多给一点灵气，就能多好一点。你站在山路上，头一次不急着给自己编一个答案。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-050",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "有些事，不是再用力一点就够了。",
+          "effect": {
+            "type": "dreamRipple"
+          }
+        },
+        {
+          "id": "line-087",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "雨从林梢落下来，先是一滴，后来连成一片。你把妖气撑成伞，伞面却漏得像筛子。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-088",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "一只受伤的灰兔躲在树根下。你本想绕开，听见它喘气，脚步便自己停了下来。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-089",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你用灵气替它止血，兔子没有道谢，只在你离开时轻轻跺了一下脚。你把那当成了很郑重的谢礼。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-090",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "山下传来锣声，张家的人在找什么。你第一次觉得热闹并不有趣，声音越多，念念越不安全。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-091",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你沿着雨水冲出的沟走，捡到一枚绣着荷花的发簪。毓娘看见它时，脸色比雨夜还白。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-092",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "她说那是念念的外婆留下的。你没有追问，只把发簪擦干，放回她掌心。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-105",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-115",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-125",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-135",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-145",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "每一次回头，山下的灯都比上一次更近。你把那一点光记在心里，像记住一个人的名字。",
+          "anim": "typewriter"
+        }
+      ]
+    },
+    {
+      "id": "last-light",
+      "kind": "scene",
+      "origin": "original",
+      "scene": "BG_COTTAGE_D",
+      "sourceRefs": [
+        "p-0133",
+        "p-0137"
+      ],
+      "beats": [
+        {
+          "id": "line-051",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你又一次走进小院。念念坐在门边，手里捧着半块糕。她没有忽然痊愈，也没有在等一个从天而降的答案。她只是朝你挪了挪。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_LONG_FAREWELL"
+          }
+        },
+        {
+          "id": "line-052",
+          "kind": "dialogue",
+          "speaker": "nian-nian",
+          "text": "给你留的。娘说你不收钱，那收糕行不行？这个不硬，我试过啦。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-053",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "试过？那这牙印……算了。我牙口好。你娘呢？",
+          "anim": "fade"
+        },
+        {
+          "id": "line-054",
+          "kind": "dialogue",
+          "speaker": "yu-niang",
+          "text": "在这儿。我去请大夫再看看，家里也不能只等着你。你有多大力，就使多大力。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-055",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "嗯。咱们说好的，一人管一点。今天我不逞强，你也不偷偷着急。",
+          "anim": "fade",
+          "when": {
+            "all": [
+              {
+                "kind": "flag",
+                "id": "honest",
+                "equals": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "line-056",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "有件事我得说。我不是不累，是不好意思说累。这些是我记的日子……你帮我也记一份吧。",
+          "anim": "fade",
+          "when": {
+            "all": [
+              {
+                "kind": "flag",
+                "id": "kept-front",
+                "equals": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "line-057",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "她接过你的话，没有失望，只把板凳推近了些。你一直以为，没能立刻救好一个人，就不配坐在这里。原来不是。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-058",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "窗外的光渐渐低了。成仙的账还没有答案，念念的病也还需要照顾。但今晚如何度过，你已经能够自己决定。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-093",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "张家的管事带人堵在院外，说孩子的病是妖气作祟。你站在墙头，听见他们把害怕说成了道理。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-094",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念握住你的手，掌心小得几乎包不住一根手指。她说不要打架，娘会担心。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-095",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你第一次没有立刻逞强。你让毓娘先带孩子进屋，自己去面对门外那些举着火把的人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-096",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "管事问你是不是妖。你说是。声音落下后，院里忽然很安静，连雨也像停了一瞬。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-097",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你没有伤他们，只把火把里的火星一一吹灭。黑暗让他们退后，也让你看清自己并不需要证明凶狠。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-098",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘打开门时，手里拿着那枚发簪。她说谢谢，随后补了一句：留下来吃饭吧。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-106",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-116",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-126",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-136",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-146",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念学会了数数，从一数到十，再从十数回一。她说这样就能把害怕也数小一点。",
+          "anim": "typewriter"
+        }
+      ],
+      "choices": [
+        {
+          "id": "stay-tonight",
+          "text": "把报酬的事放下，留下陪她们过这一夜",
+          "target": "ending-lantern",
+          "effects": {
+            "resourceDeltas": {},
+            "relationshipDeltas": {},
+            "setFlags": [
+              "stayed"
+            ]
+          }
+        },
+        {
+          "id": "return-tomorrow",
+          "text": "约好明日再来，先回山养足自己的精神",
+          "target": "ending-path",
+          "effects": {
+            "resourceDeltas": {},
+            "relationshipDeltas": {},
+            "setFlags": [
+              "rested"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ending-lantern",
+      "kind": "ending",
+      "origin": "original",
+      "scene": "BG_SUMMIT_DAWN",
+      "sourceRefs": [],
+      "beats": [
+        {
+          "id": "line-059",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "这一夜，你没再施法，只添了几次柴，把歪斜的灯芯拨正。毓娘得以合一会儿眼，念念醒来时，总能看见灯边坐着你。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_LONG_LIGHT"
+          }
+        },
+        {
+          "id": "line-060",
+          "kind": "dialogue",
+          "speaker": "nian-nian",
+          "text": "你还想吃人心吗？",
+          "anim": "fade"
+        },
+        {
+          "id": "line-061",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "今天不吃。你先把糕分匀，上回那半块，小得连牙印都快装不下了。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-062",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你不是故意逗她笑，可她笑了。你没有得到第一颗心，却发现自己已经被人惦记着。那不是报酬，也不必拿走。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-063",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "灯还亮着，心便不必交出去。",
+          "effect": {
+            "type": "particleGather"
+          }
+        },
+        {
+          "id": "line-064",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "天亮以后，山顶也被染成暖色。这场梦停在此刻：念念仍在康复，毓娘不再独自守夜，你也终于允许自己，不那么像个厉害妖怪。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-107",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-117",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-127",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-137",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-147",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "毓娘把药碗洗得很干净，碗底总留着一圈月亮。你看久了，便把月亮也当成了家里的客人。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-156",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你渐渐明白，照顾不是一场施法比赛。有人递水，有人守门，有人记得把糕点掰成两半，事情便会往前走。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-161",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你渐渐明白，照顾不是一场施法比赛。有人递水，有人守门，有人记得把糕点掰成两半，事情便会往前走。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-182",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你渐渐明白，照顾不是一场施法比赛。有人递水，有人守门，有人记得把糕点掰成两半，事情便会往前走。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-183",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "山路仍旧崎岖，雨仍旧会突然落下。可你知道院门后的灯会亮着，知道有人会听见你的敲门声。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-184",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你曾把人心当作成仙的筹码，如今更在意一颗心能不能安稳地跳。这个念头让你害怕，也让你觉得轻松。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-185",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念睡着后，毓娘终于肯靠墙闭眼。你替她把被角掖好，发现自己做这些事时，手已经不再发抖。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-186",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "天亮前最黑的那一刻，你看见远处有炊烟。那不是神迹，只是有人早起煮粥，却足以让你继续往前走。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-192",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你把这一夜的细节一一记下：火光的温度、门轴的声响、孩子睡着时微微翘起的嘴角。等明天醒来，这些都会成为继续走下去的理由。",
+          "anim": "typewriter"
+        }
+      ],
+      "ending": {
+        "id": "a-lamp-kept",
+        "title": "留一盏灯",
+        "summary": "你留下来守了这一夜。没有神迹，只有一盏灯、半块糕，和不再需要独自承担的等待。",
+        "reflections": [
+          {
+            "text": "你最先拨旺了火。毓娘记住的不是妖术，而是你让出的暖意。",
+            "when": {
+              "all": [
+                {
+                  "kind": "flag",
+                  "id": "warmed",
+                  "equals": true
+                }
+              ]
+            }
+          },
+          {
+            "text": "你曾说好以人心作报酬。这一夜的陪伴，让那桩买卖终于可以被放下。",
+            "when": {
+              "all": [
+                {
+                  "kind": "flag",
+                  "id": "bargained",
+                  "equals": true
+                }
+              ]
+            }
+          },
+          {
+            "text": "你早早承认了自己的有限，于是照护成了两个人一起做的事。",
+            "when": {
+              "all": [
+                {
+                  "kind": "flag",
+                  "id": "honest",
+                  "equals": true
+                }
+              ]
+            }
+          },
+          {
+            "text": "你曾独自撑住面子。后来把记录交出去，也把疲惫说了出来。",
+            "when": {
+              "all": [
+                {
+                  "kind": "flag",
+                  "id": "kept-front",
+                  "equals": true
+                }
+              ]
+            }
+          }
+        ],
+        "outcomes": [
+          {
+            "characterId": "little-demon",
+            "text": "留下守夜，暂且不再计算成仙的报酬。"
+          },
+          {
+            "characterId": "yu-niang",
+            "text": "有人接过了灯，可以安心歇一会儿。"
+          },
+          {
+            "characterId": "nian-nian",
+            "text": "继续康复，把下一块糕也留出一半。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ending-path",
+      "kind": "ending",
+      "origin": "original",
+      "scene": "BG_SUMMIT_DAWN",
+      "sourceRefs": [],
+      "beats": [
+        {
+          "id": "line-065",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你把明日再来的时辰说了两遍，才起身告辞。毓娘没有拦，念念却伸出手，要和你勾一下小指。她勾得很轻，约定却落得很稳。",
+          "anim": "fade",
+          "musicCue": {
+            "action": "play",
+            "track": "BGM_LONG_CALM"
+          }
+        },
+        {
+          "id": "line-066",
+          "kind": "dialogue",
+          "speaker": "nian-nian",
+          "text": "明天走门！我从早上就给你留着。别又跨墙，娘刚扫干净的。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-067",
+          "kind": "dialogue",
+          "speaker": "little-demon",
+          "text": "知道啦。妖怪也是会走门的。我只是不常练。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-068",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "回到土庙，你没有向神像许下一万颗心，只把半块糕放在供台上。你仍有没想明白的事，却不必在这一夜把所有答案赶出来。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-069",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "能再赴一次约，也是小妖怪的本事。",
+          "effect": {
+            "type": "particleGather"
+          }
+        },
+        {
+          "id": "line-070",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "晨光照上山路。念念仍在康复，毓娘照顾着家，而你养足精神，准备再下山。故事还远，你们已经知道，明天可以怎样继续。",
+          "anim": "fade"
+        },
+        {
+          "id": "line-108",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-118",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-128",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-138",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-148",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你们谈起成仙，谈起赶集，谈起明年春天要种什么。谈得越多，一万颗心越像遥远的旧传说。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-157",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "山路仍旧崎岖，雨仍旧会突然落下。可你知道院门后的灯会亮着，知道有人会听见你的敲门声。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-162",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "山路仍旧崎岖，雨仍旧会突然落下。可你知道院门后的灯会亮着，知道有人会听见你的敲门声。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-187",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你渐渐明白，照顾不是一场施法比赛。有人递水，有人守门，有人记得把糕点掰成两半，事情便会往前走。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-188",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "山路仍旧崎岖，雨仍旧会突然落下。可你知道院门后的灯会亮着，知道有人会听见你的敲门声。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-189",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你曾把人心当作成仙的筹码，如今更在意一颗心能不能安稳地跳。这个念头让你害怕，也让你觉得轻松。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-190",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "念念睡着后，毓娘终于肯靠墙闭眼。你替她把被角掖好，发现自己做这些事时，手已经不再发抖。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-191",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "天亮前最黑的那一刻，你看见远处有炊烟。那不是神迹，只是有人早起煮粥，却足以让你继续往前走。",
+          "anim": "typewriter"
+        },
+        {
+          "id": "line-193",
+          "kind": "narration",
+          "speaker": "narrator",
+          "text": "你把这一夜的细节一一记下：火光的温度、门轴的声响、孩子睡着时微微翘起的嘴角。等明天醒来，这些都会成为继续走下去的理由。",
+          "anim": "typewriter"
+        }
+      ],
+      "ending": {
+        "id": "a-promise-returned",
+        "title": "明日再赴约",
+        "summary": "你选择休息，也认真留下了约定。帮助一个人，不必耗尽自己；明日还能回来，便是一种长久。",
+        "reflections": [
+          {
+            "text": "火边那一点温暖，后来变成一扇特意为你留下的门。",
+            "when": {
+              "all": [
+                {
+                  "kind": "flag",
+                  "id": "warmed",
+                  "equals": true
+                }
+              ]
+            }
+          },
+          {
+            "text": "最初你只想要报酬，如今放在心上的，却是下一次赴约。",
+            "when": {
+              "all": [
+                {
+                  "kind": "flag",
+                  "id": "bargained",
+                  "equals": true
+                }
+              ]
+            }
+          },
+          {
+            "text": "因为你说过自己的极限，毓娘明白这次离开是休息，并不是放弃。",
+            "when": {
+              "all": [
+                {
+                  "kind": "flag",
+                  "id": "honest",
+                  "equals": true
+                }
+              ]
+            }
+          },
+          {
+            "text": "你终于交出了独自记录的日子。那张记录替代了“我什么都能”的逞强。",
+            "when": {
+              "all": [
+                {
+                  "kind": "flag",
+                  "id": "kept-front",
+                  "equals": true
+                }
+              ]
+            }
+          }
+        ],
+        "outcomes": [
+          {
+            "characterId": "little-demon",
+            "text": "回到山上恢复妖力，记着明日的约定。"
+          },
+          {
+            "characterId": "yu-niang",
+            "text": "照护有了分担，也为孩子继续寻求帮助。"
+          },
+          {
+            "characterId": "nian-nian",
+            "text": "继续康复，等着会走院门的小妖怪。"
+          }
+        ]
+      }
+    }
+  ]
+}

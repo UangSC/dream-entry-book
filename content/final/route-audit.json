@@ -1,0 +1,2952 @@
+{
+  "buildId": "final-48a4194d7897",
+  "summary": [
+    {
+      "line": "A",
+      "paths": 64,
+      "min": 10852,
+      "max": 11409,
+      "minHan": 9165,
+      "choices": [
+        7
+      ]
+    },
+    {
+      "line": "B",
+      "paths": 32,
+      "min": 8506,
+      "max": 9179,
+      "minHan": 7156,
+      "choices": [
+        6
+      ]
+    },
+    {
+      "line": "C",
+      "paths": 96,
+      "min": 11998,
+      "max": 12798,
+      "minHan": 10061,
+      "choices": [
+        7,
+        8
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "ending": "ending-aftertaste",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "ate",
+        "said-truth",
+        "guarded-all",
+        "shielded-truth"
+      ],
+      "characters": 9132,
+      "han": 7638,
+      "beats": 353
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "ate",
+        "said-truth",
+        "guarded-all",
+        "unseen"
+      ],
+      "characters": 8916,
+      "han": 7485,
+      "beats": 338
+    },
+    {
+      "ending": "ending-aftertaste",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "ate",
+        "said-truth",
+        "late-by-half",
+        "shielded-truth"
+      ],
+      "characters": 9028,
+      "han": 7553,
+      "beats": 349
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "ate",
+        "said-truth",
+        "late-by-half",
+        "unseen"
+      ],
+      "characters": 8810,
+      "han": 7398,
+      "beats": 334
+    },
+    {
+      "ending": "ending-bitter-echo",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "ate",
+        "lied",
+        "guarded-all",
+        "shielded-lie"
+      ],
+      "characters": 8906,
+      "han": 7476,
+      "beats": 337
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "ate",
+        "lied",
+        "guarded-all",
+        "unseen"
+      ],
+      "characters": 8853,
+      "han": 7435,
+      "beats": 334
+    },
+    {
+      "ending": "ending-bitter-echo",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "ate",
+        "lied",
+        "late-by-half",
+        "shielded-lie"
+      ],
+      "characters": 8800,
+      "han": 7389,
+      "beats": 333
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "ate",
+        "lied",
+        "late-by-half",
+        "unseen"
+      ],
+      "characters": 8747,
+      "han": 7348,
+      "beats": 330
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11191,
+      "han": 9444,
+      "beats": 384
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11306,
+      "han": 9523,
+      "beats": 393
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12337,
+      "han": 10340,
+      "beats": 476
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12697,
+      "han": 10604,
+      "beats": 495
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12652,
+      "han": 10580,
+      "beats": 491
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11055,
+      "han": 9326,
+      "beats": 378
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11170,
+      "han": 9405,
+      "beats": 387
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12201,
+      "han": 10222,
+      "beats": 470
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12561,
+      "han": 10486,
+      "beats": 489
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12516,
+      "han": 10462,
+      "beats": 485
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11209,
+      "han": 9460,
+      "beats": 384
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11324,
+      "han": 9539,
+      "beats": 393
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12353,
+      "han": 10353,
+      "beats": 476
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12713,
+      "han": 10617,
+      "beats": 495
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12668,
+      "han": 10593,
+      "beats": 491
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11073,
+      "han": 9342,
+      "beats": 378
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11188,
+      "han": 9421,
+      "beats": 387
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12217,
+      "han": 10235,
+      "beats": 470
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12577,
+      "han": 10499,
+      "beats": 489
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12532,
+      "han": 10475,
+      "beats": 485
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11197,
+      "han": 9447,
+      "beats": 385
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11312,
+      "han": 9526,
+      "beats": 394
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12343,
+      "han": 10343,
+      "beats": 477
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12703,
+      "han": 10607,
+      "beats": 496
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12658,
+      "han": 10583,
+      "beats": 492
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11061,
+      "han": 9329,
+      "beats": 379
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11176,
+      "han": 9408,
+      "beats": 388
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12207,
+      "han": 10225,
+      "beats": 471
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12567,
+      "han": 10489,
+      "beats": 490
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12522,
+      "han": 10465,
+      "beats": 486
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11215,
+      "han": 9463,
+      "beats": 385
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11330,
+      "han": 9542,
+      "beats": 394
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12359,
+      "han": 10356,
+      "beats": 477
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12719,
+      "han": 10620,
+      "beats": 496
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12674,
+      "han": 10596,
+      "beats": 492
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11079,
+      "han": 9345,
+      "beats": 379
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11194,
+      "han": 9424,
+      "beats": 388
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12223,
+      "han": 10238,
+      "beats": 471
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12583,
+      "han": 10502,
+      "beats": 490
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12538,
+      "han": 10478,
+      "beats": 486
+    },
+    {
+      "ending": "ending-aftertaste",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "ate",
+        "said-truth",
+        "guarded-all",
+        "shielded-truth"
+      ],
+      "characters": 8891,
+      "han": 7446,
+      "beats": 344
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "ate",
+        "said-truth",
+        "guarded-all",
+        "unseen"
+      ],
+      "characters": 8675,
+      "han": 7293,
+      "beats": 329
+    },
+    {
+      "ending": "ending-aftertaste",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "ate",
+        "said-truth",
+        "late-by-half",
+        "shielded-truth"
+      ],
+      "characters": 8787,
+      "han": 7361,
+      "beats": 340
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "ate",
+        "said-truth",
+        "late-by-half",
+        "unseen"
+      ],
+      "characters": 8569,
+      "han": 7206,
+      "beats": 325
+    },
+    {
+      "ending": "ending-bitter-echo",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "ate",
+        "lied",
+        "guarded-all",
+        "shielded-lie"
+      ],
+      "characters": 8665,
+      "han": 7284,
+      "beats": 328
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "ate",
+        "lied",
+        "guarded-all",
+        "unseen"
+      ],
+      "characters": 8612,
+      "han": 7243,
+      "beats": 325
+    },
+    {
+      "ending": "ending-bitter-echo",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "ate",
+        "lied",
+        "late-by-half",
+        "shielded-lie"
+      ],
+      "characters": 8559,
+      "han": 7197,
+      "beats": 324
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "ate",
+        "lied",
+        "late-by-half",
+        "unseen"
+      ],
+      "characters": 8506,
+      "han": 7156,
+      "beats": 321
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10988,
+      "han": 9283,
+      "beats": 376
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11103,
+      "han": 9362,
+      "beats": 385
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12134,
+      "han": 10179,
+      "beats": 468
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12494,
+      "han": 10443,
+      "beats": 487
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12449,
+      "han": 10419,
+      "beats": 483
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10852,
+      "han": 9165,
+      "beats": 370
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 10967,
+      "han": 9244,
+      "beats": 379
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 11998,
+      "han": 10061,
+      "beats": 462
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12358,
+      "han": 10325,
+      "beats": 481
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12313,
+      "han": 10301,
+      "beats": 477
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11006,
+      "han": 9299,
+      "beats": 376
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11121,
+      "han": 9378,
+      "beats": 385
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12150,
+      "han": 10192,
+      "beats": 468
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12510,
+      "han": 10456,
+      "beats": 487
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12465,
+      "han": 10432,
+      "beats": 483
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10870,
+      "han": 9181,
+      "beats": 370
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 10985,
+      "han": 9260,
+      "beats": 379
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12014,
+      "han": 10074,
+      "beats": 462
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12374,
+      "han": 10338,
+      "beats": 481
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12329,
+      "han": 10314,
+      "beats": 477
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10994,
+      "han": 9286,
+      "beats": 377
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11109,
+      "han": 9365,
+      "beats": 386
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12140,
+      "han": 10182,
+      "beats": 469
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12500,
+      "han": 10446,
+      "beats": 488
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12455,
+      "han": 10422,
+      "beats": 484
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10858,
+      "han": 9168,
+      "beats": 371
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 10973,
+      "han": 9247,
+      "beats": 380
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12004,
+      "han": 10064,
+      "beats": 463
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12364,
+      "han": 10328,
+      "beats": 482
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12319,
+      "han": 10304,
+      "beats": 478
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11012,
+      "han": 9302,
+      "beats": 377
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11127,
+      "han": 9381,
+      "beats": 386
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12156,
+      "han": 10195,
+      "beats": 469
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12516,
+      "han": 10459,
+      "beats": 488
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12471,
+      "han": 10435,
+      "beats": 484
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10876,
+      "han": 9184,
+      "beats": 371
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 10991,
+      "han": 9263,
+      "beats": 380
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12020,
+      "han": 10077,
+      "beats": 463
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12380,
+      "han": 10341,
+      "beats": 482
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "warmed",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12335,
+      "han": 10317,
+      "beats": 478
+    },
+    {
+      "ending": "ending-aftertaste",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "ate",
+        "said-truth",
+        "guarded-all",
+        "shielded-truth"
+      ],
+      "characters": 9179,
+      "han": 7672,
+      "beats": 355
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "ate",
+        "said-truth",
+        "guarded-all",
+        "unseen"
+      ],
+      "characters": 8963,
+      "han": 7519,
+      "beats": 340
+    },
+    {
+      "ending": "ending-aftertaste",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "ate",
+        "said-truth",
+        "late-by-half",
+        "shielded-truth"
+      ],
+      "characters": 9075,
+      "han": 7587,
+      "beats": 351
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "ate",
+        "said-truth",
+        "late-by-half",
+        "unseen"
+      ],
+      "characters": 8857,
+      "han": 7432,
+      "beats": 336
+    },
+    {
+      "ending": "ending-bitter-echo",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "ate",
+        "lied",
+        "guarded-all",
+        "shielded-lie"
+      ],
+      "characters": 8953,
+      "han": 7510,
+      "beats": 339
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "ate",
+        "lied",
+        "guarded-all",
+        "unseen"
+      ],
+      "characters": 8900,
+      "han": 7469,
+      "beats": 336
+    },
+    {
+      "ending": "ending-bitter-echo",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "ate",
+        "lied",
+        "late-by-half",
+        "shielded-lie"
+      ],
+      "characters": 8847,
+      "han": 7423,
+      "beats": 335
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "ate",
+        "lied",
+        "late-by-half",
+        "unseen"
+      ],
+      "characters": 8794,
+      "han": 7382,
+      "beats": 332
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11270,
+      "han": 9503,
+      "beats": 387
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11385,
+      "han": 9582,
+      "beats": 396
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12416,
+      "han": 10399,
+      "beats": 479
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12776,
+      "han": 10663,
+      "beats": 498
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12731,
+      "han": 10639,
+      "beats": 494
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11134,
+      "han": 9385,
+      "beats": 381
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11249,
+      "han": 9464,
+      "beats": 390
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12280,
+      "han": 10281,
+      "beats": 473
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12640,
+      "han": 10545,
+      "beats": 492
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12595,
+      "han": 10521,
+      "beats": 488
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11288,
+      "han": 9519,
+      "beats": 387
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11403,
+      "han": 9598,
+      "beats": 396
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12432,
+      "han": 10412,
+      "beats": 479
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12792,
+      "han": 10676,
+      "beats": 498
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12747,
+      "han": 10652,
+      "beats": 494
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11152,
+      "han": 9401,
+      "beats": 381
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11267,
+      "han": 9480,
+      "beats": 390
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12296,
+      "han": 10294,
+      "beats": 473
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12656,
+      "han": 10558,
+      "beats": 492
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12611,
+      "han": 10534,
+      "beats": 488
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11276,
+      "han": 9506,
+      "beats": 388
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11391,
+      "han": 9585,
+      "beats": 397
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12422,
+      "han": 10402,
+      "beats": 480
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12782,
+      "han": 10666,
+      "beats": 499
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12737,
+      "han": 10642,
+      "beats": 495
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11140,
+      "han": 9388,
+      "beats": 382
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11255,
+      "han": 9467,
+      "beats": 391
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12286,
+      "han": 10284,
+      "beats": 474
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12646,
+      "han": 10548,
+      "beats": 493
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12601,
+      "han": 10524,
+      "beats": 489
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11294,
+      "han": 9522,
+      "beats": 388
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11409,
+      "han": 9601,
+      "beats": 397
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12438,
+      "han": 10415,
+      "beats": 480
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12798,
+      "han": 10679,
+      "beats": 499
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12753,
+      "han": 10655,
+      "beats": 495
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11158,
+      "han": 9404,
+      "beats": 382
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11273,
+      "han": 9483,
+      "beats": 391
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12302,
+      "han": 10297,
+      "beats": 474
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12662,
+      "han": 10561,
+      "beats": 493
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "faced-zhang",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12617,
+      "han": 10537,
+      "beats": 489
+    },
+    {
+      "ending": "ending-aftertaste",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "ate",
+        "said-truth",
+        "guarded-all",
+        "shielded-truth"
+      ],
+      "characters": 8938,
+      "han": 7480,
+      "beats": 346
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "ate",
+        "said-truth",
+        "guarded-all",
+        "unseen"
+      ],
+      "characters": 8722,
+      "han": 7327,
+      "beats": 331
+    },
+    {
+      "ending": "ending-aftertaste",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "ate",
+        "said-truth",
+        "late-by-half",
+        "shielded-truth"
+      ],
+      "characters": 8834,
+      "han": 7395,
+      "beats": 342
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "ate",
+        "said-truth",
+        "late-by-half",
+        "unseen"
+      ],
+      "characters": 8616,
+      "han": 7240,
+      "beats": 327
+    },
+    {
+      "ending": "ending-bitter-echo",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "ate",
+        "lied",
+        "guarded-all",
+        "shielded-lie"
+      ],
+      "characters": 8712,
+      "han": 7318,
+      "beats": 330
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "ate",
+        "lied",
+        "guarded-all",
+        "unseen"
+      ],
+      "characters": 8659,
+      "han": 7277,
+      "beats": 327
+    },
+    {
+      "ending": "ending-bitter-echo",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "ate",
+        "lied",
+        "late-by-half",
+        "shielded-lie"
+      ],
+      "characters": 8606,
+      "han": 7231,
+      "beats": 326
+    },
+    {
+      "ending": "ending-bitter",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "ate",
+        "lied",
+        "late-by-half",
+        "unseen"
+      ],
+      "characters": 8553,
+      "han": 7190,
+      "beats": 323
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11067,
+      "han": 9342,
+      "beats": 379
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11182,
+      "han": 9421,
+      "beats": 388
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12213,
+      "han": 10238,
+      "beats": 471
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12573,
+      "han": 10502,
+      "beats": 490
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12528,
+      "han": 10478,
+      "beats": 486
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10931,
+      "han": 9224,
+      "beats": 373
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11046,
+      "han": 9303,
+      "beats": 382
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12077,
+      "han": 10120,
+      "beats": 465
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12437,
+      "han": 10384,
+      "beats": 484
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12392,
+      "han": 10360,
+      "beats": 480
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11085,
+      "han": 9358,
+      "beats": 379
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11200,
+      "han": 9437,
+      "beats": 388
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12229,
+      "han": 10251,
+      "beats": 471
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12589,
+      "han": 10515,
+      "beats": 490
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12544,
+      "han": 10491,
+      "beats": 486
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10949,
+      "han": 9240,
+      "beats": 373
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11064,
+      "han": 9319,
+      "beats": 382
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12093,
+      "han": 10133,
+      "beats": 465
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12453,
+      "han": 10397,
+      "beats": 484
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "kept-hands",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12408,
+      "han": 10373,
+      "beats": 480
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11073,
+      "han": 9345,
+      "beats": 380
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11188,
+      "han": 9424,
+      "beats": 389
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12219,
+      "han": 10241,
+      "beats": 472
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12579,
+      "han": 10505,
+      "beats": 491
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12534,
+      "han": 10481,
+      "beats": 487
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10937,
+      "han": 9227,
+      "beats": 374
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11052,
+      "han": 9306,
+      "beats": 383
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12083,
+      "han": 10123,
+      "beats": 466
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12443,
+      "han": 10387,
+      "beats": 485
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "went-now",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12398,
+      "han": 10363,
+      "beats": 481
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "ascended"
+      ],
+      "characters": 11091,
+      "han": 9361,
+      "beats": 380
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11206,
+      "han": 9440,
+      "beats": 389
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12235,
+      "han": 10254,
+      "beats": 472
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12595,
+      "han": 10518,
+      "beats": 491
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "scared-him",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12550,
+      "han": 10494,
+      "beats": 487
+    },
+    {
+      "ending": "ending-ascend",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "ascended"
+      ],
+      "characters": 10955,
+      "han": 9243,
+      "beats": 374
+    },
+    {
+      "ending": "ending-deferred",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "hid",
+        "deferred"
+      ],
+      "characters": 11070,
+      "han": 9322,
+      "beats": 383
+    },
+    {
+      "ending": "ending-demon-king",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "marched-on"
+      ],
+      "characters": 12099,
+      "han": 10136,
+      "beats": 466
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "shielded-by-all"
+      ],
+      "characters": 12459,
+      "han": 10400,
+      "beats": 485
+    },
+    {
+      "ending": "ending-willing",
+      "choices": [
+        "bargained",
+        "took-chicken",
+        "changed-price",
+        "asked-first",
+        "just-debt",
+        "fought-back",
+        "stopped",
+        "fought-alone"
+      ],
+      "characters": 12414,
+      "han": 10376,
+      "beats": 481
+    }
+  ],
+  "conditionalBeats": 132,
+  "conditionalBoth": 132
+}

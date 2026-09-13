@@ -28,9 +28,8 @@ describe('日常闲话与持续的表情', () => {
   it('饥饿与慌张跨旁白持续，到明确的情绪转折才切换', () => {
     const pkg = dreamPackageSchema.parse(JSON.parse(readFileSync('public/dreams/little-demon.json', 'utf8')));
     const cues = createPerformances(pkg);
-    expect(cues['line-002']!.portrait).toBe(cues['line-003']!.portrait);
-    expect(cues['line-007']!.portrait).toBe(cues['line-008']!.portrait);
-    expect(cues['line-007']!.portrait).not.toBe(cues['line-071']!.portrait);
-    expect(cues['line-014']!.portrait).toBe(cues['line-015']!.portrait);
+    const beats = pkg.nodes.find(node => node.id === 'ember')!.beats.filter(beat => beat.speaker === 'little-demon' || beat.speaker === 'narrator');
+    expect(new Set(beats.map(beat => cues[beat.id]?.portrait)).size).toBe(1);
+    for (const beat of pkg.nodes.flatMap(node => node.beats).filter(beat => beat.text.startsWith('师祖（'))) expect(cues[beat.id]?.portrait).toBeUndefined();
   });
 });

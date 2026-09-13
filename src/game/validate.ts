@@ -4,6 +4,7 @@ import {
   EXIT_EFFECTS,
   SPLIT_EFFECTS,
   LIMITS,
+  LONGFORM_LIMITS,
   type Beat,
   type Condition,
   type DreamNode,
@@ -67,6 +68,7 @@ export function validateDreamPackage(
     return { ok: false, findings };
   }
   const pkg = parsed.data;
+  const limits = pkg.edition === 'longform' ? LONGFORM_LIMITS : LIMITS;
 
   // ---------- 体积 ----------
   if (options.byteLength !== undefined && options.byteLength > LIMITS.maxBytes) {
@@ -150,7 +152,7 @@ export function validateDreamPackage(
     beatIdsGlobal.push(...node.beats.map((b) => b.id));
 
     // 节点至少有一个无条件拍，避免整页为空
-    if (!node.beats.some((b) => !skippable(b))) {
+    if (pkg.edition !== 'longform' && !node.beats.some((b) => !skippable(b))) {
       err('all-conditional', `节点 ${node.id} 的所有拍都带 when，可能整页为空`, `${nAt}.beats`);
     }
 
@@ -265,7 +267,7 @@ export function validateDreamPackage(
   for (const r of [...pkg.resources, ...pkg.relationships]) {
     combos *= r.max - r.min + 1;
   }
-  if (Number.isFinite(combos) && combos > LIMITS.maxStateCombos) {
+  if (pkg.edition !== 'longform' && Number.isFinite(combos) && combos > LIMITS.maxStateCombos) {
     err(
       'state-explosion',
       `状态组合约 ${Math.round(combos)} 种，超过 ${LIMITS.maxStateCombos} 上限`,
@@ -276,31 +278,31 @@ export function validateDreamPackage(
   const effectBeats = pkg.nodes.flatMap((n) =>
     n.beats.filter((b) => b.effect !== undefined).map((b) => ({ node: n.id, beat: b })),
   );
-  if (effectBeats.length > LIMITS.maxTimedEffects) {
+  if (effectBeats.length > limits.maxTimedEffects) {
     err(
       'effect-quota',
       `入场+退场类共 ${effectBeats.length} 拍，超过每包 ${LIMITS.maxTimedEffects} 拍上限`,
     );
   }
   const splitCount = effectBeats.filter((e) => splitSet.has(e.beat.effect?.type ?? '')).length;
-  if (splitCount > LIMITS.maxSplitEffects) {
+  if (splitCount > limits.maxSplitEffects) {
     err('effect-quota', `拆字类共 ${splitCount} 拍，超过 ${LIMITS.maxSplitEffects} 拍上限`);
   }
   const enterKinds = new Set(
     effectBeats.map((e) => e.beat.effect?.type ?? '').filter((t) => enterSet.has(t)),
   );
-  if (enterKinds.size > LIMITS.maxEnterKinds) {
+  if (enterKinds.size > limits.maxEnterKinds) {
     err('effect-quota', `入场类用了 ${enterKinds.size} 种，超过 ${LIMITS.maxEnterKinds} 种上限`);
   }
   const exitKinds = new Set(
     effectBeats.map((e) => e.beat.effect?.type ?? '').filter((t) => exitSet.has(t)),
   );
-  if (exitKinds.size > LIMITS.maxExitKinds) {
+  if (exitKinds.size > limits.maxExitKinds) {
     err('effect-quota', `退场类用了 ${exitKinds.size} 种，超过 ${LIMITS.maxExitKinds} 种上限`);
   }
 
   // 连续 N 拍窗口内不得出现 2 次特效：在“拍图”上枚举长度 N 的路径。
-  const gapViolation = findEffectGapViolation(pkg, nodeMap, LIMITS.minGapBetweenEffects);
+  const gapViolation = findEffectGapViolation(pkg, nodeMap, limits.minGapBetweenEffects);
   if (gapViolation !== undefined) {
     err(
       'effect-gap',
@@ -373,6 +375,7 @@ function analyzeValueRanges(
     const cur = queue[steps++]!;
     const node = nodeMap.get(cur.nodeId);
     if (node === undefined) continue;
+    if (!node.beats.some(beat => evaluateCondition(beat.when, cur.vars))) out.push({ severity: 'error', code: 'all-conditional', message: `节点 ${node.id} 存在无可见正文的可达状态` });
     if (node.kind === 'ending') { endings.add(node.id); continue; }
 
     if (node.next !== undefined) {

@@ -5,6 +5,7 @@ import { readDreamBook, sha256 } from './archive';
 import { bookKV } from './storage';
 import { GENERATION_DURATION_MS, snapshotJob, simulatedWeaver, type GenerationJob } from './generation';
 import type { KV } from '../game/storage';
+import { storyAsides } from '../../tools/story-asides';
 import { sourceSchema } from '../game/schema';
 
 const archive = new Uint8Array(readFileSync('public/books/little-demon.dreambook'));
@@ -17,15 +18,16 @@ afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
 describe('入梦书 v1 的真实示例和不可信文件', () => {
   it('日常闲话随梦包携带，拒绝缺失人物、立绘和重复选项', async () => {
     const book = await readDreamBook(archive);
-    expect(Object.keys(book.manifest.presentation.asides ?? {})).toEqual(['line-004', 'line-036']);
+    expect(Object.keys(book.manifest.presentation.asides ?? {})).toEqual([]);
     for (const kind of ['character', 'portrait', 'duplicate', 'beat']) {
       const invalid = structuredClone(manifest);
-      const aside = invalid.presentation.asides['line-004'];
-      if (kind === 'character') aside.options[0].replies[0].speaker = 'missing-person';
-      if (kind === 'portrait') aside.options[0].replies[0].portrait = 'BG_MISSING';
-      if (kind === 'duplicate') aside.options[1].id = aside.options[0].id;
+      const aside = structuredClone(storyAsides['line-004']!);
+      invalid.presentation.asides = { [pkg.nodes[0].beats[0].id]: aside };
+      if (kind === 'character') aside.options[0]!.replies[0]!.speaker = 'missing-person';
+      if (kind === 'portrait') aside.options[0]!.replies[0]!.portrait = 'BG_MISSING';
+      if (kind === 'duplicate') aside.options[1]!.id = aside.options[0]!.id;
       if (kind === 'beat') invalid.presentation.asides['missing-beat'] = aside;
-      await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(invalid)) }))).rejects.toThrow();
+      await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(invalid)) }, { level: 0 }))).rejects.toThrow();
     }
   });
   it('六种情绪演出跟随梦包，并拒绝无效选择引用', async () => {
@@ -33,27 +35,28 @@ describe('入梦书 v1 的真实示例和不可信文件', () => {
     expect(new Set(Object.values(book.manifest.presentation.choiceMoods ?? {})).size).toBe(6);
     const invalid = structuredClone(manifest);
     invalid.presentation.choiceMoods = { 'missing-choice': 'hesitant' };
-    await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(invalid)) }))).rejects.toThrow('选择演出引用不存在的选项');
+    await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(invalid)) }, { level: 0 }))).rejects.toThrow('选择演出引用不存在的选项');
   });
   it('每拍立绘随梦包携带，主角的七种表情可用，旧 Demo 仍可读取', async () => {
     const book = await readDreamBook(archive);
     const performances = book.manifest.presentation.performances!;
     for (const beat of book.pkg.nodes.flatMap(node => node.beats)) {
+      if (!performances[beat.id]?.portrait) { expect(performances[beat.id]?.label).toBeTruthy(); continue; }
       const asset = book.manifest.assets.find(asset => asset.id === performances[beat.id]?.portrait);
       expect(asset?.kind).toBe('image');
       expect(book.files[asset!.path]?.length).toBeGreaterThan(0);
     }
-    expect(new Set(Object.values(performances).filter(item => item.portrait.includes('DEMON_BARE')).map(item => item.portrait)).size).toBe(7);
+    expect(new Set(Object.values(performances).filter(item => item.portrait?.includes('DEMON_BARE') && !item.portrait.endsWith('_FULL')).map(item => item.portrait)).size).toBe(7);
     const demo = await readDreamBook(new Uint8Array(readFileSync('public/books/little-demon-demo.dreambook')));
     expect(demo.pkg.title).toBe(book.pkg.title);
   });
   it('拒绝丢失的立绘和不存在的演出台词引用', async () => {
     const missing = structuredClone(manifest);
-    missing.presentation.performances['line-002'].portrait = 'BG_MISSING_PORTRAIT';
+    missing.presentation.performances[pkg.nodes[0].beats[0].id].portrait = 'BG_MISSING_PORTRAIT';
     await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(missing)) }))).rejects.toThrow('素材引用类别错误');
     const invalid = structuredClone(manifest);
-    invalid.presentation.performances['missing-beat'] = invalid.presentation.performances['line-002'];
-    await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(invalid)) }))).rejects.toThrow('立绘演出引用不存在的拍');
+    invalid.presentation.performances['missing-beat'] = invalid.presentation.performances[pkg.nodes[0].beats[0].id];
+    await expect(readDreamBook(zipSync({ ...files, 'book.json': strToU8(JSON.stringify(invalid)) }, { level: 0 }))).rejects.toThrow('立绘演出引用不存在的拍');
   });
   it('作者主页与发布日期可省略；提供时拒绝危险链接、伪造知乎域名和无效日期', () => {
     const { authorUrl, publishedAt, ...legacy } = pkg.source;
@@ -72,13 +75,13 @@ describe('入梦书 v1 的真实示例和不可信文件', () => {
     expect(sourceSchema.safeParse({ ...original, sourceUrl: 'https://user:password@example.com/' }).success).toBe(false);
     expect(sourceSchema.safeParse({ ...original, kind: 'external_excerpt', completeness: 'complete' }).success).toBe(false);
   });
-  it('完整示例可回读，包含作者、两种结局、夜间声音与白昼粒子', async () => {
+  it('完整示例可回读，包含作者、七份终幕、夜间声音与白昼粒子', async () => {
     const book = await readDreamBook(archive);
-    expect(book.pkg.source.author).toBe('女巫'); expect(book.pkg.nodes.filter(n => n.kind === 'ending')).toHaveLength(2);
+    expect(book.pkg.source.author).toBe('女巫'); expect(book.pkg.nodes.filter(n => n.kind === 'ending')).toHaveLength(7);
     expect(book.pkg.source.authorUrl).toBe('https://www.zhihu.com/people/cc09d82355e21162462ba02ac9717dba');
     expect(book.pkg.source.sourceUrl).toBe('https://www.zhihu.com/market/paid_column/2025960728138401447/section/2025954672918163637');
     expect(book.pkg.source.publishedAt).toBe('2026-04-10');
-    expect(book.manifest.presentation.scenes.BG_SHRINE_N?.ambience).toBe('BGM_NIGHT_AMBIENCE');
+    expect(book.manifest.presentation.scenes.BG_SHRINE_N?.ambience).toBe('BGM_SHRINE_AMBIENCE');
     expect(book.manifest.presentation.scenes.BG_COTTAGE_D?.particles).toBe('leaves');
   });
   it('重新压缩不改变包内容身份', async () => {

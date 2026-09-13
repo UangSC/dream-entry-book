@@ -587,6 +587,403 @@
       ]
     },
     {
+      "id": "BGM_CARE",
+      "kind": "music",
+      "file": "bgm-care.mp3",
+      "durationSeconds": 134.838277,
+      "bytes": 1888592,
+      "sha256": "74fe874c938e7b62b9478bbc4404f167c10c8b394f9550648099b457035f703c",
+      "source": {
+        "name": "渡灵气·照护期",
+        "originalPath": "assets\\source\\audio\\bgm-new\\渡灵气·照护期.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 134.838277,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "BGM_MARKET",
+      "kind": "music",
+      "file": "bgm-market.mp3",
+      "durationSeconds": 71.238821,
+      "bytes": 998443,
+      "sha256": "d53acf6d3bbc9a8c528a7fafeac4c4c2bcc667d250f3c582e22397c8884cd5e3",
+      "source": {
+        "name": "市侩诙谐",
+        "originalPath": "assets\\source\\audio\\bgm-new\\市侩诙谐.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 71.238821,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "BGM_COLD_DANGER",
+      "kind": "music",
+      "file": "bgm-cold-danger.mp3",
+      "durationSeconds": 50.062222,
+      "bytes": 701849,
+      "sha256": "d50e89ac754c5e3cca0a9363394c517fedd5af32335feb336df9d2093df87195",
+      "source": {
+        "name": "冷与危",
+        "originalPath": "assets\\source\\audio\\bgm-new\\冷与危.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 50.062222,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "BGM_ACID",
+      "kind": "music",
+      "file": "bgm-acid.mp3",
+      "durationSeconds": 52.825397,
+      "bytes": 740614,
+      "sha256": "ece70ad9fc1786a69427ee3d53f5980e7a1681d5d88c571bd9cda0de406792d0",
+      "source": {
+        "name": "酸心线",
+        "originalPath": "assets\\source\\audio\\bgm-new\\酸心线.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 52.825397,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "BGM_SEEK_HER",
+      "kind": "music",
+      "file": "bgm-seek-her.mp3",
+      "durationSeconds": 199.273651,
+      "bytes": 2790809,
+      "sha256": "55438dd843fa51372011601553c30b1c910e1da92b2db0ad6d8d2d6463126b12",
+      "source": {
+        "name": "万人寻她",
+        "originalPath": "assets\\source\\audio\\bgm-new\\万人寻她.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 199.273651,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "BGM_FAREWELL",
+      "kind": "music",
+      "file": "bgm-farewell.mp3",
+      "durationSeconds": 143.2439,
+      "bytes": 2006352,
+      "sha256": "c1da207ea29b3b2d85899b61d8f228d9118cc700cee9085ffdbcb0035dd1a49b",
+      "source": {
+        "name": "兑现与送别",
+        "originalPath": "assets\\source\\audio\\bgm-new\\兑现与送别.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 143.2439,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "SFX_FIRE",
+      "kind": "sfx",
+      "file": "sfx-fire.mp3",
+      "durationSeconds": 2,
+      "bytes": 21110,
+      "sha256": "92c0deceefec065c0efe7c2e85ce631d0db83a183888150005d41b0bb0449e43",
+      "source": {
+        "name": "用户音效 S1",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S1.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      }
+    },
+    {
+      "id": "BGM_FIRE_AMBIENCE",
+      "kind": "music",
+      "file": "bgm-fire-ambience.mp3",
+      "durationSeconds": 8,
+      "bytes": 113049,
+      "sha256": "64f7b833bd81794c4fea31d94c28fd80c72dbc9d959d0fcb7b13ba77a4e008e6",
+      "source": {
+        "name": "用户音效 S2",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S2.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 8,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "BGM_RAIN_AMBIENCE",
+      "kind": "music",
+      "file": "bgm-rain-ambience.mp3",
+      "durationSeconds": 30,
+      "bytes": 420980,
+      "sha256": "23bc60fd69c7a703552b6bd8825c90c213a67be9b7e05211316c324c2cdb6d92",
+      "source": {
+        "name": "用户音效 S4",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S4.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 30,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "BGM_FOREST_RAIN",
+      "kind": "music",
+      "file": "bgm-forest-rain.mp3",
+      "durationSeconds": 25.000249,
+      "bytes": 351158,
+      "sha256": "94edede70e22de2c3884d12c5b7d6c484e50e7a5fa0063e786f3c5d69bfddc7e",
+      "source": {
+        "name": "用户音效 S5",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S5.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 25.000249,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "BGM_FOREST_AMBIENCE",
+      "kind": "music",
+      "file": "bgm-forest-ambience.mp3",
+      "durationSeconds": 30,
+      "bytes": 421153,
+      "sha256": "4949437b8a70f87625fb7a6e4de54fcd31a5cf614718013a7512d919ff243761",
+      "source": {
+        "name": "用户音效 S6",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S6.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 30,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "BGM_SHRINE_AMBIENCE",
+      "kind": "music",
+      "file": "bgm-shrine-ambience.mp3",
+      "durationSeconds": 20,
+      "bytes": 281358,
+      "sha256": "db9b94f5a4a48a77be7cbec817320282a14b9d934abd29e96b0189095d0374d0",
+      "source": {
+        "name": "用户音效 S7",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S7.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      },
+      "loop": {
+        "mode": "fadeLoop",
+        "startSeconds": 0,
+        "endSeconds": 20,
+        "overlapMs": 800,
+        "verified": false
+      }
+    },
+    {
+      "id": "SFX_OFFER",
+      "kind": "sfx",
+      "file": "sfx-offer.mp3",
+      "durationSeconds": 1,
+      "bytes": 10754,
+      "sha256": "92d15bdea943673c91a8668dd50c9eeba80edc0a87227956a45d0c2055f6b746",
+      "source": {
+        "name": "用户音效 S8",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S8.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      }
+    },
+    {
+      "id": "SFX_ROPE",
+      "kind": "sfx",
+      "file": "sfx-rope.mp3",
+      "durationSeconds": 2,
+      "bytes": 20721,
+      "sha256": "8b1b9df988fd709157c43b16d10560a2811ce0c6858528ee35c2f93c8aad4cd6",
+      "source": {
+        "name": "用户音效 S9",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S9.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      }
+    },
+    {
+      "id": "SFX_GATE",
+      "kind": "sfx",
+      "file": "sfx-gate.mp3",
+      "durationSeconds": 4,
+      "bytes": 40835,
+      "sha256": "fbecd5ea815ad8214abd50cf2ca018bd706fcfa4836700bff498552486b7e9d1",
+      "source": {
+        "name": "用户音效 S10",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S10.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      }
+    },
+    {
+      "id": "SFX_DOOR",
+      "kind": "sfx",
+      "file": "sfx-door.mp3",
+      "durationSeconds": 1.94424,
+      "bytes": 20198,
+      "sha256": "0b7d4edde2127ed99f6d4e3feda8c1b3e68a7bab9e2ed87f5498cbbf73bfddbc",
+      "source": {
+        "name": "用户音效 S11",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S11.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      }
+    },
+    {
+      "id": "SFX_SHATTER",
+      "kind": "sfx",
+      "file": "sfx-shatter.mp3",
+      "durationSeconds": 0.990249,
+      "bytes": 10493,
+      "sha256": "d39f728c5e3c21f2278fb970052bc01d14610e293276a08a6e8aecbdaf6d1b91",
+      "source": {
+        "name": "用户音效 S13",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S13.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      }
+    },
+    {
+      "id": "SFX_COMPASS",
+      "kind": "sfx",
+      "file": "sfx-compass.mp3",
+      "durationSeconds": 0.980862,
+      "bytes": 10515,
+      "sha256": "20da86cf39bc78654778e48eb506cd954bd3721cf30b53bab6218a74e737eb9f",
+      "source": {
+        "name": "用户音效 S14",
+        "originalPath": "assets\\source\\audio\\sfx-new\\#S14.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      }
+    },
+    {
+      "id": "SFX_SPIRIT",
+      "kind": "sfx",
+      "file": "sfx-spirit.mp3",
+      "durationSeconds": 1.399955,
+      "bytes": 14673,
+      "sha256": "42386174d4ebd0fef07adb551329ebf817d8f3dd2f66b0fa80cacc0d600968ff",
+      "source": {
+        "name": "本地合成占位 · 灵气微光",
+        "originalPath": "assets\\source\\audio\\sfx_spirit.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      }
+    },
+    {
+      "id": "SFX_CALL",
+      "kind": "sfx",
+      "file": "sfx-call.mp3",
+      "durationSeconds": 4,
+      "bytes": 40795,
+      "sha256": "50f80e706f0cf114765d3708b2fb63f90f4dae273230b029e3df9ccfb2ba4cf4",
+      "source": {
+        "name": "本地合成占位 · 山谷和声（无人声）",
+        "originalPath": "assets\\source\\audio\\sfx_call.wav"
+      },
+      "rights": {
+        "status": "pending",
+        "reference": "用户提供临时素材；合成占位另有标记"
+      }
+    },
+    {
       "id": "BGM_NIGHT_AMBIENCE",
       "kind": "music",
       "file": "ambience-night.wav",

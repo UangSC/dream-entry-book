@@ -3,6 +3,7 @@ import { packDreamBook, readDreamBook, sha256 } from '../src/books/archive';
 import type { BookManifest, BookAsset } from '../src/books/schema';
 import { createPerformances } from './story-performances';
 import { storyAsides } from './story-asides';
+import { finalPresentation } from './final-presentation';
 
 // 可重复生成的轻声环境层：蟋蟀短鸣、低频蛙声，首尾留白，避免循环接缝。
 const rate = 22050, seconds = 20, pcm = new Float32Array(rate * seconds);
@@ -47,6 +48,7 @@ const manifest: BookManifest = {
     chapters: { threshold: '一 · 庙中借宿', fireside: '二 · 火边的人心', warmth: '三 · 一点暖意', promise: '三 · 一桩买卖', 'small-miracle': '四 · 小小的神通', doorstep: '五 · 一扇留着的门', grove: '六 · 山风里的疑问', 'last-light': '七 · 今夜与明日', 'ending-lantern': '终 · 留一盏灯', 'ending-path': '终 · 明日再赴约' },
     scenes: { BG_GATE: { label: '云上 · 梦斋', time: 'indoor', particles: 'none' }, BG_SHRINE_N: { label: '山顶 · 小土庙', time: 'night', particles: 'fireflies', ambience: 'BGM_NIGHT_AMBIENCE' }, BG_SHRINE_FIRE: { label: '庙中 · 火边', time: 'night', particles: 'fireflies', ambience: 'BGM_NIGHT_AMBIENCE' }, BG_FOREST_D: { label: '山间 · 林径', time: 'day', particles: 'leaves' }, BG_COTTAGE_D: { label: '山下 · 小院', time: 'day', particles: 'leaves' }, BG_SUMMIT_DAWN: { label: '山顶 · 天将明', time: 'dawn', particles: 'leaves' }, BG_END: { label: '云上 · 梦醒', time: 'indoor', particles: 'none' } },
     dreamMusic: 'BGM_DREAM', endingMusic: 'BGM_LONG_FAREWELL_ALT', endingScene: 'BG_END',
+    ...finalPresentation,
   }, assets,
 };
 const archive = packDreamBook(manifest, pkg, files);

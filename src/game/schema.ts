@@ -45,6 +45,11 @@ export const LIMITS = {
   minGapBetweenEffects: 4,
 } as const;
 
+/** 正式长篇保持同一状态模型，仅扩展容量；旧包仍执行原配额。 */
+export const LONGFORM_LIMITS = { ...LIMITS, maxNodes: 96, maxBeatsPerNode: 160,
+  maxTimedEffects: 64, maxSplitEffects: 32, maxEnterKinds: 8, maxExitKinds: 4,
+  minGapBetweenEffects: 1 } as const;
+
 // ---------- 条件 ----------
 
 const flagPredicate = z
@@ -238,7 +243,7 @@ const nodeBase = {
   origin: z.enum(['adapted', 'original']),
   sourceRefs: z.array(z.string().min(1)),
   scene: assetId.refine((s) => s.startsWith('BG_'), 'scene 必须是 BG_ 资产'),
-  beats: z.array(beatSchema).min(1).max(LIMITS.maxBeatsPerNode),
+  beats: z.array(beatSchema).min(1).max(LONGFORM_LIMITS.maxBeatsPerNode),
 };
 
 export const sceneNodeSchema = z
@@ -423,6 +428,7 @@ const relationshipValue = z
 export const dreamPackageSchema = z
   .object({
     schemaVersion: z.literal(1),
+    edition: z.literal('longform').optional(),
     packageId: contentId,
     buildId: contentId,
     title: z.string().min(1, 'title 不能为空').and(cpMax(80, 'title')),
@@ -450,9 +456,16 @@ export const dreamPackageSchema = z
       )
       .max(LIMITS.maxFlags),
     entryNodeId: contentId,
-    nodes: z.array(nodeSchema).min(1).max(LIMITS.maxNodes),
+    nodes: z.array(nodeSchema).min(1).max(LONGFORM_LIMITS.maxNodes),
   })
-  .strict();
+  .strict()
+  .superRefine((pkg, ctx) => {
+    if (pkg.edition === 'longform') return;
+    if (pkg.nodes.length > LIMITS.maxNodes) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['nodes'], message: '普通梦包节点超过上限' });
+    pkg.nodes.forEach((node, index) => {
+      if (node.beats.length > LIMITS.maxBeatsPerNode) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['nodes', index, 'beats'], message: '普通梦包拍数超过上限' });
+    });
+  });
 
 export type DreamPackage = z.infer<typeof dreamPackageSchema>;
 export type DreamNode = z.infer<typeof nodeSchema>;

@@ -24,7 +24,7 @@ export const presentationSchema = z.object({
     id: z.string().min(1).max(80), text: z.string().min(1).max(100), mood: choiceMood,
     replies: z.array(z.object({ speaker: z.string().max(80), text: z.string().min(1).max(240), portrait: assetId.optional() }).strict()).min(1).max(4),
   }).strict()).min(2).max(3) }).strict()).optional(),
-  performances: z.record(z.string().max(80), z.object({ portrait: assetId, label: z.string().max(80) }).strict()).optional(),
+  performances: z.record(z.string().max(80), z.object({ portrait: assetId.optional(), label: z.string().max(80) }).strict()).optional(),
   scenes: z.record(assetId, z.object({ label: z.string().max(60), time: z.enum(['day', 'night', 'dawn', 'indoor']), particles: z.enum(['fireflies', 'leaves', 'none']), ambience: assetId.optional() }).strict()),
   dreamMusic: assetId.optional(), endingMusic: assetId.optional(), endingScene: assetId.optional(),
 }).strict();
