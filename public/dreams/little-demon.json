@@ -1000,7 +1000,8 @@
           "kind": "narration",
           "speaker": "narrator",
           "text": "她步履很急，一路走到一户人家的朱红大门前。那门，比你见过的任何一扇都亮。",
-          "anim": "typewriter"
+          "anim": "typewriter",
+          "sceneShift": "BG_ZHANG_GATE"
         },
         {
           "id": "doorstep-137",
@@ -7144,7 +7145,8 @@
           "kind": "narration",
           "speaker": "narrator",
           "text": "妖力再没能养回来。你就守着土庙，守着那半面刻道墙，做一只很旧、很旧的小妖。",
-          "anim": "typewriter"
+          "anim": "typewriter",
+          "sceneShift": "BG_SHRINE_N"
         },
         {
           "id": "ending-bitter-echo-371",

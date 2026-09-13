@@ -122,15 +122,18 @@ const tracks: Record<string, string[]> = {
   BGM_FAREWELL: ['red-jacket', 'farewell-ask', 'ending-ascend', 'ending-deferred', 'ending-aftertaste', 'ending-willing'],
 };
 const shifts: Record<string, [string, string][]> = {
-  doorstep: [['你一路跟', 'BG_ZHANG_GATE'], ['回到家，', 'BG_COTTAGE_N'], ['第二天晌午', 'BG_COTTAGE_D'], ['夜里，她把枕头', 'BG_COTTAGE_N']],
+  doorstep: [['她步履很急，', 'BG_ZHANG_GATE'], ['回到家，', 'BG_COTTAGE_N'], ['第二天晌午', 'BG_COTTAGE_D'], ['夜里，她把枕头', 'BG_COTTAGE_N']],
   fame: [['你捡着树上最好的', 'BG_SHRINE_D']], guarding: [['冬天最冷', 'BG_COTTAGE_RAIN']],
   'demon-road': [['师祖是那年冬天来的', 'BG_FOREST_RAIN'], ['土庙塌了半边', 'BG_SHRINE_N']],
 };
 shifts['ending-aftertaste'] = [['吃人心的小妖怪死了。', 'BG_SHRINE_N']];
-shifts['ending-bitter-echo'] = [['从那以后', 'BG_COTTAGE_RAIN']];
+shifts['ending-bitter-echo'] = [['妖力再没能养回来。', 'BG_SHRINE_N']];
 shifts['ending-deferred'] = [['后来的事', 'BG_TREE_D']];
 const sfx: Record<string, string> = { fireside: 'FIRE', ember: 'FIRE', price: 'FIRE', 'first-breath': 'SPIRIT', 'zhang-gate': 'GATE', 'chicken-leg': 'OFFER', 'pit-rescue': 'ROPE', taoist: 'COMPASS', 'patient-trap': 'COMPASS', 'master-comes': 'COMPASS', 'ten-thousand-shield': 'CALL' };
 for (const node of nodes) {
+  for (const [prefix] of shifts[node.id] ?? []) {
+    if (!node.beats.some(beat => beat.text.startsWith(prefix))) throw new Error(`换景未命中原文：${node.id} / ${prefix}`);
+  }
   const track = Object.entries(tracks).find(([, ids]) => ids.includes(node.id))?.[0];
   if (track) for (const beat of node.beats) { beat.musicCue = { action: 'play', track }; if (!beat.when) break; }
   if (node.id === 'taoist') node.beats.at(-1)!.sceneShift = 'BG_FOREST_RAIN';

@@ -1,14 +1,14 @@
 # 入梦书
 
-读过的故事，值得一活。
+读过的故事，值得一活。Vite + React + TypeScript 互动小说，FastAPI + SQLite 提供授权码登录与最近七天的手记。
 
-中文短篇互动小说游戏。首篇《吃人心的小妖怪》已接通完整本地试玩：3 次选择、2 个结局、选择回响、自动存档、分歧重玩、梦册、场景转场、配乐与离线缓存。
+《吃人心的小妖怪》现使用 `content/final/` 的正式定稿：三线、12 个选择点、45 节点、951 拍、7 个终幕（梦册合并同名文本后 6 项）。已复用原有资源管线、立绘、沉浸阅读、自动播放、情绪选择动画及离线缓存。
 
-现已加入入梦书架：可导入/导出完整 `.dreambook` 素材包；“新增入梦书”提供导入入口与 96 秒 Agent 生成流程演示。模拟任务可收起和刷新恢复，当前不调用真实大模型。
+## 本地启动
 
-## 启动
+需要 Node.js 22.12+ 或 24、Python 3.11+。在项目根目录打开两个终端。
 
-需要 Node.js 22.12+ 或 24。首次安装后：
+前端：
 
 ```powershell
 npm install
@@ -16,40 +16,38 @@ npm run build
 npm run preview
 ```
 
-预览地址为 [http://127.0.0.1:62560/](http://127.0.0.1:62560/)。该地址使用独立端口，避免其他本地项目同源的缓存和存档互相影响。修改源码可用 `npm run dev`，以终端显示的地址为准；开发服务器不启用离线缓存。
+后端：
 
-发布文件位于 `dist/`，支持根目录或子目录静态托管。直接双击 HTML 文件不支持 Service Worker，需要 HTTP 本地服务器或 HTTPS 站点。
+```powershell
+python -m venv .venv
+.venv\Scripts\python -m pip install -r backend/requirements.txt
+.venv\Scripts\python -m uvicorn backend.app:app --host 127.0.0.1 --port 62561
+```
 
-## 游玩
+访问 [http://127.0.0.1:62560/](http://127.0.0.1:62560/)。Vite 将 `/api` 转发到 62561。开发前端可用 `npm run dev -- --host 127.0.0.1 --port 62560 --strictPort`，先停止占用该端口的 preview。
 
-- 在梦斋选择“推开梦门”；有存档时可以继续。
-- 首页刘看山的六组动作与十二句守梦短句分别每 5–30 秒随机切换；白色烟幕以 3.6 秒缓慢聚拢、换图、散开，围绕入梦书与小妖怪主题的自问和肯定句逐字出现。看板娘暂不显示。
-- 点击正文、点击“继续”或按空格/右方向键翻页。动画未结束时，第一次点击只显示全文。
-- 三次选择之后抵达局部终幕，点击“收下这场梦”收藏梦签。
-- “分歧回望”可恢复已经走过的选择点，梦册收藏保留。
-- 梦内停止画面律动；夜晚有细微萤火虫与很轻的蟋蟀/蛙声，白昼有随机落叶。设置可独立调节环境声和粒子。
-- 字幕可选原有演出、打字机流式渐显或直接显示全文；场景淡化放慢，入梦/出梦使用整页中央水波。系统减少动态效果偏好同样生效。
-- 首次在线缓存完成后，页脚显示“离线就绪”；此后当前浏览器可离线打开。存档只保存在当前设备、当前地址，可以导出和导入。
+默认为本地模拟授权：右上角“知乎登录”→填写模拟昵称→同意并返回。无需知乎密码。点击头像查看游玩记录、异步织梦任务、入架记录；打开面板暂停配乐。任务产物明确标记为小妖怪定稿的流程演示，尚未调用真实大模型。
+
+后端配置与真实知乎接入边界见 [backend/README.md](backend/README.md)。完整交付、字数核验、资源占位与待决策项见 [DELIVERY.md](DELIVERY.md)。
+
+## 游玩与旧书
+
+- 箭头、正文、空格或右方向键翻页；自动播放在选择处停止，设置中可调语速。
+- 分歧回望可重选已走过的分叉，已收藏梦签保留。书签仍保存在当前设备和地址，可从设置导出备份。
+- 正式版：[little-demon.dreambook](public/books/little-demon.dreambook)。旧样例：[little-demon-demo.dreambook](public/books/little-demon-demo.dreambook)。临时单线存档兼容包：[little-demon-legacy.dreambook](public/books/little-demon-legacy.dreambook)，需要时从书架导入。
+- 在线缓存完成显示“离线就绪”后，阅读可离线使用。登录与后端任务需要本地服务在线；授权和账号 API 不进入离线缓存。
+- 本轮仅验收桌面端，移动端留待统一适配。
 
 ## 检查与制作
 
 ```powershell
 npm test
+npx tsx tools/verify-final-story.ts
 npm run check:release
 npm run test:offline
+.venv\Scripts\python -m pytest backend/test_app.py -q
 ```
 
-`test:offline` 在构建后执行，直接验证生成的 Service Worker 在网络不可用、子目录部署和部分缓存情况下的行为。`check:release` 默认检查本地试玩包、故事结构与素材哈希。`npm run check:release -- --public` 另检查公开发布的审读和素材使用依据。
+构建自动运行 `tools/prepare-story.ts` 与 `tools/prepare-book.ts`。定稿快照和原件哈希位于 `content/final/`，逐行导入审计及 192 条路径报告也在该目录。`tools/prepare-final-assets.py` 加工本轮音画，`tools/story-performances.ts` 编排表情和服装，不改正文。
 
-- `tools/prepare-story.ts`：首篇改编源码，产出梦包与完整审读稿。构建时自动运行。
-- `tools/prepare-assets.py`：长曲切片、音效变体、角色副本与背景亮度测量。需 Python、Pillow、FFmpeg，原件只读。
-- `npm run prepare:keepers`：单独重做六组官方动作、静帧和看板娘 SVG；需要 Python 与 Pillow。加 `-- --preview` 可用 CairoSVG 生成检查图。
-- `src/game/`：确定性引擎、图验证、路径回放与存档。
-- `src/runtime/`：音频、节拍、转场、资源加载与离线状态。
-- `public/`：实际游戏资源；`assets/source/` 保存素材原件，`assets/work/` 保存加工中间件。
-
-首本素材包：[little-demon.dreambook](public/books/little-demon.dreambook)。制作规范见 [入梦书规范 v1](docs/DREAMBOOK_FORMAT.md)，未来生成接口见 [织梦流程](docs/DREAM_WEAVER.md)。
-
-工程现状和验收记录见 [落地与验收记录](docs/IMPLEMENTATION_STATUS.md)；剧情文字见 [首篇完整试玩审读稿](docs/STORY_REVIEW_PLAYABLE.md)；设计规范见 [文档索引](docs/README.md)。
-
-当前为本地试玩版本。已沿用用户在 Claude 会话中确认的首篇与背景；本次新增的具体分支对白保留 AI 衍生标记。没有把新编写文本伪记成原作后续、知乎直答生成或已经公网发布。
+`dist/` 为静态前端发布产物。部署完整账号服务时，将同源 `/api` 反向代理到 FastAPI，并设置正确 `APP_ORIGIN`。当前后端为单进程本地版本；真实授权尚需平台凭据和用户资料协议确认。资源沿用本地占位件；`check:release -- --public` 的公开发布审读与素材依据是独立检查，本轮未宣称已公网发布。
