@@ -1,0 +1,3 @@
+#!/bin/sh
+# 在创建提交之前检查暂存区，不读取本地 dotenv。
+exec node tools/check-repository.mjs

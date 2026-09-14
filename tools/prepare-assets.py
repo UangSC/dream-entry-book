@@ -8,8 +8,10 @@ import subprocess
 from PIL import Image, ImageSequence, ImageStat
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-FFMPEG = shutil.which('ffmpeg') or r'C:\Program Files\ffmpeg\bin\ffmpeg.exe'
-FFPROBE = str(pathlib.Path(FFMPEG).with_name('ffprobe.exe'))
+FFMPEG = shutil.which('ffmpeg')
+FFPROBE = shutil.which('ffprobe')
+if not FFMPEG or not FFPROBE:
+    raise RuntimeError('请安装 FFmpeg 并将 ffmpeg、ffprobe 加入 PATH')
 
 def run(args):
     result = subprocess.run([FFMPEG, '-hide_banner', '-nostats', *map(str, args)], capture_output=True, text=True, encoding='utf-8', errors='replace')
@@ -60,7 +62,7 @@ for asset_id, name, original, start, end, label in clips:
         raise RuntimeError(f'{asset_id} 响度不合格：{final}')
     register({'id': asset_id, 'kind': 'music', 'file': output.name, 'label': label, **metadata(output),
               'loop': {'mode': 'fadeLoop', 'startSeconds': 0, 'endSeconds': end - start, 'overlapMs': 2400, 'verified': False},
-              'source': {'originalPath': source_path.relative_to(ROOT).as_posix(), 'startSeconds': start, 'endSeconds': end},
+              'source': {'startSeconds': start, 'endSeconds': end},
               'rights': {'status': 'pending'}, 'modifications': ['第一代 AAC 抽轨裁切；不变速；线性增益；128kbps MP3', '循环重叠由播放器排程；人工听测待验收']})
     reports.append({'id': asset_id, 'input': measured, 'gainDb': gain, 'output': final})
     print(f'{asset_id}: {final["input_i"]} LUFS-I / {final["input_tp"]} dBTP', flush=True)
@@ -86,13 +88,13 @@ for asset_id, original, start, end, target_peak in variants:
     output = audio_dir / (asset_id.lower().replace('_', '-') + '.wav')
     run(['-y', '-i', source_path, '-af', filters + f',volume={target_peak-peak}dB,afade=t=in:d=0.004,afade=t=out:st={duration-.008}:d=0.008', '-ar', '48000', '-c:a', 'pcm_s16le', output])
     register({'id': asset_id, 'kind': 'sfx', 'file': output.name, **metadata(output),
-              'loop': {'mode': 'none'}, 'source': {'originalPath': source_path.relative_to(ROOT).as_posix()},
+              'loop': {'mode': 'none'}, 'source': {},
               'rights': {'status': 'pending'}, 'modifications': [f'裁切 {start}–{end}s；单声道；目标峰值 {target_peak} dBFS；首尾消爆音']})
     reports.append({'id': asset_id, 'sourcePeakDb': peak, 'gainDb': target_peak - peak})
 
 manifest['assetSetId'] = 'audio-2026-09-13-variants'
 manifest['groups'] = {prefix: [a['id'] for a in manifest['assets'] if a['id'].startswith(prefix)] for prefix in ['SFX_PAGE', 'SFX_CHOICE', 'SFX_DREAM_IN', 'SFX_DREAM_OUT']}
-manifest['reserves'] = [{'file': 'assets/source/audio/轻触确认_文件_#2.wav', 'reason': '信号过弱，保留原件；未抬高噪声作为成品'}]
+manifest.pop('reserves', None)
 manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 (work / 'measurements.json').write_text(json.dumps(reports, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 

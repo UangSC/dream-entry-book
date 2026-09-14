@@ -9,14 +9,19 @@
     "build": "tsx tools/prepare-story.ts && tsx tools/prepare-book.ts && tsc -b && vite build && node tools/prepare-offline.mjs",
     "preview": "vite preview --host 127.0.0.1 --port 62560 --strictPort",
     "test": "vitest run",
+    "pretest": "npm run prepare:story && tsx tools/verify-final-story.ts",
     "test:watch": "vitest",
+    "pretest:watch": "npm run prepare:story && tsx tools/verify-final-story.ts",
     "typecheck": "tsc -b",
     "prepare:story": "tsx tools/prepare-story.ts",
     "prepare:book": "tsx tools/prepare-book.ts",
     "prepare:keepers": "python tools/prepare-keepers.py",
     "book:pack": "tsx tools/pack-dreambook.ts",
     "test:offline": "node tools/verify-offline.mjs",
-    "check:release": "tsx tools/check-release.ts"
+    "check:release": "tsx tools/check-release.ts",
+    "check:repository": "node tools/check-repository.mjs",
+    "test:repository": "node --test tools/check-repository.test.mjs",
+    "setup:hooks": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "fflate": "^0.8.3",

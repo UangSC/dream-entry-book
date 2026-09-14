@@ -130,7 +130,7 @@ npm run book:pack -- --input ./my-book-source --output ./my-new-book.dreambook
 
 输出文件必须尚不存在，工具不覆盖旧包。封面、章节和素材路径的契约必须仍然满足本规范；不要手改完文件却沿用旧哈希。
 
-生成入口的当前实现与后续服务端接口见 [DREAM_WEAVER.md](DREAM_WEAVER.md)。
+生成入口当前为流程演示，真实线索分析与接口边界见 [API 指南](API_GUIDE.md)。
 
 ### 选择的情绪演出
 

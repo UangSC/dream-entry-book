@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { advance, chooseOption, nodeVisitOrdinal, startPackage, visibleChoices, type SaveState, type EngineResult } from '../src/game/engine';
 import { reconstruct, validateSave } from '../src/game/replay';
@@ -45,7 +45,8 @@ const summary = ['A', 'B', 'C'].map(line => {
   return { line, paths: paths.length, min: Math.min(...paths.map(route => route.characters)), max: Math.max(...paths.map(route => route.characters)), minHan: Math.min(...paths.map(route => route.han)), choices: [...new Set(paths.map(route => route.choices.length))] };
 });
 const report = { buildId: pkg.buildId, summary, routes, conditionalBeats: coverage.size, conditionalBoth: [...coverage.values()].filter(set => set.size === 2).length };
-writeFileSync('content/final/route-audit.json', JSON.stringify(report, null, 2) + '\n');
+mkdirSync('.work/story', { recursive: true });
+writeFileSync('.work/story/route-audit.json', JSON.stringify(report, null, 2) + '\n');
 console.table(summary);
 for (const line of summary) assert.ok(line.min >= 7000, `${line.line} 最短路线 ${line.min} 字，不足 7000`);
 console.log(`${routes.length} 条路径、7 终幕、${coverage.size} 个条件拍已验证。`);

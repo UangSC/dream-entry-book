@@ -39,7 +39,7 @@ def main():
         output = ROOT / 'public/audio' / (asset_id.lower().replace('_', '-') + '.mp3')
         encode(source, output, duration, asset_id.startswith('BGM_'))
         seconds = float(subprocess.check_output(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', str(output)]))
-        asset = dict(id=asset_id, kind='music' if asset_id.startswith('BGM_') else 'sfx', file=output.name, durationSeconds=seconds, bytes=output.stat().st_size, sha256=hashlib.sha256(output.read_bytes()).hexdigest(), source={'name': title, 'originalPath': str(source.relative_to(ROOT))}, rights={'status': 'pending', 'reference': '用户提供临时素材；合成占位另有标记'})
+        asset = dict(id=asset_id, kind='music' if asset_id.startswith('BGM_') else 'sfx', file=output.name, durationSeconds=seconds, bytes=output.stat().st_size, sha256=hashlib.sha256(output.read_bytes()).hexdigest(), source={'name': title}, rights={'status': 'pending', 'reference': '用户提供临时素材；合成占位另有标记'})
         if asset['kind'] == 'music':
             asset['loop'] = dict(mode='fadeLoop', startSeconds=0, endSeconds=seconds, overlapMs=800, verified=False)
         manifest['assets'] = [item for item in manifest['assets'] if item['id'] != asset_id] + [asset]

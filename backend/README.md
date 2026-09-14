@@ -18,11 +18,11 @@
 
 官方活动故事目录/详情无需 Access Secret。搜索和直答优先从 `ZHIHU_ACCESS_SECRET` 读取凭据；Windows 未设置时读取当前用户凭据库的 `rumengshu/zhihu-access-secret`。运行 `.venv\Scripts\python -m backend.credentials` 可无回显保存。客户端仅收到结果，健康检查仅显示是否配置。
 
-默认本地每日预算：搜索 100 次、分析 20 次，可用 `ZHIHU_SEARCH_DAILY_LIMIT`、`ZHIHU_ANALYSIS_DAILY_LIMIT` 调整；它们不是知乎账户的共享剩余额度。目录/详情缓存一小时，搜索和分析缓存半小时，相同内容并发合并；失败不自动重试。详见 `docs/submission/API_INTEGRATION.md`。
+默认本地每日预算：搜索 100 次、分析 20 次，可用 `ZHIHU_SEARCH_DAILY_LIMIT`、`ZHIHU_ANALYSIS_DAILY_LIMIT` 调整；它们不是知乎账户的共享剩余额度。目录/详情缓存一小时，搜索和分析缓存半小时，相同内容并发合并；失败不自动重试。详见 [API 指南](../docs/API_GUIDE.md)。
 
 ## 真实知乎 Authorization Code 配置
 
-普通应用以 [当前官方 OAuth 说明](https://developer.zhihu.com/docs?key=zhihu_oauth_integrated) 为准；赛事分配凭据的入口另参考项目 `zhihu/references/hackathon-oauth.md` 并在赛事页核实，没有调用 CLI 中的登录凭据。具体配置缺项及申请草稿见 [接入复核](../docs/submission/ZHIHU_INTEGRATION_REVIEW.md)。
+普通应用以 [当前官方 OAuth 说明](https://developer.zhihu.com/docs?key=zhihu_oauth_integrated) 为准；赛事分配凭据在赛事平台核实。不要使用本地 CLI 的登录凭据代替应用凭据。
 
 ```powershell
 $env:OAUTH_MODE = 'zhihu'
@@ -44,7 +44,7 @@ $env:ZHIHU_PROFILE_URL = 'https://openapi.zhihu.com/user'
 
 应用会话存于标签页 `sessionStorage`，通过 `Authorization: Bearer` 发送，最长有效一小时，不包含知乎 OAuth Token。真实登录不依赖第三方 Cookie，同一签名配置下不同 FC 实例可验证。`APP_SESSION_SECRET` 可选，未填写时从 `ZHIHU_OAUTH_APP_KEY` 派生独立用途签名键；填写时使用专用随机秘密且各实例一致。退出清除当前浏览器会话，当前没有全局撤销名单，复制出的凭据在到期前仍有效。轮换用于签名的秘密会使旧会话失效。
 
-**真实授权未联网验收**：本地代码已按官方 Skill `0.7.2` 的黑客松协议修正基础资料请求：`GET https://openapi.zhihu.com/user`，仅使用 OAuth Token 的 Bearer 鉴权，读取 `uid/hash_id/fullname/avatar_path`；用户 ID 在 Python 中无损解析后以字符串返回。仅登录和基础资料不依赖 Access Secret，搜索和直答仍需要它。应用凭据缺失时返回 503。HTTP 模拟测试通过不代表真实知乎登录成功，本轮改动尚未部署。
+基础资料请求使用 `GET https://openapi.zhihu.com/user`，采用 OAuth Token 的 Bearer 鉴权，读取 `uid/hash_id/fullname/avatar_path`；用户 ID 在 Python 中无损解析后以字符串返回。仅登录和基础资料不依赖 Access Secret，搜索和直答仍需要它。应用凭据缺失时返回 503。模拟上游测试不能替代部署后的本人真实授权验收。
 
 ## 接口
 

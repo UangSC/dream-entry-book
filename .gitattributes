@@ -1,0 +1,3 @@
+# 字节哈希参与剧情与素材校验，跨平台检出时保持一致。
+/content/final/*.md text eol=lf
+/public/mascot/*.svg binary

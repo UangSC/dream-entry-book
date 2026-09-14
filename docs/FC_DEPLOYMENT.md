@@ -12,7 +12,7 @@
 .venv\Scripts\python tools/package-fc.py --code-only
 ```
 
-2026-09-14 本轮生成的新代码包为 `.work/fc-py312-m2al4pal/rumengshu-fc-code.zip`（16,526 字节），只含六个白名单后端文件，不含 `.env`、本地数据或素材。新增浏览器授权模块，复用此前的 Linux Python 3.12 依赖层与素材层。旧 `fc-py312-8vsccftd` 包不包含本轮前端回调方案，不要再用它更新。
+命令会输出本次代码包所在目录。代码包只含白名单后端文件，不含 `.env`、本地数据或素材。业务代码更新可复用同版本 Linux Python 3.12 依赖层与素材层。
 
 验证代码包并复用旧层：
 
@@ -66,7 +66,7 @@ python3 -m uvicorn backend.fc:app --host 0.0.0.0 --port 9000
 
 `ZHIHU_OAUTH_APP_ID` 和 `ZHIHU_OAUTH_APP_KEY` 由维护者直接在 FC 环境变量表单填写平台分配值。不要放在 GitHub 的 `VITE_*` 变量中，也不要发给开发助手。`APP_SESSION_SECRET` 可选：不填写时使用后端 APPKEY 派生独立用途的会话签名键；填写时请使用服务器专用随机秘密，各实例保持一致。仅登录和读取基础资料不要求 `ZHIHU_ACCESS_SECRET`，搜索和直答另需该凭据。
 
-本地最新代码已区分以上三个地址；截至 2026-09-14 本轮修改尚未上传 FC。等项目改动完成后再统一打包更新，不能把本地配置说明视为线上已生效。
+三个地址各有用途，不能混填。修改本地代码或推送 GitHub 不会更新 FC，必须上传代码包并部署。
 
 GitHub 仓库 Settings → Secrets and variables → Actions → Variables 设置公开变量 `VITE_API_BASE_URL` 为上述 `API_ORIGIN`。Pages 工作流在构建时读取它；修改变量后需要重新运行部署工作流或推送触发构建。该值不能带 `/api`、密钥或查询参数。
 
@@ -74,7 +74,7 @@ GitHub 仓库 Settings → Secrets and variables → Actions → Variables 设�
 
 知乎平台登记的回调改为 **`https://uangsc.github.io/dream-entry-book/oauth-callback.html`**，必须与上述 `FRONTEND_URL` 下的独立页面完全一致。作品链接仍为 `https://uangsc.github.io/dream-entry-book/`。不要再登记 FC 的 `/api/auth/callback`，也不要用首页代替回调页。
 
-旧流程在默认 `fcapp.run` 域名执行站外 3xx 时收到 `ExternalRedirectForbidden`。本轮改为：浏览器 POST `/api/auth/start` 获取 JSON 授权地址 → 浏览器跳到知乎 → 知乎回到 Pages 回调页 → 回调页 POST `/api/auth/exchange` → 浏览器返回作品首页。FC 不再执行站外跳转；真实模式下旧 GET 授权入口返回 409 指引。
+授权流程：浏览器 POST `/api/auth/start` 获取 JSON 授权地址 → 浏览器跳到知乎 → 知乎回到 Pages 回调页 → 回调页 POST `/api/auth/exchange` → 浏览器返回作品首页。FC 返回 JSON，不执行站外跳转；真实模式下旧 GET 授权入口返回 409 指引。
 
 这解决应用使用 FC 站外重定向的问题，不改变[阿里云默认公网域名仅供测试的限制](https://help.aliyun.com/document_detail/2868393.html)。正式生产应另行配置自定义域名或网关。
 
@@ -84,7 +84,7 @@ FC 入口默认把临时数据库与任务结果放在 `/tmp/rumengshu`，把模
 
 ## 验证
 
-代码包在本机 WSL Linux x86_64 / Python 3.12 环境中解压验证，检查二进制扩展加载、健康接口、未登录保护、模拟登录、示例书包层生成任务与下载及 Uvicorn 实际 HTTP 启动。真实 OAuth 的模拟上游测试另覆盖跨 FC 实例兑换和会话验证、错误或过期授权请求、CORS、无第三方 Cookie 及知乎令牌不返回前端。以上不代表真实知乎登录已通过；本轮前后端尚未部署。
+验证程序在 Linux x86_64 / Python 3.12 环境运行，检查二进制扩展加载、健康接口、未登录保护、模拟登录、示例书包层任务与下载及 Uvicorn HTTP 启动。模拟上游测试另覆盖跨实例会话验证、错误或过期授权请求、CORS 和令牌边界；它们不能替代真实知乎登录测试。
 
 可以在相同 Linux 环境复验指定构建目录：
 
@@ -108,7 +108,7 @@ python3 tools/verify-fc-package.py /path/to/fc-py312-output
 
 如果仍报 `_pydantic_core` 缺失，检查实际解释器是否为 Python 3.12、架构是否 x86_64、依赖层是否已挂载、`PYTHONPATH` 是否生效，以及旧代码包依赖是否残留。ARM64 函数不能使用本包。
 
-## 本次打包的边界
+## 服务边界
 
 真实登录使用可跨实例验证的短期签名应用会话，保存于当前标签页的 `sessionStorage`，通过 Authorization 请求头访问 FC，不依赖第三方 Cookie。知乎 APPKEY 和 OAuth Token 不返回前端。授权请求额外使用随机 state、浏览器 verifier 和后端签名 transaction 绑定；这是本项目的浏览器请求证明，**不表示知乎支持 OAuth PKCE**。授权码单次兑换仍依赖知乎上游。
 

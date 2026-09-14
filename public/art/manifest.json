@@ -14,7 +14,6 @@
       "source": {
         "type": "ai_generated",
         "name": "用户提供的二次元梦斋背景",
-        "file": "assets/source/art/bg-gate.png",
         "sha256": "8a21317bb71b19a0803b8dce136cd1ef11d6d45dc58fb662bf621dfede6f7ebe",
         "bytes": 1722706,
         "tool": "gpt-image",
@@ -48,7 +47,6 @@
       "source": {
         "type": "ai_generated",
         "name": "用户提供的二次元梦斋背景",
-        "file": "assets/source/art/bg-end.png",
         "sha256": "8386e53ba613dff6b740565a9ddaf68958b71e92dcd524df881cdebd4b28f1de",
         "bytes": 1728115,
         "tool": "gpt-image",
@@ -82,7 +80,6 @@
       "source": {
         "type": "ai_generated",
         "name": "用户提供的生成背景",
-        "originPath": "assets/source/art/bg-shrine-fire.png",
         "tool": null,
         "model": null,
         "date": "2026-09-13",
@@ -113,7 +110,6 @@
       "source": {
         "type": "ai_generated",
         "name": "用户提供的生成背景",
-        "originPath": "assets/source/art/bg-shrine-n.png",
         "tool": null,
         "model": null,
         "date": "2026-09-13",
@@ -144,7 +140,6 @@
       "source": {
         "type": "ai_generated",
         "name": "用户提供的生成背景",
-        "originPath": "assets/source/art/bg-cottage-d.png",
         "tool": null,
         "model": null,
         "date": "2026-09-13",
@@ -175,7 +170,6 @@
       "source": {
         "type": "ai_generated",
         "name": "用户提供的生成背景",
-        "originPath": "assets/source/art/bg-forest-d.png",
         "tool": null,
         "model": null,
         "date": "2026-09-13",
@@ -206,7 +200,6 @@
       "source": {
         "type": "ai_generated",
         "name": "用户提供的生成背景",
-        "originPath": "assets/source/art/bg-summit-dawn.png",
         "tool": null,
         "model": null,
         "date": "2026-09-13",

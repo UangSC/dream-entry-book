@@ -4,12 +4,12 @@ import { describe, expect, it } from 'vitest';
 import { dreamPackageSchema } from './schema';
 
 const pkg = dreamPackageSchema.parse(JSON.parse(readFileSync('public/dreams/little-demon.json', 'utf8')));
-const sources = JSON.parse(readFileSync('content/final/sources.json', 'utf8')) as { file: string; sha256: string }[];
-const audit = JSON.parse(readFileSync('content/final/import-audit.json', 'utf8')) as { file: string; line: number; raw: string; kind: string; id?: string; text?: string }[];
+const { files: sources } = JSON.parse(readFileSync('content/final/sources.json', 'utf8')) as { files: { file: string; sha256: string }[] };
+const audit = JSON.parse(readFileSync('.work/story/import-audit.json', 'utf8')) as { file: string; line: number; raw: string; kind: string; id?: string; text?: string }[];
 
 describe('正式定稿溯源', () => {
-  it('七份只读快照及审计行与锁定来源一致', () => {
-    expect(sources).toHaveLength(7);
+  it('四份剧情快照及审计行与锁定来源一致', () => {
+    expect(sources).toHaveLength(4);
     const lines = new Map(sources.map(source => {
       const bytes = readFileSync(`content/final/${source.file}`);
       expect(createHash('sha256').update(bytes).digest('hex')).toBe(source.sha256);

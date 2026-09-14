@@ -26,7 +26,7 @@ function play(choices: string[]) {
 }
 
 describe('首篇完整路线', () => {
-  for (const { choices, ending: target } of JSON.parse(readFileSync('content/final/route-audit.json', 'utf8')).routes as { choices: string[]; ending: string }[]) {
+  for (const { choices, ending: target } of JSON.parse(readFileSync('.work/story/route-audit.json', 'utf8')).routes as { choices: string[]; ending: string }[]) {
     it(`${choices.join(" → ")} 可通关并恢复`, () => {
       const state = play(choices);
       expect(state.choiceHistory).toHaveLength(choices.length);

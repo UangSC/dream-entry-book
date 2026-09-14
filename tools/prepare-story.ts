@@ -1,11 +1,11 @@
 import { createHash } from 'node:crypto';
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { validateDreamPackage } from '../src/game/validate';
 import { TIMED_EFFECTS, type Beat, type Choice, type Condition, type DreamNode, type DreamPackage } from '../src/game/schema';
 
-// 唯一正文来源是定稿快照；快照的哈希与只读原件一并归档。
+// 仅编译发布清单内的正文，本地计划和审读笔记不参与构建。
 const sourceDir = 'content/final';
-const sources = JSON.parse(readFileSync(`${sourceDir}/sources.json`, 'utf8')) as { file: string; sha256: string }[];
+const { buildId, files: sources } = JSON.parse(readFileSync(`${sourceDir}/sources.json`, 'utf8')) as { buildId: string; files: { file: string; sha256: string }[] };
 for (const source of sources) {
   if (createHash('sha256').update(readFileSync(`${sourceDir}/${source.file}`)).digest('hex') !== source.sha256) throw new Error(`定稿快照被修改：${source.file}`);
 }
@@ -24,7 +24,7 @@ const next: Record<string, string> = {
 };
 const sides: Record<string, string> = { 真话: 'said-truth', 谎话: 'lied', 吓账: 'scared-him', 讨账: 'just-debt', 受盾: 'shielded-by-all', 独战: 'fought-alone' };
 const continuations = new Set(['empty-house', 'zhang-return', 'taoist-danger']);
-for (const file of readdirSync(sourceDir).filter(file => /^0[2-5]_.*\.md$/.test(file)).sort()) {
+for (const { file } of sources) {
   let node: DreamNode | undefined, originalId = '', mode = 'outside', side: string | undefined, afterChoice = false;
   const lines = readFileSync(`${sourceDir}/${file}`, 'utf8').split(/\r?\n/);
   for (const [index, raw] of lines.entries()) {
@@ -149,18 +149,17 @@ for (const node of nodes) {
   }
 }
 const flags = [...new Set(nodes.flatMap(node => node.kind === 'scene' ? node.choices?.flatMap(choice => choice.effects.setFlags) ?? [] : []))];
-const digest = createHash('sha256').update(JSON.stringify(sources)).digest('hex').slice(0, 12);
-const pkg: DreamPackage = { ...legacy, edition: 'longform', buildId: `final-${digest}`, nodes,
+const pkg: DreamPackage = { ...legacy, edition: 'longform', buildId, nodes,
   characters: Object.entries(characters).map(([name, id]) => ({ id, name })),
   flags: flags.map(id => ({ id, label: id, kind: 'commitment' })),
 };
 const art = JSON.parse(readFileSync('public/art/manifest.json', 'utf8'));
 const audio = JSON.parse(readFileSync('public/audio/manifest.json', 'utf8'));
 const result = validateDreamPackage(pkg, { assetIds: [...art.assets, ...audio.assets].map((a: { id: string }) => a.id) });
-writeFileSync('content/final/import-audit.json', JSON.stringify(audit, null, 2) + '\n');
-writeFileSync('content/final/chapters.json', JSON.stringify(chapters, null, 2) + '\n');
+mkdirSync('.work/story', { recursive: true });
+writeFileSync('.work/story/import-audit.json', JSON.stringify(audit, null, 2) + '\n');
+writeFileSync('.work/story/chapters.json', JSON.stringify(chapters, null, 2) + '\n');
 if (!result.ok) { console.error(result.findings); process.exit(1); }
 const json = JSON.stringify(pkg, null, 2) + '\n';
-writeFileSync('content/drafts/little-demon.json', json); writeFileSync('public/dreams/little-demon.json', json);
-writeFileSync('docs/STORY_REVIEW_PLAYABLE.md', '# 正式三线审读来源\n\n正文以 content/final/02–05 定稿快照为准。逐行对照见 import-audit.json。所有节点由定稿编译；没有追加临时剧情。\n');
+writeFileSync('public/dreams/little-demon.json', json);
 console.log(`定稿已接入：${nodes.length} 节点 / ${nodes.reduce((sum, node) => sum + node.beats.length, 0)} 拍 / ${flags.length} 旗标 / 7 终幕。`);

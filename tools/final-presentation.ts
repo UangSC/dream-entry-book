@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import type { Presentation } from '../src/books/schema';
 
 export const finalPresentation: Partial<Presentation> = {
-  chapters: JSON.parse(readFileSync('content/final/chapters.json', 'utf8')),
+  chapters: JSON.parse(readFileSync('.work/story/chapters.json', 'utf8')),
   asides: {},
   choiceMoods: { warmed: 'warm', bargained: 'guarded', 'faced-zhang': 'resolute', 'took-chicken': 'breezy', ate: 'hesitant', 'kept-hands': 'bashful', 'changed-price': 'warm', 'said-truth': 'resolute', lied: 'hesitant', 'guarded-all': 'resolute', 'late-by-half': 'hesitant', 'shielded-truth': 'resolute', 'shielded-lie': 'resolute', unseen: 'guarded', 'went-now': 'resolute', 'asked-first': 'bashful', 'scared-him': 'breezy', 'just-debt': 'guarded', hid: 'hesitant', 'fought-back': 'resolute', 'marched-on': 'guarded', stopped: 'hesitant', 'shielded-by-all': 'warm', 'fought-alone': 'resolute', ascended: 'warm', deferred: 'bashful' },
   description: '娘说，吃够一万颗人心，就能成仙。可遇见念念以后，事情好像没那么简单。那一颗心，你到底吃不吃？',

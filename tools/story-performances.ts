@@ -25,7 +25,7 @@ const childNodes = new Set([...bareNodes].filter(id => !['guarding', 'taoist-dan
 
 export function createPerformances(pkg: DreamPackage): NonNullable<Presentation['performances']> {
   const result: NonNullable<Presentation['performances']> = {};
-  const sourceSpeakers = new Map<string, string>((JSON.parse(readFileSync('content/final/import-audit.json', 'utf8')) as { id?: string; raw: string }[]).flatMap(line => {
+  const sourceSpeakers = new Map<string, string>((JSON.parse(readFileSync('.work/story/import-audit.json', 'utf8')) as { id?: string; raw: string }[]).flatMap(line => {
     const speaker = line.raw.match(/^\*\*([^*]+)\*\*[^：]*：/);
     return line.id && speaker ? [[line.id, speaker[1]!.replace(/（.*）/, '')] as [string, string]] : [];
   }));

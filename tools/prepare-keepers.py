@@ -16,7 +16,7 @@ ET.register_namespace('', SVG)
 def asset_record(asset_id, path, source, **extra):
     return {'id': asset_id, 'file': path.name, 'bytes': path.stat().st_size,
             'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
-            'source': source.relative_to(ROOT).as_posix(),
+            'source': '项目矢量角色原稿' if asset_id == 'MASCOT_LIBRARIAN' else '知乎官方刘看山动作素材',
             'rights': {'status': 'pending'}, **extra}
 
 

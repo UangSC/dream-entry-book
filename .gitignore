@@ -15,3 +15,69 @@ __pycache__/
 
 # 官方知乎文档与原始参考素材（不随项目发布）
 zhihu/
+
+# 开发助手规则、计划、验收与本地笔记
+/*.md
+!/README.md
+AGENTS.md
+SKILL.md
+DELIVERY.md
+.codex/
+.claude/
+.vscode/
+.idea/
+docs/*
+!docs/README.md
+!docs/FC_DEPLOYMENT.md
+!docs/API_GUIDE.md
+!docs/DREAMBOOK_FORMAT.md
+!docs/DREAM_PACKAGE_SPEC.md
+!docs/REPOSITORY_POLICY.md
+
+# 素材原件和中间文件；保留当前作品来源校验必需的唯一节选
+assets/*
+!assets/source/
+assets/source/*
+!assets/source/stories/
+assets/source/stories/*
+!assets/source/stories/2025954672918163637.json
+new_BGM/
+/ICNO.png
+/Poster.png
+
+# 剧情正文是编译输入；计划与报告仅本地保留
+content/*
+!content/drafts/
+content/drafts/*
+!content/drafts/little-demon-legacy.json
+!content/final/
+content/final/*
+!content/final/02_*.md
+!content/final/03_*.md
+!content/final/04_*.md
+!content/final/05_*.md
+!content/final/sources.json
+
+# 上传包、凭据容器和运行数据
+*.zip
+*.log
+*.sqlite
+*.sqlite3
+*.db
+*.pem
+*.key
+*.pfx
+*.p12
+*.bak
+
+# public 中保留在本地的旧版或未加工素材
+/public/art/*.png
+/public/art/bg_*.webp
+/public/art/portraits/demon-calm.webp
+/public/art/portraits/demon-fierce.webp
+/public/art/portraits/demon-hungry.webp
+/public/art/portraits/demon-idle.webp
+/public/art/portraits/demon-panic.webp
+/public/art/portraits/demon-soft.webp
+/public/audio/bgm-new/
+/public/audio/sfx-new/
