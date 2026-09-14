@@ -20,7 +20,7 @@
 
 ## 真实知乎 Authorization Code 配置
 
-参考项目 `zhihu/references/hackathon-oauth.md`，没有调用 CLI 中的登录凭据。
+普通应用以 [当前官方 OAuth 说明](https://developer.zhihu.com/docs?key=zhihu_oauth_integrated) 为准；赛事分配凭据的入口另参考项目 `zhihu/references/hackathon-oauth.md` 并在赛事页核实，没有调用 CLI 中的登录凭据。具体配置缺项及申请草稿见 [接入复核](../docs/submission/ZHIHU_INTEGRATION_REVIEW.md)。
 
 ```powershell
 $env:OAUTH_MODE = 'zhihu'
@@ -34,7 +34,7 @@ $env:ZHIHU_PROFILE_URL = 'https://平台确认的用户资料端点'
 
 密钥仅在服务端读取，不写入前端或仓库。实际替换示例值后启动。回调地址配置为 `${APP_ORIGIN}/api/auth/callback`。已适配 `https://openapi.zhihu.com/authorize` 和 `https://openapi.zhihu.com/access_token`，授权回调兼容 `authorization_code`/`code`；用户资料调用使用 Access Secret、OAuth Token、请求时间戳组合。
 
-**真实授权未联网验收**：现有文档缺少确定的用户资料 URL/响应协议，且历史记录显示回调可能不回传 `state`。当前要求平台回传原始 `state`，缺失则拒绝；不会为了兼容而关闭校验。资料适配暂接收顶层或 `data` 下的 `id`、`name`、`avatar_url`，需平台确认后调整。配置缺失时返回 503，不能视为已经完成真实知乎登录。
+**真实授权未联网验收**：2026-09-14 后续读取官方 Skill `0.7.2` 已确认黑客松支持 `state` 原样透传；基础资料为 `GET https://openapi.zhihu.com/user`，仅使用 OAuth Token 的 Bearer 鉴权，返回 `uid/hash_id/fullname/avatar_path` 等字段。当前资料适配仍按旧占位字段 `id/name/avatar_url` 解析，需要按新版修正鉴权与字段后再联调；仅填入 URL 不代表适配完成。保留现有 `state` 校验，配置缺失时返回 503。当前未配置独立应用凭据，不能视为已经完成真实知乎登录。
 
 ## 接口
 

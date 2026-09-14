@@ -1,6 +1,7 @@
 # 知乎 OAuth 应用集成
 
-资料整理时间：2026-07-22
+资料复核时间：2026-09-14
+当前官方依据：https://developer.zhihu.com/docs?key=zhihu_oauth_integrated
 适用对象：需要在 Web 应用中集成知乎登录，并代表已授权知乎用户访问数据的开发者
 
 OAuth 是开发者集成能力，不是 `zhihu-cli` 的普通用户鉴权方式。CLI 使用 Access Secret 查询该凭证所属账号自己的数据，不发起 OAuth、不接收用户 OAuth token。
@@ -30,21 +31,26 @@ OAuth 是开发者集成能力，不是 `zhihu-cli` 的普通用户鉴权方式�
 
 ## 前置申请
 
-向 `product-platform@zhihu.com` 申请 `app_id` 和 `app_key`。
+向 `openplatform@zhihu.com` 申请 `app_id` 和 `app_key`。此前记录的 `product-platform@zhihu.com` 已不符合当前官方说明。
 
 邮件主题：
 
 ```text
-<公司名称>申请接入知乎 OAuth 服务
+<公司/组织/产品名称>申请接入知乎 OAuth 服务
 ```
 
 申请材料：
 
 - 应用名称
 - 应用简介
+- 应用图标（分辨率至少 256×256，以附件发送）
 - OAuth 授权完成后的回调地址 `redirect_uri`
-- 应用申请人名称
-- 应用申请人手机号
+- 申请人姓名
+- 申请人手机号
+- 申请人知乎个人中心地址
+- 申请获取的用户权限：A. 邮箱、B. 手机、C. 公开内容（个人创作、关注用户列表、公开收藏夹），按实际用途选择
+
+权限会在授权时向用户展示并再次确认。赛事专属应用凭据是否已分配，应在赛事项目页面核对；Access Secret 不能替代 App ID 或 App Key。
 
 ## Authorization Code Flow
 
@@ -60,15 +66,15 @@ OAuth 是开发者集成能力，不是 `zhihu-cli` 的普通用户鉴权方式�
 GET https://openapi.zhihu.com/authorize?redirect_uri={redirect_uri}&app_id={app_id}&response_type=code
 ```
 
-知乎 2077 项目在 2026-05-14 的线上实测回调形态：
+当前官方文档给出的回调形态：
 
 ```text
 {redirect_uri}?authorization_code={authorization_code}
 ```
 
-回调参数实际为 `authorization_code`。应用后端把它的值作为 token 接口的 `code` 表单参数提交，即 `code = callback.authorization_code`。为兼容可能的协议修订，接收端可以同时接受 `authorization_code` 和 `code`，但以 `authorization_code` 为当前实测主路径。
+回调参数为 `authorization_code`。应用后端把它的值作为 token 接口的 `code` 表单参数提交，即 `code = callback.authorization_code`。本项目同时兼容读取 `code`，官方主路径仍为 `authorization_code`。
 
-`redirect_uri` 应进行 URL 编码，并且必须与申请时登记的地址一致。知乎 2077 同期实测还发现授权回调不返 `state`。当前资料也没有定义 PKCE、scope 和用户拒绝授权时的回调参数，正式集成前必须向平台确认。
+`redirect_uri` 应进行 URL 编码，并且必须与申请时登记的地址一致。当前官方文档没有说明 `state` 回传、PKCE、scope 请求参数和用户拒绝授权时的回调参数。示例没有 `state` 不等于已证实平台不支持它；需实际联调或由平台确认。
 
 ## 换取 Access Token
 
@@ -133,22 +139,22 @@ curl -G 'https://developer.zhihu.com/api/v1/user/contents' \
 
 - `app_key`、authorization code 的交换和 OAuth access token 的使用都在应用后端完成。
 - 不把 `app_key` 或 OAuth access token 放进浏览器、移动端包、URL、前端日志或 Agent 输出。
-- 回调必须校验请求关联性；正式集成至少需要平台确认并支持 `state` 后再上线。
+- 回调必须校验请求关联性。本项目当前使用浏览器 Cookie 加随机 `state`；联调需验证回传。不应仅删除 `state` 检查；如平台采用其他机制，需要确认其对授权码与发起会话的绑定保障后再调整。
 - OAuth access token 与开放平台 Access Secret 分开存储、分开审计、分开撤销。
 - 用户取消授权、token 过期或接口返回鉴权失败时，停止访问，不静默切换到 Access Secret 所属账号。
 
 ## 协议待确认项
 
-1. 授权回调实测不返 `state`。没有可靠的 `state` 回传就无法完成标准登录 CSRF 校验，不能直接作为生产安全能力定稿。
+1. 当前官方说明未定义 `state` 回传。本项目要求原值回传，缺失将拒绝登录；当前没有本项目真实 OAuth 联调结果。
 2. 文档没有 PKCE、scope、用户拒绝授权、错误响应和回调错误参数。
 3. 只返回 `access_token` 与 `expires_in`，没有 refresh token；需确认过期后是否必须重新授权。
 4. 没有 token 撤销、授权查询或解绑接口。
 5. 文档提到“获取用户信息”，但没有提供对应 endpoint 和响应 schema。
-6. 需确认 `app_key` 是否允许直接作为表单参数传输，以及是否另有签名要求。
+6. `app_key` 作为 HTTPS 表单字段已由当前官方 cURL 示例明确，不再作为待确认项；不自行增加文档未规定的签名协议。
 
-## 已验证的协议偏差
+## 旧资料中的跨项目实测记录（本轮未复验）
 
-知乎 2077 项目在 2026-05-14 真实跑通 OAuth 时确认：
+下列内容来自旧资料对知乎 2077 项目的描述，不是本项目或当前平台版本的已验证事实：
 
 - 授权回调使用 `authorization_code`，不是旧文档中的 `code`。
 - token 交换接口的表单字段仍使用 `code`。

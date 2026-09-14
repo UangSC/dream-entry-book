@@ -1,5 +1,7 @@
 # 《入梦书》项目文档总索引
 
+2026-09-14 知乎接入复核：[OAuth 诊断与产品实施建议](submission/ZHIHU_INTEGRATION_REVIEW.md) 核对当前官方说明、应用凭据缺项及已有 API，实现状态以根目录 README 和 [API 接入说明](submission/API_INTEGRATION.md) 为准。下文早期 Demo 数量属于历史记录。
+
 2026-09-13 第二轮更新：从固定单篇试玩扩展为可导入/导出的入梦书架，并加入可恢复的 96 秒多 Agent 制作流程模拟。实际契约见 [入梦书规范 v1](DREAMBOOK_FORMAT.md) 与 [织梦流程](DREAM_WEAVER.md)。本轮用户需求优先于下文早期“首版只播放预织故事”的范围。
 
 同日角色更新：刘看山的六组动作与十二句入梦书主题短句分别按 5–30 秒随机切换，带 3.6 秒慢聚慢散的白色烟幕与逐字输出；看板娘按最新反馈暂时下掉，见 [角色设计](CHARACTER_DESIGN.md)。
@@ -35,6 +37,7 @@
 
 | 文档 | 职责 |
 |---|---|
+| [ZHIHU_INTEGRATION_REVIEW.md](submission/ZHIHU_INTEGRATION_REVIEW.md) | 当前 OAuth 缺项、官网依据、结局回流与知识库实施建议 |
 | [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) | 当前代码、真实验证、交接与后续事项 |
 | [STORY_REVIEW_PLAYABLE.md](STORY_REVIEW_PLAYABLE.md) | 首篇完整分支对白与条件回响 |
 | [REVIEW_AND_DECISIONS.md](REVIEW_AND_DECISIONS.md) | 审查发现、替用户作出的默认决策、剩余外部事实与改动理由 |

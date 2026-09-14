@@ -10,3 +10,6 @@ backend/data/
 __pycache__/
 .pytest_cache/
 .env
+
+# 官方知乎文档与原始参考素材（不随项目发布）
+zhihu/
