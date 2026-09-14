@@ -51,14 +51,18 @@ little-demon.dreambook
 | `description` | 入梦前简介，最多 800 字符 |
 | `tags` | 最多 5 个短标签 |
 | `contentNote` | 题材与改编说明，最多 400 字符 |
+| `usageNotice` | 可选，版权与内容使用声明，最多 400 字符；随书包保留，并在作品说明中展示 |
 | `chapters` | `{节点 ID: 章节标题}`，必须指向真实节点 |
 | `performances` | 可选，`{拍 ID: {portrait: 图片素材 ID, label: 中文替代文字}}`；立绘随包携带，引用必须存在 |
+| `atmosphereCues` | 可选，`{拍 ID: 粒子类型}`；在指定拍改变天气效果，引用必须存在 |
 | `scenes` | `{图片 ID: {label, time, particles, ambience?}}` |
 | `dreamMusic` | 可选，梦内默认音乐 ID；不填则不提供默认配乐 |
 | `endingMusic` | 可选，梦醒页面音乐 ID |
 | `endingScene` | 可选，梦醒页面背景 ID；不填则沿用终幕背景 |
 
-`time` 为 `day/night/dawn/indoor`，`particles` 为 `fireflies/leaves/none`。`ambience` 引用一条 music 素材，由独立环境声声道播放，初始音量很轻。没有该字段就不播放环境声。场景粒子不会影响剧情；玩家关闭动态效果或系统减少动态效果时全部停用。
+`time` 为 `day/night/dawn/indoor`，`particles` 为 `fireflies/leaves/rain/none`。雨滴覆盖整个场景，不拦截点击或滚动；其他粒子沿用原有渐隐范围。`atmosphereCues` 持续至本节点的下一次换景或离开节点，可用于“雨停了”等剧情拍；回退和恢复存档时按实际可见的阅读记录还原。
+
+`ambience` 引用一条 music 素材，由独立环境声声道播放，初始音量很轻。没有该字段就不播放环境声。内置雨天场景切到 `none` 时，对应环境雨声停止，剧情配乐照常延续。场景粒子不会影响剧情；玩家关闭动态效果、关闭场景粒子、系统要求减少动态效果或页面隐藏时均停用。
 
 ```json
 {

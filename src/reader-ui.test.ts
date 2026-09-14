@@ -7,6 +7,7 @@ import { Game } from './App';
 import { dreamPackageSchema, type DreamPackage } from './game/schema';
 import type { GameData } from './runtime/library';
 import type { LibraryActions } from './components/LibraryHost';
+import { AI_CONTENT_LABEL, AI_CONTENT_NOTICE } from './runtime/contentNotice';
 
 const bridge = vi.hoisted(() => ({ busy: undefined as undefined | ((busy: boolean) => void), authenticated: true, gate: vi.fn() }));
 const testUser = { id: 'test-reader', name: '测试读者', avatar: '', simulation: false };
@@ -51,6 +52,15 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 describe('阅读交互', () => {
+  it('游客也能从首页查看完整 AI 与非商业声明，原作者入口保留', () => {
+    bridge.authenticated = false;
+    render(createElement(Game, { data: { ...data, pkg: raw, presentation: { ...data.presentation, usageNotice: AI_CONTENT_NOTICE } }, library }));
+    click('暂时静音'); click(new RegExp(AI_CONTENT_LABEL));
+    const dialog = screen.getByRole('dialog', { name: '关于这场梦' });
+    expect(within(dialog).getByText(AI_CONTENT_NOTICE)).toBeDefined();
+    expect(within(dialog).getByRole('link', { name: /前往知乎阅读原作/ })).toBeDefined();
+    expect(bridge.gate).not.toHaveBeenCalled();
+  });
   it('定稿八个终幕全部列名，三种不敢应声保持独立标题', () => {
     render(createElement(Game, { data: { ...data, pkg: raw }, library })); click('暂时静音'); click(/^我的梦册/);
     const dialog = screen.getByRole('dialog', { name: '你带回来的梦' });

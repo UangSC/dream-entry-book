@@ -35,7 +35,7 @@
 .screen-reading .dialogue-card::before { left: 255px; width: 38px; }
 .screen-reading .reading-status { padding-left: 245px; padding-bottom: 10px; }
 .screen-reading .text-area { display: flow-root; min-height: 112px; padding: 4px 0 9px; }
-.portrait-clearance { float: left; width: 225px; height: 106px; }
+.portrait-clearance { float: left; width: 225px; height: 80px; }
 .screen-reading .story-text { width: auto; line-height: 1.8; }
 .screen-reading .continue-row { padding-top: 0; justify-content: flex-end; border: 0; }
 .screen-reading .continue-button { min-width: 40px; min-height: 32px; padding: 4px 10px; }
@@ -48,7 +48,7 @@
 .screen-reading .footer > :is(:hover, :focus-visible, :focus-within) { opacity: 1; }
 .screen-reading .footer .zhihu-discover { border: 0; }
 
-.dialogue-portrait { position: absolute; top: 0; left: 20px; bottom: auto; width: 220px; height: 240px; transform: translateY(-50%); margin: 0; pointer-events: none; z-index: 2; animation: portrait-blend-in 500ms ease both; }
+.dialogue-portrait { position: absolute; top: 0; left: 20px; bottom: auto; width: 220px; height: 240px; transform: translateY(-60%); margin: 0; pointer-events: none; z-index: 2; animation: portrait-blend-in 500ms ease both; }
 .dialogue-portrait img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 6px 14px #07152040); mask-image: linear-gradient(#000 82%, transparent 100%); }
 .dialogue-portrait.portrait-narrator img { animation: narrator-soft-focus 650ms cubic-bezier(.2,.8,.25,1) both; filter: saturate(.62) brightness(1.14) contrast(.82) blur(1.2px) drop-shadow(0 0 7px #fffdf8aa) drop-shadow(0 6px 14px #07152022); }
 @keyframes narrator-soft-focus { from { transform: scale(1); filter: saturate(.85) brightness(1) contrast(.95) blur(0) drop-shadow(0 0 0 transparent); } to { transform: scale(.9); filter: saturate(.62) brightness(1.14) contrast(.82) blur(1.2px) drop-shadow(0 0 7px #fffdf8aa) drop-shadow(0 6px 14px #07152022); } }
@@ -129,7 +129,7 @@
 .screen-reading .reading-layout,
 .screen-reading.footer-quiet .reading-layout,
 .screen-reading.footer-quiet:has(.footer > :hover, .footer > :focus-within) .reading-layout { padding-bottom: 44px; transition: none; }
-.screen-reading .text-area { box-sizing: border-box; height: clamp(170px, 24svh, 240px); min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; padding: 4px 0 48px; }
+.screen-reading .text-area { box-sizing: border-box; height: calc(clamp(132px, 18svh, 180px) - 36px); min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; margin-bottom: 36px; padding: 4px 0 6px; }
 .reader-floating-controls { position: absolute; right: 18px; bottom: 8px; display: flex; gap: 6px; z-index: 3; }
 .screen-reading .reader-floating-controls button { display: grid; place-items: center; width: 32px; height: 32px; min-width: 0; min-height: 0; margin: 0; padding: 6px; border: 0; border-radius: 0; color: #526a78a8; background: transparent; box-shadow: none; }
 .screen-reading .reader-floating-controls button:hover, .screen-reading .reader-floating-controls button.active { color: #92672f; background: transparent; }
@@ -158,6 +158,39 @@ input, textarea, [contenteditable="true"] { -webkit-user-select: text; user-sele
 .story-text, .story-text * { -webkit-user-select: none !important; user-select: none !important; }
 .story-text::selection, .story-text *::selection { background: transparent; }
 @media (max-width: 740px) {
-  .screen-reading .text-area { height: clamp(210px, 30svh, 290px); padding-bottom: 48px; }
+  .screen-reading .text-area { height: calc(clamp(164px, 23svh, 216px) - 36px); padding-bottom: 6px; }
   .reader-floating-controls { right: 12px; }
+}
+
+/* 内容说明在进入故事前可读，不挤占正文区域。 */
+.usage-summary { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin-top: 13px; padding: 3px 0; text-align: left; font-size: 11px; line-height: 1.8; color: #596e80; }
+.usage-summary:hover { color: #344c64; text-decoration: underline; text-underline-offset: 4px; }
+.usage-summary:focus-visible { outline: 2px solid #9b8154; outline-offset: 4px; border-radius: 3px; }
+.intro-usage { margin: 8px 0 17px; }
+.usage-notice { margin: 18px 0; padding: 16px 18px; border: 1px solid #b7a47b55; border-radius: 10px; background: #f3eee299; }
+.usage-notice h3 { margin: 0 0 8px; font-size: 13px; font-weight: 500; color: #756144; }
+.usage-notice p { margin: 0; font-size: 12px; line-height: 1.9; color: #526575; }
+
+/* 雨覆盖整个场景，始终位于阅读控件之后，不拦截点击或滚动。 */
+.atmosphere-rain { mask-image: none; contain: paint; }
+.atmosphere-rain i {
+  top: -60px;
+  width: var(--size);
+  height: var(--length);
+  border-radius: 999px;
+  background: linear-gradient(to bottom, transparent, #dcebf6 78%, #eaf5ff);
+  animation-name: scene-rainfall;
+  animation-timing-function: linear;
+  opacity: 0;
+}
+.atmosphere-rain i:nth-child(4n) { filter: blur(.35px); }
+@keyframes scene-rainfall {
+  0% { opacity: 0; transform: translate3d(0, -5vh, 0) rotate(12deg); }
+  8% { opacity: var(--rain-opacity); }
+  90% { opacity: var(--rain-opacity); }
+  100% { opacity: 0; transform: translate3d(var(--drift), calc(100vh + 110px), 0) rotate(12deg); }
+}
+@media (max-width: 740px) {
+  .atmosphere-rain i:nth-child(n+37) { display: none; }
+  .usage-summary { font-size: 10px; gap: 6px; }
 }

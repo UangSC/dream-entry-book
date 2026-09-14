@@ -68,6 +68,9 @@ async function parseDreamBook(archive: Uint8Array): Promise<LoadedBook> {
   assertKind(manifest.presentation.dreamMusic, 'music'); assertKind(manifest.presentation.endingMusic, 'music');
     for (const [id, scene] of Object.entries(manifest.presentation.scenes)) { assertKind(id, 'image'); assertKind(scene.ambience, 'music'); }
     const beatIds = new Set(result.data.nodes.flatMap(node => node.beats.map(beat => beat.id)));
+    for (const id of Object.keys(manifest.presentation.atmosphereCues ?? {})) {
+      if (!beatIds.has(id)) throw new Error(`天气演出引用不存在的拍：${id}`);
+    }
     for (const [id, performance] of Object.entries(manifest.presentation.performances ?? {})) {
       if (!beatIds.has(id)) throw new Error(`立绘演出引用不存在的拍：${id}`);
       assertKind(performance.portrait, 'image');

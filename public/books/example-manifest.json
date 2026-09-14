@@ -99,7 +99,8 @@
       "三线八终幕",
       "山野来信"
     ],
-    "contentNote": "包含亲人离别、食心、暴力与牺牲。剧情为已定稿的互动改编，不代表原作者后续。",
+    "contentNote": "包含亲人离别、食心、暴力与牺牲。",
+    "usageNotice": "本项目展示的互动剧情由 AI 基于原作素材生成与改编，属于衍生演绎，非原创故事，也不代表原作全文或原作者的官方续作。仅供娱乐体验，不用于任何商业用途。原作与相关素材的权利归原作者及各自权利人所有。",
     "scenes": {
       "BG_GATE": {
         "label": "云上 · 梦斋",
@@ -149,13 +150,13 @@
       "BG_COTTAGE_RAIN": {
         "label": "小院 · 雨夜",
         "time": "night",
-        "particles": "none",
+        "particles": "rain",
         "ambience": "BGM_RAIN_AMBIENCE"
       },
       "BG_FOREST_RAIN": {
         "label": "山林 · 冷雨",
         "time": "night",
-        "particles": "none",
+        "particles": "rain",
         "ambience": "BGM_FOREST_RAIN"
       },
       "BG_RAVINE_N": {
@@ -7979,6 +7980,23 @@
         "portrait": "BG_PORTRAIT_DEMON_INJURED_FULL",
         "label": "小妖怪 · 受伤"
       }
+    },
+    "atmosphereCues": {
+      "burn-mountain-3277820000": "none",
+      "ending-aftertaste-7a1ac5db2a": "none",
+      "ending-bitter-echo-7a1ac5db2a": "none",
+      "ending-bitter-mountains-e3c1af6e5f": "none",
+      "years-of-the-king-d703523e44": "none",
+      "ending-bitter-e3c1af6e5f": "rain",
+      "ending-aftertaste-4f9176dcfe": "rain",
+      "ending-aftertaste-3bc41a01ef": "none",
+      "ending-bitter-40a5087d1b": "none",
+      "ending-bitter-echo-2a1a3f23ad": "rain",
+      "ending-bitter-mountains-3ef224b48f": "rain",
+      "master-comes-3806b3ec61": "rain",
+      "doorstep-answers-f3173003aa": "none",
+      "years-of-the-king-5d5c5843cb": "none",
+      "years-of-the-king-27c64dbdd7": "rain"
     }
   },
   "assets": [

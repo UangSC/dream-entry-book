@@ -3,6 +3,7 @@ import { packDreamBook, readDreamBook, sha256 } from '../src/books/archive';
 import type { BookManifest, BookAsset } from '../src/books/schema';
 import { createPerformances } from './story-performances';
 import { finalPresentation } from './final-presentation';
+import { createAtmosphereCues } from './story-weather';
 
 // 可重复生成的轻声环境层：蟋蟀短鸣、低频蛙声，首尾留白，避免循环接缝。
 const rate = 22050, seconds = 20, pcm = new Float32Array(rate * seconds);
@@ -41,6 +42,7 @@ const manifest: BookManifest = {
   presentation: {
     ...finalPresentation,
     performances: createPerformances(pkg),
+    atmosphereCues: createAtmosphereCues(pkg),
   }, assets,
 };
 const archive = packDreamBook(manifest, pkg, files);
