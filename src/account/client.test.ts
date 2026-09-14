@@ -30,10 +30,13 @@ describe('前端 API 地址', () => {
   });
 
   it('JSON 写操作携带会话，401 给出登录提示', async () => {
+    const dispatchEvent = vi.fn();
+    vi.stubGlobal('window', { dispatchEvent });
     const fetchMock = vi.fn().mockResolvedValue(new Response('{}', { status: 401 }));
     vi.stubGlobal('fetch', fetchMock);
     const { apiRequest } = await import('./client');
     await expect(apiRequest('/auth/logout', {})).rejects.toThrow('登录已过期');
+    expect(dispatchEvent).toHaveBeenCalledWith(expect.objectContaining({ type: 'dream-session-cleared' }));
     expect(fetchMock).toHaveBeenCalledWith(expect.any(String), expect.objectContaining({ method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: '{}' }));
   });
 });

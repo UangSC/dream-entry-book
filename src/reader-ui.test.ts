@@ -8,8 +8,9 @@ import { dreamPackageSchema, type DreamPackage } from './game/schema';
 import type { GameData } from './runtime/library';
 import type { LibraryActions } from './components/LibraryHost';
 
-const bridge = vi.hoisted(() => ({ busy: undefined as undefined | ((busy: boolean) => void) }));
-vi.mock('./account/session', () => ({ useAccount: () => ({ user: null }), api: vi.fn(), SessionProvider: () => null }));
+const bridge = vi.hoisted(() => ({ busy: undefined as undefined | ((busy: boolean) => void), authenticated: true, gate: vi.fn() }));
+const testUser = { id: 'test-reader', name: '测试读者', avatar: '', simulation: false };
+vi.mock('./account/session', () => ({ useAccount: () => ({ user: bridge.authenticated ? testUser : null, requireLogin: () => { bridge.gate(); return bridge.authenticated; } }), api: vi.fn(async () => {}), SessionProvider: () => null }));
 vi.mock('./components/AccountPanel', () => ({ AccountButton: () => null, AccountPanel: () => null }));
 vi.mock('./components/Scene', () => ({ Scene: ({ onBusy }: { onBusy: (busy: boolean) => void }) => { bridge.busy = onBusy; return null; } }));
 vi.mock('./components/HomeCompanions', () => ({ HomeCompanions: () => null }));
@@ -17,7 +18,7 @@ vi.mock('./components/Atmosphere', () => ({ Atmosphere: () => null }));
 vi.mock('./components/Portal', () => ({ usePortal: () => ({ busy: false, cross: (update: () => void) => update(), layer: null }) }));
 vi.mock('./runtime/offline', () => ({ registerOffline: () => () => {} }));
 vi.mock('./runtime/pulse', () => ({ prefersReducedMotion: () => false, PulseDriver: class { setOptions() {} setBeatMap() {} sample() { return { envelope: 0 }; } visual() { return { scale: 1, brightness: 1 }; } } }));
-vi.mock('./runtime/audio', () => ({ AudioEngine: class { loadManifest() {} setVolumes() {} silence() {} pause() {} resume() {} dispose() {} } }));
+vi.mock('./runtime/audio', () => ({ AudioEngine: class { loadManifest() {} setVolumes() {} silence() {} pause() {} resume() {} dispose() {} unlock() { return Promise.resolve({ state: 'ready' }); } preload() { return Promise.resolve([]); } getStatus() { return { state: 'ready' }; } playMusic() {} playSfx() {} positionOf() { return null; } } }));
 
 const raw = dreamPackageSchema.parse(JSON.parse(readFileSync('public/dreams/little-demon.json', 'utf8')));
 const pkg: DreamPackage = { ...raw, packageId: 'ui-fixture', entryNodeId: 'intro', characters: [{ id: 'little-demon', name: '小妖怪', bio: '还未相识的人' }, { id: 'friend', name: '朋友', bio: '山中的来客' }], resources: [], relationships: [], flags: [], nodes: [
@@ -34,8 +35,9 @@ const data = { pkg, presentation: { cover: 'BG_GATE', tags: [], subtitle: '测�
 const library = { openShelf: vi.fn(), addBook: vi.fn(), bookCount: 1, panelOpen: false } as unknown as LibraryActions;
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
 const currentBeat = () => document.querySelector('.reading-layout')?.getAttribute('data-beat');
-function enter(book = data) { render(createElement(Game, { data: book, library })); click('推开梦门'); click(/准备好了，入梦/); }
+function enter(book = data) { render(createElement(Game, { data: book, library })); click('暂时静音'); click('推开梦门'); click(/准备好了，入梦/); }
 beforeEach(() => {
+  bridge.authenticated = true; bridge.gate.mockClear(); vi.clearAllMocks();
   localStorage.clear();
   localStorage.setItem('rumengshu:sound-choice', 'muted');
   localStorage.setItem('rumengshu:preferences', JSON.stringify({ motion: false, audioEnabled: false, textAnimation: 'instant' }));
@@ -49,8 +51,59 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 describe('阅读交互', () => {
+  it('游客不能开始、打开书架、导入或设置，但可关闭声音提示', () => {
+    bridge.authenticated = false;
+    render(createElement(Game, { data, library })); click('暂时静音');
+    for (const name of ['推开梦门', '打开入梦书架', '新增入梦书', '打开设置']) click(name);
+    expect(bridge.gate).toHaveBeenCalledTimes(4);
+    expect(library.openShelf).not.toHaveBeenCalled(); expect(library.addBook).not.toHaveBeenCalled();
+    expect(screen.queryByRole('dialog')).toBeNull(); expect(currentBeat()).toBeUndefined();
+  });
+  it('退出授权后立即停止阅读，既有存档不能绕过登录继续', () => {
+    enter(); click('继续');
+    const saved = { ...localStorage };
+    bridge.authenticated = false;
+    // 重新渲染模拟账号退出或服务端返回 401。
+    cleanup(); render(createElement(Game, { data, library })); click('暂时静音');
+    click('继续上次的梦'); fireEvent.keyDown(window, { code: 'ArrowRight' });
+    expect(currentBeat()).toBeUndefined(); expect({ ...localStorage }).toEqual(saved);
+    bridge.authenticated = true;
+    cleanup(); render(createElement(Game, { data, library })); click('暂时静音'); click('继续上次的梦');
+    expect(currentBeat()).toBe('two');
+  });
+  it('阅读中授权失效会回首页，保留手动档并关闭存档面板', () => {
+    const page = render(createElement(Game, { data, library })); click('暂时静音'); click('推开梦门'); click(/准备好了，入梦/);
+    click('继续'); click('存档'); click('保存到手动档');
+    const saved = { ...localStorage };
+    bridge.authenticated = false; page.rerender(createElement(Game, { data, library }));
+    expect(currentBeat()).toBeUndefined();
+    expect(screen.queryByRole('dialog', { name: '把这一页收好' })).toBeNull();
+    expect({ ...localStorage }).toEqual(saved);
+    expect(screen.getByRole('dialog', { name: '开启声音，入梦体验更佳' })).toBeTruthy();
+  });
+  it('曾选择静音也提示；本次首页关闭不重复，离梦后再次提示', () => {
+    const page = render(createElement(Game, { data, library }));
+    expect(screen.getByRole('dialog', { name: '开启声音，入梦体验更佳' })).toBeTruthy();
+    click('暂时静音'); page.rerender(createElement(Game, { data, library }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+    click('推开梦门'); click(/准备好了，入梦/); click('离梦');
+    expect(screen.getByRole('dialog', { name: '开启声音，入梦体验更佳' })).toBeTruthy();
+  });
+  it('开启声音后回首页不提示；在首页关闭声音则提示', async () => {
+    render(createElement(Game, { data, library }));
+    await act(async () => { click('是，开启声音'); });
+    click('推开梦门'); click(/准备好了，入梦/); click('离梦');
+    expect(screen.queryByRole('dialog')).toBeNull();
+    click('关闭声音');
+    expect(screen.getByRole('dialog', { name: '开启声音，入梦体验更佳' })).toBeTruthy();
+  });
+  it('刷新时声音尚未解锁，即便保存了开启偏好也会提示', () => {
+    localStorage.setItem('rumengshu:sound-choice', 'enabled');
+    render(createElement(Game, { data, library }));
+    expect(screen.getByRole('dialog', { name: '开启声音，入梦体验更佳' })).toBeTruthy();
+  });
   it('第一次入梦前模糊人物名与简介，进入后恢复角色身份', () => {
-    render(createElement(Game, { data, library })); click('推开梦门');
+    render(createElement(Game, { data, library })); click('暂时静音'); click('推开梦门');
     expect(document.querySelector('.characters-unseen .character-preview-copy')?.getAttribute('aria-hidden')).toBe('true');
     click(/准备好了，入梦/);
     expect(currentBeat()).toBe('one');
@@ -85,7 +138,7 @@ describe('阅读交互', () => {
     enter(); click('继续'); click('后退一条对话');
     click('存档'); click('保存到手动档'); click('关闭面板');
     click('前进一条对话'); expect(currentBeat()).toBe('two');
-    cleanup(); render(createElement(Game, { data, library }));
+    cleanup(); render(createElement(Game, { data, library })); click('暂时静音');
     click('打开设置'); click(/自动存档与手动存档/); click('读取手动档');
     expect(currentBeat()).toBe('one');
     click('前进一条对话'); expect(currentBeat()).toBe('two');

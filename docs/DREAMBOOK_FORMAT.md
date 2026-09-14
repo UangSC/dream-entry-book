@@ -1,6 +1,8 @@
 # 入梦书素材包规范 v1
 
-更新于 2026-09-13。**入梦书**是一份可导入、可导出、可离线游玩的完整故事素材包。第一本为女巫《吃人心的小妖怪》，实际示例在 [little-demon.dreambook](../public/books/little-demon.dreambook)，清单示例在 [example-manifest.json](../public/books/example-manifest.json)。
+更新于 2026-09-14。**入梦书**是一份可导入、可导出、可在浏览器本地保存的完整故事素材包。第一本为女巫《吃人心的小妖怪》，实际示例在 [little-demon.dreambook](../public/books/little-demon.dreambook)，清单示例在 [example-manifest.json](../public/books/example-manifest.json)。
+
+当前阅读器的阅读、书架、导入导出与存档操作均需先登录授权。素材缓存和本地书包不替代登录检查；无法向后端确认会话时返回首页，已有书架和存档继续保留。
 
 本规范定义分发容器；`story.json` 的剧情状态机继续遵循 [DREAM_PACKAGE_SPEC.md](DREAM_PACKAGE_SPEC.md)。两者独立版本化，不能把存档 JSON 当作素材包。
 

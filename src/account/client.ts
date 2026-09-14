@@ -24,6 +24,7 @@ export function saveSession(token: string): void {
 }
 export function clearSession(): void {
   try { sessionStorage.removeItem(sessionKey); } catch { /* 未允许存储时也可退出。 */ }
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('dream-session-cleared'));
 }
 
 export async function apiRequest(path: string, body?: unknown, method?: string): Promise<Response> {

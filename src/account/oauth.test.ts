@@ -4,7 +4,7 @@ const entries = new Map<string, string>();
 beforeEach(() => {
   entries.clear();
   vi.stubGlobal('sessionStorage', { getItem: (key: string) => entries.get(key) ?? null, setItem: (key: string, value: string) => entries.set(key, value), removeItem: (key: string) => entries.delete(key) });
-  vi.stubGlobal('window', { location: { href: 'https://reader.test/dream-entry-book/' } });
+  vi.stubGlobal('window', { location: { href: 'https://reader.test/dream-entry-book/' }, dispatchEvent: vi.fn() });
   vi.stubEnv('BASE_URL', '/dream-entry-book/');
   vi.stubEnv('VITE_API_BASE_URL', 'https://api.test');
 });

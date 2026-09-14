@@ -64,7 +64,9 @@ export function App() {
 }
 
 export function Game({ data, library }: { data: GameData; library: LibraryActions }) {
-  const { user } = useAccount();
+  const { user, requireLogin } = useAccount();
+  const authorized = useRef(!!user);
+  authorized.current = !!user;
   const { pkg, presentation } = data;
   const chapterNames = presentation.chapters;
   const [kv] = useState(() => bookKV(localStorageKV() ?? unavailableKV, pkg));
@@ -85,7 +87,9 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
   const [sceneBusy, setSceneBusy] = useState(false);
   const sceneBusyRef = useRef(false);
   const onSceneBusy = useCallback((busy: boolean) => { sceneBusyRef.current = busy; setSceneBusy(busy); }, []);
-  const [screen, setScreen] = useState<Screen>('home'), [panel, setPanel] = useState<Panel>(null);
+  const [screen, updateScreen] = useState<Screen>('home'), [panel, updatePanel] = useState<Panel>(null);
+  const setScreen = (next: Screen) => { if (next === 'home' || authorized.current) updateScreen(next); };
+  const setPanel = (next: Panel) => { if (next === null || next === 'source' || requireLogin()) updatePanel(next); };
   const [settings, setSettings] = useState(preferences), [reduced, setReduced] = useState(prefersReducedMotion);
   const [instant, setInstant] = useState(false), [textReady, setTextReady] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false), [pageVisible, setPageVisible] = useState(() => !document.hidden);
@@ -94,7 +98,13 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
   const [savedOk, setSavedOk] = useState(true);
   const [album, setAlbum] = useState<readonly AlbumEntry[]>(() => readAlbum(kv));
   const [sound, setSound] = useState(false), [soundState, setSoundState] = useState('声音未开启');
-  const [soundPrompt, setSoundPrompt] = useState(() => { try { return localStorage.getItem('rumengshu:sound-choice') === null; } catch { return true; } });
+  const [soundPrompt, setSoundPrompt] = useState(true);
+  useEffect(() => { setSoundPrompt(screen === 'home' && !sound); }, [screen, sound]);
+  useEffect(() => {
+    if (user) return;
+    setAutoPlay(false); updatePanel(null); updateScreen('home');
+    // 每次翻页均已保存；失去授权只关闭操作入口，不清除本地书签与队列。
+  }, [user]);
   const [offline, setOffline] = useState('正在准备离线阅读');
   const [availableUpdate, setAvailableUpdate] = useState<(() => void) | null>(null);
   const [audio] = useState(() => new AudioEngine(base + 'audio/', asset => data.audioUrls[asset.id]!));
@@ -141,7 +151,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
   useEffect(() => {
     const open = () => setPanel('account'); window.addEventListener('dream-account-open', open);
     return () => window.removeEventListener('dream-account-open', open);
-  }, []);
+  }, [requireLogin]);
   useEffect(() => {
     if (!pageVisible || panel === 'account' || library.panelOpen) { void audio.pause(); void ambienceAudio.pause(); }
     else { void audio.resume(); void ambienceAudio.resume(); }
@@ -223,6 +233,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     return outcome.ok;
   };
   function saveSlot(slot: SaveSlot, history = journal.current) {
+    if (!authorized.current) return;
     if (!stateRef.current || !history) return;
     const snapshot = restorePosition(pkg, history.present, stateRef.current.revision, now());
     if (!snapshot) { setNotice('当前书页无法还原，存档未覆盖'); return; }
@@ -232,6 +243,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     if (slot === 'manual') setNotice('手动存档已保存，包含当前对话队列');
   }
   function onAsideChange(next: AsideBookmark) {
+    if (!authorized.current) return;
     if (!stateRef.current || next.phase === 'done') return;
     const position = readingPosition(stateRef.current, next);
     journal.current = next.phase === 'choosing' && journal.current ? { ...journal.current, present: position } : recordPosition(journal.current, position);
@@ -240,6 +252,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     if (next.phase === 'choosing') saveSlot('auto', beforeChoice(journal.current));
   }
   function restoreReader(history: ReaderJournal) {
+    if (!authorized.current) return;
     const next = restorePosition(pkg, history.present, stateRef.current?.revision ?? 0, now());
     if (!next) { setNotice('这份书签与当前故事路线不符，未改变剧情'); return; }
     journal.current = history;
@@ -248,17 +261,20 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     save(next);
   }
   function travel(direction: -1 | 1) {
+    if (!authorized.current) return;
     if (panel || library.panelOpen || portal.busy || sceneBusyRef.current || !journal.current) return;
     const next = moveJournal(journal.current, direction);
     if (next !== journal.current) restoreReader(next);
   }
   function loadSlot(slot: SaveSlot) {
+    if (!requireLogin()) return;
     const loaded = readSlot(kv, pkg, slot, now());
     if (loaded.status !== 'ok') { setNotice(loaded.status === 'none' ? '这个存档位还是空的' : '存档与当前故事不符，原件已保留'); return; }
     setPanel(null);
     portal.cross(() => { restoreReader(loaded.reader ?? beginJournal(readingPosition(loaded.state))); setScreen('reading'); }, 'enter');
   }
   const apply = (result: EngineResult, restored = false, reset = false) => {
+    if (!authorized.current) return;
     if (!result.ok) { setNotice(result.error.message); return; }
     if ('stale' in result) return;
     const position = readingPosition(result.state);
@@ -269,18 +285,21 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     if (!restored && sound) for (const event of result.events) if (event.type === 'sfx') audio.playSfx(event.assetId);
   };
   const start = () => {
+    if (!requireLogin()) return;
     runId.current = crypto.randomUUID();
     setPanel(null); portal.cross(() => { apply(startPackage(pkg, now()), false, true); setScreen('reading'); }, 'enter');
     if (sound) audio.playSfx('SFX_DREAM_IN');
     readerRef.current?.focus();
   };
   const continueDream = () => {
+    if (!requireLogin()) return;
     if (!stateRef.current) return;
     const finalNode = pkg.nodes.find(n => n.id === stateRef.current!.nodeId);
     const collected = finalNode?.kind === 'ending' && collection.some(e => e.endingId === finalNode.ending.id);
     ensureSound(); setPanel(null); portal.cross(() => { setScreen(stateRef.current!.phase === 'finished' && collected ? 'ending' : 'reading'); setInstant(true); setTextReady(true); }, 'enter');
   };
   const finish = () => {
+    if (!authorized.current) return;
     if (!stateRef.current || !ending) return;
     const entry: AlbumEntry = { packageId: pkg.packageId, buildId: pkg.buildId, endingId: ending.id, title: ending.title, collectedAt: now() };
     const result = collectEnding(kv, entry);
@@ -289,6 +308,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     if (sound) audio.playSfx('SFX_DREAM_OUT'); portal.cross(() => setScreen('ending'), 'exit');
   };
   const advanceStory = () => {
+    if (!authorized.current) return;
     if (panel || library.panelOpen || portal.busy || sceneBusyRef.current || screen !== 'reading' || !stateRef.current) return;
     if (!textReady && motion && !instant) { setInstant(true); setTextReady(true); return; }
     if (performance.now() - clickAt.current < 180) return;
@@ -304,6 +324,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     apply(advance(pkg, stateRef.current, now()));
   };
   const choose = (choiceId: string, revision: number) => {
+    if (!authorized.current) return;
     const current = stateRef.current;
     if (!current || portal.busy || sceneBusyRef.current || !textReady && motion && !instant || performance.now() - clickAt.current < 180) return;
     clickAt.current = performance.now();
@@ -332,6 +353,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
   }, [savedOk]);
 
   const exportBackup = () => {
+    if (!requireLogin()) return;
     let entries: Record<string, string> = {};
     try { entries = JSON.parse(exportAll(kv)).data; } catch { /* 未保存的当前进度仍可导出 */ }
     if (stateRef.current) entries[`rumengshu:save:${pkg.packageId}`] = JSON.stringify({ ...stateRef.current, ...(journal.current ? { reader: journal.current } : {}) });
@@ -340,10 +362,12 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = `rumengshu-save-${new Date().toISOString().slice(0, 10)}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
   const importBackup = async (file: File | undefined) => {
+    if (!requireLogin()) return;
     if (!file) return;
     if (file.size > 2 * 1024 * 1024) { setNotice('备份不得超过 2 MiB'); return; }
     try {
       const backup = await file.text();
+      if (!authorized.current || !requireLogin()) return;
       // 导入前额外保留当前进度；失败时仍可回溯。
       if (stateRef.current) kv.set(`rumengshu:backup:${pkg.packageId}:${Date.now()}`, JSON.stringify(stateRef.current));
       const result = importAll(kv, backup, [pkg]);
@@ -355,6 +379,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     } catch { setNotice('备份读取或保存失败，当前进度未变'); }
   };
   const restart = () => {
+    if (!requireLogin()) return;
     try {
       if (stateRef.current) kv.set(`rumengshu:backup:${pkg.packageId}:${Date.now()}`, JSON.stringify(stateRef.current));
       else if (initialSave.status === 'build-mismatch' || initialSave.status === 'corrupt') {
@@ -375,7 +400,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     if (screen !== 'reading' || choices.length > 0 || state?.phase === 'finished') setAutoPlay(false);
   }, [screen, choices.length, state?.phase]);
   const autoProgress = useAutoReader(`${state?.revision}:${beat?.id}`, autoReadDuration(beat?.text ?? '', settings.autoPace), autoPlay,
-    screen === 'reading' && ready && !panel && !library.panelOpen && !portal.busy && !sceneBusy && pageVisible && !choices.length && !holdChoice && state?.phase !== 'finished', advanceStory);
+    !!user && screen === 'reading' && ready && !panel && !library.panelOpen && !portal.busy && !sceneBusy && pageVisible && !choices.length && !holdChoice && state?.phase !== 'finished', advanceStory);
   useEffect(() => {
     setFooterQuiet(false);
     if (screen !== 'reading' || portal.busy) return;
@@ -391,14 +416,21 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
   const leaveDream = () => { if (stateRef.current && !save(stateRef.current)) return; setPanel(null); if (screen === 'reading') portal.cross(() => setScreen('home'), 'exit'); else setScreen('home'); };
   const setPreference = <K extends keyof Preferences>(key: K, value: Preferences[K]) => setSettings(s => ({ ...s, [key]: value }));
 
-  return <div className={`game screen-${screen} ${motion ? 'motion-on' : 'motion-off'} ${portal.busy ? 'portal-busy' : ''} ${sceneBusy ? 'scene-busy' : ''} ${footerQuiet ? 'footer-quiet' : ''}`} onClickCapture={event => { if (portal.busy || sceneBusyRef.current) { event.preventDefault(); event.stopPropagation(); } }} style={{ '--reading-size': `${settings.fontSize}px` } as CSSProperties}>
+  const blockGuestAction = (event: React.SyntheticEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element) || target.closest('[data-guest-access]')) return;
+    if (target.closest('button, a, input, select, textarea, .dialogue-card') && !requireLogin()) {
+      event.preventDefault(); event.stopPropagation();
+    }
+  };
+  return <div className={`game screen-${screen} ${motion ? 'motion-on' : 'motion-off'} ${portal.busy ? 'portal-busy' : ''} ${sceneBusy ? 'scene-busy' : ''} ${footerQuiet ? 'footer-quiet' : ''}`} onClickCapture={event => { if (portal.busy || sceneBusyRef.current) { event.preventDefault(); event.stopPropagation(); return; } blockGuestAction(event); }} onChangeCapture={blockGuestAction} style={{ '--reading-size': `${settings.fontSize}px` } as CSSProperties}>
     <div className="world" ref={sceneRoot}><Scene asset={data.art[activeScene]} motion={motion && !portal.busy} onBusy={onSceneBusy} /><div className="world-light" />{screen === 'home' && <div className="world-particles" aria-hidden="true">{Array.from({ length: 16 }, (_, i) => <i key={i} style={{ '--i': i } as CSSProperties} />)}</div>}</div>
     <div className="scene-shade" />
     <Atmosphere scene={activeScene} kind={screen === 'reading' ? sceneProfile?.particles ?? 'none' : 'none'} enabled={motion && settings.particles} />
     {portal.layer}
     <header className="topbar">
       <button className={`brand ${screen === 'reading' ? `brand-${brandPhase}` : ''}`} aria-hidden={screen === 'reading' && brandPhase !== 'visible'} tabIndex={screen === 'reading' && brandPhase !== 'visible' ? -1 : undefined} aria-label="返回梦斋" onClick={leaveDream}><span className="brand-mark"><Icon name="book" size={24} /></span><span>入梦书<small key={brandSubtitle} className="brand-subtitle">{brandSubtitle}</small></span>{screen === 'reading' && brandPhase === 'ash' && <AshParticles brand />}</button>
-      <nav aria-label="主要导航"><button className="nav-button library-button" aria-label="打开入梦书架" onClick={() => { if (!stateRef.current || save(stateRef.current)) library.openShelf(); }}><Icon name="book" /><span>入梦书架</span></button><button className="nav-button" aria-label={`我的梦册，已收集 ${collectionCount} 枚梦签`} onClick={() => setPanel('album')}><Icon name="bookmark" /><span>我的梦册</span><em>{collectionCount}</em></button><button className="icon-button sound-button" aria-label={sound ? '关闭声音' : '开启声音'} title={soundState} onClick={() => void enableSound()}><Icon name={sound ? 'sound' : 'mute'} /></button><button className="icon-button" aria-label="打开设置" onClick={() => setPanel('settings')}><Icon name="settings" /></button><AccountButton onOpen={() => setPanel('account')} /></nav>
+      <nav aria-label="主要导航"><button className="nav-button library-button" aria-label="打开入梦书架" onClick={() => { if (!stateRef.current || save(stateRef.current)) library.openShelf(); }}><Icon name="book" /><span>入梦书架</span></button><button className="nav-button" aria-label={`我的梦册，已收集 ${collectionCount} 枚梦签`} onClick={() => setPanel('album')}><Icon name="bookmark" /><span>我的梦册</span><em>{collectionCount}</em></button><button data-guest-access className="icon-button sound-button" aria-label={sound ? '关闭声音' : '开启声音'} title={soundState} onClick={() => void enableSound()}><Icon name={sound ? 'sound' : 'mute'} /></button><button className="icon-button" aria-label="打开设置" onClick={() => setPanel('settings')}><Icon name="settings" /></button><span data-guest-access><AccountButton onOpen={() => setPanel('account')} /></span></nav>
     </header>
 
     {screen === 'home' && <main className="home-layout">
@@ -424,8 +456,8 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
 
     {screen === 'ending' && ending && state && <main className="ending-layout"><div className="ending-intro"><span className="eyebrow">这一次，你把梦留成了这样</span><div className="ending-emblem"><Icon name={ending.id === 'a-lamp-kept' ? 'spark' : 'moon'} size={40} /></div><h1>{ending.title}</h1><p>{ending.summary}</p><span className="ending-collected"><Icon name="check" size={16} />{savedOk ? '梦签已收入梦册' : '梦签暂存于本次会话，请导出备份'}</span></div><section className="echo-card"><h2>你的选择，故事记得</h2>{ending.reflections?.filter(item => evaluateCondition(item.when, state)).map((item, i) => <p key={i}><span>0{i + 1}</span>{item.text}</p>)}<div className="outcomes">{ending.outcomes?.filter(item => evaluateCondition(item.when, state)).map(item => <div key={item.characterId}><b>{pkg.characters.find(c => c.id === item.characterId)?.name}</b><span>{item.text}</span></div>)}</div></section><div className="ending-actions"><button className="primary" onClick={() => setPanel('chapters')}>回到某个选择 <Icon name="history" /></button><button className="secondary" onClick={() => setScreen('home')}>回梦斋</button></div><p className="ending-note">{sourceCredit}<br />AI 衍生的局部终幕 · 原作的故事仍在书页之外<br /><a href={pkg.source.sourceUrl ?? sourceSearch} target="_blank" rel="noopener noreferrer">去知乎，发现更多好故事 ↗</a></p></main>}
 
-    <footer className="footer"><div className="footer-status"><span><i className={offline === '离线就绪' ? 'status-dot ready' : 'status-dot'} />{offline}</span>{availableUpdate && screen === 'home' && <button onClick={() => { if (stateRef.current) save(stateRef.current); availableUpdate(); }}>新版本已备好，更新书页</button>}</div><a className="zhihu-discover" href="https://www.zhihu.com/" target="_blank" rel="noopener noreferrer">去知乎，发现更多故事 ↗</a><button onClick={() => setPanel('source')}>关于这场梦</button></footer>
-    {soundPrompt && <Dialog title="开启声音，入梦体验更佳" onClose={() => rememberSound(false)}><p className="dialog-lead">配乐、环境声与翻页音效，会陪你走进这场梦。</p><p>是否开启声音？你的选择会保存在当前浏览器，之后也可以随时调整。</p><div className="button-row"><button className="primary" onClick={() => { void enableSound().then(enabled => { if (enabled) rememberSound(true); }); }}>是，开启声音 <Icon name="sound" size={18} /></button><button className="secondary" onClick={() => rememberSound(false)}>暂时静音</button></div><p className="muted" role="status">{soundState === '声音未开启' ? '建议使用耳机，慢慢读。' : soundState}</p></Dialog>}
+    <footer data-guest-access className="footer"><div className="footer-status"><span><i className={offline === '离线就绪' ? 'status-dot ready' : 'status-dot'} />{offline}</span>{availableUpdate && screen === 'home' && <button onClick={() => { if (stateRef.current) save(stateRef.current); availableUpdate(); }}>新版本已备好，更新书页</button>}</div><a className="zhihu-discover" href="https://www.zhihu.com/" target="_blank" rel="noopener noreferrer">去知乎，发现更多故事 ↗</a><button onClick={() => setPanel('source')}>关于这场梦</button></footer>
+    {soundPrompt && <div data-guest-access><Dialog title="开启声音，入梦体验更佳" onClose={() => rememberSound(false)}><p className="dialog-lead">配乐、环境声与翻页音效，会陪你走进这场梦。</p><p>是否开启声音？你的选择会保存在当前浏览器；每次回到首页时若仍静音，会再次提醒。</p><div className="button-row"><button className="primary" onClick={() => { void enableSound().then(enabled => { if (enabled) rememberSound(true); }); }}>是，开启声音 <Icon name="sound" size={18} /></button><button className="secondary" onClick={() => rememberSound(false)}>暂时静音</button></div><p className="muted" role="status">{soundState === '声音未开启' ? '建议使用耳机，慢慢读。' : soundState}</p></Dialog></div>}
     {panel === 'account' && user && <AccountPanel onClose={() => setPanel(null)} library={library} />}
     {panel === 'saves' && <Dialog title="把这一页收好" onClose={() => setPanel(null)}><p className="muted">每本书有一个自动档和一个手动档，均保存在当前浏览器，包含最多 30 条前后翻阅记录。</p><div className="save-slot-list">{(['auto', 'manual'] as const).map(slot => {
       const saved = slots[slot];
@@ -446,7 +478,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
 
     {panel === 'chapters' && <Dialog title="回到风向改变的地方" onClose={() => setPanel(null)}><p className="muted">从已走过的分歧点重选。之后的剧情进度会回到当时，收藏的梦签依然保留。</p>{state?.checkpoints.length ? <div className="checkpoint-list">{state.checkpoints.map((checkpoint, index) => <button className="checkpoint" key={index} onClick={() => { apply(restoreCheckpoint(pkg, stateRef.current!, index, now()), true); setPanel(null); setScreen('reading'); }}><span>0{index + 1}</span><div><b>{chapterNames[checkpoint.nodeId] ?? '梦中分歧'}</b><small>{pkg.nodes.find(n => n.id === checkpoint.nodeId)?.kind === 'scene' ? '回到这里，重新作出选择' : ''}</small></div><Icon name="history" size={19} /></button>)}</div> : <div className="empty-state"><Icon name="bookmark" size={32} /><p>还没有走到分歧处，先继续读下去吧。</p></div>}</Dialog>}
 
-    {panel === 'source' && <Dialog title="关于这场梦" onClose={() => setPanel(null)}><p className="dialog-lead">读过的故事，值得一活。</p><p>这本入梦书取材于{pkg.source.author ?? '作者信息待核对'}的《{pkg.source.title}》。{pkg.source.kind === 'hackathon_excerpt' ? '原始材料来自知乎提供的有限节选。' : pkg.source.kind === 'external_excerpt' ? '原始材料为外部作品节选。' : '来源为原创作品。'}</p><p>你所经历的对白、取舍与局部终幕含有改编和扩写，不代表原作者的完整结局。</p><div className="source-box"><span>原作</span><strong>{pkg.source.title}</strong>{sourceCredit}{pkg.source.publishedAt && <span>发布日期：<time dateTime={pkg.source.publishedAt}>{pkg.source.publishedAt}</time></span>}{pkg.source.authorUrl && <a href={pkg.source.authorUrl} target="_blank" rel="noopener noreferrer">前往作者主页 ↗</a>}<a className="secondary" href={pkg.source.sourceUrl ?? sourceSearch} target="_blank" rel="noopener noreferrer">{pkg.source.sourceUrl ? pkg.source.kind === 'hackathon_excerpt' ? '前往知乎阅读原作' : '前往来源网站阅读原作' : '去知乎查找故事'} ↗</a>{!pkg.source.sourceUrl && <small>当前为知乎搜索入口，尚未核对原文直链。</small>}</div><p className="muted">在知乎，读更多好故事，也遇见故事背后的人。</p><p className="fine-print">入梦书制作：{data.book.manifest.creator}。素材来源与使用说明随入梦书一同保存。</p>{data.book.manifest.simulation && <p className="simulation-label">本书为流程演示产物，沿用已有剧情和素材，未调用大模型。</p>}</Dialog>}
+    {panel === 'source' && <div data-guest-access><Dialog title="关于这场梦" onClose={() => setPanel(null)}><p className="dialog-lead">读过的故事，值得一活。</p><p>这本入梦书取材于{pkg.source.author ?? '作者信息待核对'}的《{pkg.source.title}》。{pkg.source.kind === 'hackathon_excerpt' ? '原始材料来自知乎提供的有限节选。' : pkg.source.kind === 'external_excerpt' ? '原始材料为外部作品节选。' : '来源为原创作品。'}</p><p>你所经历的对白、取舍与局部终幕含有改编和扩写，不代表原作者的完整结局。</p><div className="source-box"><span>原作</span><strong>{pkg.source.title}</strong>{sourceCredit}{pkg.source.publishedAt && <span>发布日期：<time dateTime={pkg.source.publishedAt}>{pkg.source.publishedAt}</time></span>}{pkg.source.authorUrl && <a href={pkg.source.authorUrl} target="_blank" rel="noopener noreferrer">前往作者主页 ↗</a>}<a className="secondary" href={pkg.source.sourceUrl ?? sourceSearch} target="_blank" rel="noopener noreferrer">{pkg.source.sourceUrl ? pkg.source.kind === 'hackathon_excerpt' ? '前往知乎阅读原作' : '前往来源网站阅读原作' : '去知乎查找故事'} ↗</a>{!pkg.source.sourceUrl && <small>当前为知乎搜索入口，尚未核对原文直链。</small>}</div><p className="muted">在知乎，读更多好故事，也遇见故事背后的人。</p><p className="fine-print">入梦书制作：{data.book.manifest.creator}。素材来源与使用说明随入梦书一同保存。</p>{data.book.manifest.simulation && <p className="simulation-label">本书为流程演示产物，沿用已有剧情和素材，未调用大模型。</p>}</Dialog></div>}
 
     {(panel === 'restart' || panel === 'save-problem') && <Dialog title={panel === 'restart' ? '再借一次这段故事' : '旧书签需要先收好'} onClose={() => setPanel(null)}><p>{panel === 'restart' ? '新一轮梦境会从第一页开始。当前进度会另存备份，已经收藏的梦签不受影响。' : '检测到旧版本或异常存档，暂时不能直接续读。你可以导出留存，再开启这版故事；原始书签会另存备份。'}</p><div className="button-row"><button className="secondary" onClick={exportBackup}>导出当前备份</button><button className="primary" onClick={restart}>收好书签，重新入梦 <Icon name="arrow" /></button></div></Dialog>}
   </div>;
