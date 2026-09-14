@@ -9,7 +9,6 @@ import sqlite3
 import time
 import uuid
 import zipfile
-from dotenv import load_dotenv
 from contextlib import asynccontextmanager, contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -23,7 +22,6 @@ from backend.credentials import access_secret
 from backend.zhihu_api import ZhihuGateway
 
 ROOT = Path(__file__).resolve().parents[1]
-load_dotenv(ROOT / '.env')
 WEEK = 7 * 86400
 STAGES = ['读一读故事', '理清人物与牵挂', '找到风向改变的地方', '安排画面与声音', '装订入梦书']
 
