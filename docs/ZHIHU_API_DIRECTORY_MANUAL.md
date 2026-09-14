@@ -4,7 +4,7 @@
 
 ## 一、appKey 应填在哪里
 
-`appKey` 属于服务端 OAuth 应用凭据，不能写入 React 前端、提交到 Git 或放进 `.env` 后上传。当前项目通过环境变量读取：
+赛事项目分配的 OAuth App Key 属于服务端应用凭据，不能写入 React 前端、提交到 Git 或放进 `.env` 后上传。它不同于社区签名快速开始中的 `app_key`（知乎用户 token）及 `app_secret`（社区签名密钥），也不同于搜索/直答的 Access Secret，不可根据名称混填。当前 OAuth 项目通过环境变量读取：
 
 ```powershell
 $env:ZHIHU_OAUTH_APP_KEY = '你的 appKey'
@@ -13,7 +13,7 @@ $env:ZHIHU_ACCESS_SECRET = '你的 Access Secret（如接口要求）'
 $env:OAUTH_MODE = 'zhihu'
 ```
 
-配置读取位置是 `backend/app.py` 的 `Settings.app_key`，OAuth 换取 Token 的服务端流程从 `/api/auth/start` 开始，回调地址为 `${APP_ORIGIN}/api/auth/callback`。部署时在后端进程环境中设置即可；不要修改 `src/` 文件，也不要把真实值写入 README。
+配置读取位置是 `backend/app.py` 的 `Settings.app_key`。当前由前端请求 POST `/api/auth/start` 后跳转知乎，回调地址为 `https://uangsc.github.io/dream-entry-book/oauth-callback.html`，FC 通过 POST `/api/auth/exchange` 兑换授权码。部署时在后端进程环境中设置凭据；不要修改 `src/` 文件，也不要把真实值写入 README。地址配置和验收步骤见 [FC 部署说明](FC_DEPLOYMENT.md)。
 
 ## 二、接口调用通用规则
 
@@ -26,13 +26,13 @@ $env:OAUTH_MODE = 'zhihu'
 ## 三、OAuth（Authorization Code）
 
 1. 在知乎开放平台创建应用，取得 appId、appKey，并登记回调地址。
-2. 后端生成随机 `state`，将用户重定向到文档规定的授权地址。
+2. 本项目由浏览器生成随机 `state`，从后端获取已绑定本次请求的授权地址，再由浏览器跳转知乎。
 3. 用户授权后，知乎回调 `redirect_uri` 并携带一次性授权码。
 4. 后端使用 appId、appKey、授权码和完全一致的 redirect_uri 请求 Token 端点。
-5. 服务端保存短期 Token，调用受保护接口时按文档要求放入 Bearer 或指定请求头。
+5. 服务端使用知乎 Token 获取基础资料，向前端返回不包含知乎 Token 的短期应用会话。两种凭据不可混用。
 6. 校验 `state`、授权码有效期和回调来源；失败返回明确错误，不自动重复兑换。
 
-项目已提供 `/api/auth/start`、`/api/auth/callback`、`/api/session`、`/api/me` 和 `/api/auth/logout`。真实模式启动示例见 `backend/README.md`。
+项目真实登录使用 POST `/api/auth/start`、POST `/api/auth/exchange`、GET `/api/session`、GET `/api/me` 和 POST `/api/auth/logout`。旧 GET `/api/auth/callback` 仅保留本地 mock 模式。应用会话保存在 `sessionStorage`，真实登录无需第三方 Cookie；浏览器 verifier 机制不代表知乎支持 PKCE。真实模式与会话有效期边界见 [后端说明](../backend/README.md)。
 
 ## 四、在本项目中的接口映射
 
@@ -48,7 +48,6 @@ $env:OAUTH_MODE = 'zhihu'
 ## 五、安全与上线检查
 
 - 将 `ZHIHU_OAUTH_APP_KEY`、`ZHIHU_ACCESS_SECRET` 放入部署平台 Secret；轮换时只改环境变量。
-- `APP_ORIGIN` 必须与知乎后台登记的回调域名一致，并使用 HTTPS。
+- `APP_ORIGIN` 填前端来源域名，`API_ORIGIN` 填后端来源域名，`FRONTEND_URL` 填含项目路径的前端完整地址。知乎登记的回调必须为该前端目录下的 `oauth-callback.html`，使用 HTTPS。
 - 保持 `.gitignore` 中的 `.env` 和 `zhihu/` 规则，提交前运行 `git diff --cached` 检查敏感值。
 - 使用 `pytest backend -q` 验证授权关联、来源校验和接口行为。
-

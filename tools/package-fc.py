@@ -1,4 +1,5 @@
 """使用明确白名单构建 FC 代码包及 Linux CPython 3.12 x86_64 层。"""
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -10,7 +11,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 CODE_FILES = (
-    'backend/app.py', 'backend/fc.py', 'backend/zhihu_api.py',
+    'backend/app.py', 'backend/fc.py', 'backend/zhihu_api.py', 'backend/browser_auth.py',
     'backend/credentials.py', 'backend/requirements-runtime.txt',
 )
 
@@ -42,6 +43,9 @@ def archive_tree(directory, destination):
 
 
 def main():
+    parser = argparse.ArgumentParser(description='按白名单打包 FC 代码与运行层，不读取 .env。')
+    parser.add_argument('--code-only', action='store_true', help='只更新业务代码 ZIP，复用已经部署的依赖层与素材层')
+    args = parser.parse_args()
     work = ROOT / '.work'
     work.mkdir(exist_ok=True)
     output = Path(tempfile.mkdtemp(prefix='fc-py312-', dir=work))
@@ -55,6 +59,11 @@ def main():
         destination = code / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / name, destination)
+    if args.code_only:
+        report = archive_tree(code, output / 'rumengshu-fc-code.zip')
+        (output / 'manifest.json').write_text(json.dumps({'code_only': True, 'archives': [report]}, ensure_ascii=False, indent=2), encoding='utf-8')
+        print(json.dumps({'output': str(output), 'archive': report}, ensure_ascii=False))
+        return
     subprocess.run([
         sys.executable, '-m', 'pip', '--isolated', 'install',
         '--index-url', 'https://pypi.org/simple',

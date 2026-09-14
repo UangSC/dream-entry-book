@@ -18,9 +18,11 @@ from urllib.parse import urlencode, parse_qs, urlparse
 import httpx
 from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse, Response, FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, ConfigDict
 from backend.credentials import access_secret
 from backend.zhihu_api import ZhihuGateway
+from backend.browser_auth import BrowserAuth, challenge
 
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / '.env')
@@ -31,16 +33,29 @@ STAGES = ['读一读故事', '理清人物与牵挂', '找到风向改变的地�
 class Settings:
     database: Path = field(default_factory=lambda: Path(os.getenv('RUMENGSHU_DATA_DIR', str(ROOT / 'backend/data'))) / 'dreams.sqlite3')
     origin: str = field(default_factory=lambda: os.getenv('APP_ORIGIN', 'http://127.0.0.1:62560').rstrip('/'))
+    api_origin: str = field(default_factory=lambda: os.getenv('API_ORIGIN', '').rstrip('/'))
+    frontend_url: str = field(default_factory=lambda: os.getenv('FRONTEND_URL', ''))
     mode: str = field(default_factory=lambda: os.getenv('OAUTH_MODE', 'mock'))
     app_id: str = field(default_factory=lambda: os.getenv('ZHIHU_OAUTH_APP_ID', ''))
-    app_key: str = field(default_factory=lambda: os.getenv('ZHIHU_OAUTH_APP_KEY', ''))
+    app_key: str = field(default_factory=lambda: os.getenv('ZHIHU_OAUTH_APP_KEY', ''), repr=False)
+    session_secret: str = field(default_factory=lambda: os.getenv('APP_SESSION_SECRET', ''), repr=False)
     access_secret: str = field(default_factory=access_secret, repr=False)
-    # 项目文档未给出稳定用户资料协议；配置已获平台确认的 HTTPS 接口后才启用真实登录。
-    profile_url: str = field(default_factory=lambda: os.getenv('ZHIHU_PROFILE_URL', ''))
+    # 黑客松 OAuth 的基础用户资料端点，不能替换成内容 API。
+    profile_url: str = field(default_factory=lambda: os.getenv('ZHIHU_PROFILE_URL', 'https://openapi.zhihu.com/user'))
     stage_seconds: float = field(default_factory=lambda: float(os.getenv('MOCK_STAGE_SECONDS', '2')))
 
 class StrictModel(BaseModel):
     model_config = ConfigDict(extra='forbid')
+
+class AuthStartInput(StrictModel):
+    state: str = Field(pattern=r'^[A-Za-z0-9_-]{43}$')
+    challenge: str = Field(pattern=r'^[A-Za-z0-9_-]{43}$')
+
+class AuthExchangeInput(StrictModel):
+    state: str = Field(pattern=r'^[A-Za-z0-9_-]{43}$')
+    verifier: str = Field(pattern=r'^[A-Za-z0-9_-]{43}$')
+    transaction: str = Field(min_length=1, max_length=8192)
+    code: str = Field(min_length=1, max_length=4096)
 
 class JobInput(StrictModel):
     title: str = Field(min_length=1, max_length=60)
@@ -70,6 +85,21 @@ def digest(value: str):
 def create_app(settings: Settings | None = None):
     config = settings or Settings()
     if config.mode not in {'mock', 'zhihu'}: raise ValueError('OAUTH_MODE 只能是 mock 或 zhihu')
+    api_origin = config.api_origin or config.origin
+    frontend_url = config.frontend_url or config.origin + '/'
+    for value in (config.origin, api_origin):
+        parsed = urlparse(value)
+        if parsed.scheme not in {'http', 'https'} or not parsed.netloc or parsed.username or parsed.password or parsed.path or parsed.params or parsed.query or parsed.fragment:
+            raise ValueError('APP_ORIGIN 和 API_ORIGIN 必须是无路径的 HTTP(S) 域名')
+    frontend = urlparse(frontend_url)
+    if f'{frontend.scheme}://{frontend.netloc}' != config.origin or frontend.username or frontend.password or frontend.query or frontend.fragment:
+        raise ValueError('FRONTEND_URL 必须属于 APP_ORIGIN，且不包含查询参数或片段')
+    cross_origin = api_origin != config.origin
+    if cross_origin and not (api_origin.startswith('https://') and config.origin.startswith('https://')):
+        raise ValueError('跨站 Cookie 登录要求前后端均使用 HTTPS')
+    callback_url = api_origin + '/api/auth/callback'
+    browser_callback_url = frontend_url.rstrip('/') + '/oauth-callback.html'
+    browser_auth = BrowserAuth(config.session_secret or config.app_key or secrets.token_urlsafe(32), browser_callback_url)
     config.database.parent.mkdir(parents=True, exist_ok=True)
     sessions, transactions, codes = {}, {}, {}
 
@@ -191,8 +221,9 @@ def create_app(settings: Settings | None = None):
 
     @app.middleware('http')
     async def headers(request, call_next):
-        # 限定同源写操作；授权回调为 GET，并另外检查 state 和浏览器绑定。
-        if request.method not in {'GET', 'HEAD', 'OPTIONS'} and request.headers.get('origin') != config.origin:
+        # 写操作必须来自配置的前端；模拟同意表单来自后端自身。
+        allowed = {api_origin} if request.url.path == '/api/oauth/approve' else {config.origin}
+        if request.method not in {'GET', 'HEAD', 'OPTIONS'} and request.headers.get('origin') not in allowed:
             return Response('请求来源不匹配', status_code=403)
         response = await call_next(request)
         response.headers['Cache-Control'] = 'no-store'
@@ -200,7 +231,22 @@ def create_app(settings: Settings | None = None):
         response.headers['X-Content-Type-Options'] = 'nosniff'
         return response
 
+    app.add_middleware(CORSMiddleware, allow_origins=[config.origin], allow_credentials=True,
+                       allow_methods=['GET', 'POST'], allow_headers=['Content-Type', 'Authorization'], max_age=600)
+
     def session(request: Request):
+        authorization = request.headers.get('authorization')
+        if authorization:
+            if not authorization.startswith('Bearer '): raise HTTPException(401, '登录凭据格式不正确')
+            body = browser_auth.read(authorization[7:], 'session')
+            value = body['data'] | {'expires': body['exp']}
+            if not all(isinstance(value.get(key), str) and value[key] for key in ('id', 'name', 'avatar')):
+                raise HTTPException(401, '登录凭据无效')
+            # 新 FC 实例也能验证应用会话；原有业务表仍是实例临时数据。
+            with database() as db:
+                db.execute('INSERT INTO users VALUES (?,?,?,?) ON CONFLICT(id) DO UPDATE SET name=excluded.name,avatar=excluded.avatar,updated_at=excluded.updated_at',
+                           (value['id'], value['name'], value['avatar'], time.time()))
+            return value
         value = sessions.get(digest(request.cookies.get('dream_session', '')))
         if not value or value['expires'] <= time.time(): raise HTTPException(401, '请先登录，再收好这场梦。')
         return value
@@ -212,7 +258,9 @@ def create_app(settings: Settings | None = None):
         return value
 
     def cookie(response, name, value, age, path='/'):
-        response.set_cookie(name, value, max_age=age, httponly=True, secure=config.origin.startswith('https:'), samesite='lax', path=path)
+        # OAuth 浏览器绑定 Cookie 用 Lax 接收顶层回调；API 会话跨站时使用 None。
+        response.set_cookie(name, value, max_age=age, httponly=True, secure=api_origin.startswith('https:'),
+                            samesite='none' if name == 'dream_session' and cross_origin else 'lax', path=path)
 
     @app.get('/api/health')
     def health(): return {'status': 'ok', 'oauth_mode': config.mode, 'tasks': 'simulation', 'zhihu_configured': bool(config.access_secret)}
@@ -228,8 +276,7 @@ def create_app(settings: Settings | None = None):
 
     @app.get('/api/auth/start')
     def auth_start():
-        if config.mode == 'zhihu' and not all([config.app_id, config.app_key, config.access_secret, config.profile_url.startswith('https://')]):
-            raise HTTPException(503, '真实知乎登录尚未配置完整，当前请使用模拟模式。')
+        if config.mode != 'mock': raise HTTPException(409, '请从更新后的作品页面点击知乎登录。')
         stamp = time.time()
         for bucket in [transactions, codes, sessions]:
             for key in list(bucket):
@@ -237,7 +284,7 @@ def create_app(settings: Settings | None = None):
         browser, state = secrets.token_urlsafe(32), secrets.token_urlsafe(32)
         transactions[digest(browser)] = {'state': state, 'expires': stamp + 600}
         destination = '/api/oauth/authorize' if config.mode == 'mock' else 'https://openapi.zhihu.com/authorize'
-        params = {'app_id': 'rumengshu-local' if config.mode == 'mock' else config.app_id, 'response_type': 'code', 'redirect_uri': config.origin + '/api/auth/callback', 'state': state}
+        params = {'app_id': 'rumengshu-local' if config.mode == 'mock' else config.app_id, 'response_type': 'code', 'redirect_uri': callback_url, 'state': state}
         response = RedirectResponse(destination + '?' + urlencode(params), 303)
         cookie(response, 'dream_oauth', browser, 600, '/api')
         return response
@@ -246,12 +293,11 @@ def create_app(settings: Settings | None = None):
     def authorize(request: Request, state: str, app_id: str, response_type: str, redirect_uri: str):
         if config.mode != 'mock': raise HTTPException(404)
         transaction(request, state)
-        if app_id != 'rumengshu-local' or response_type != 'code' or redirect_uri != config.origin + '/api/auth/callback': raise HTTPException(400, '授权参数不匹配')
+        if app_id != 'rumengshu-local' or response_type != 'code' or redirect_uri != callback_url: raise HTTPException(400, '授权参数不匹配')
         return f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>知乎模拟授权 · 入梦书</title>
         <style>body{{background:#f5eee1;color:#40372f;font:18px/1.8 serif;display:grid;place-items:center;min-height:95vh}}main{{width:420px;padding:44px;background:#fffcf5;border:1px solid #ccb995;border-radius:24px;box-shadow:0 20px 90px #57442918}}input,button{{font:inherit;padding:12px;border-radius:10px;border:1px solid #ba9963}}button{{background:#355a4d;color:white;cursor:pointer}}small{{display:block;color:#796f62}}a{{color:#355a4d}}</style>
         <main><small>知乎账号 · 本地模拟</small><h1>把这场梦，收进名字里。</h1><p>这是模拟授权页。无需知乎密码，进度会记在当前模拟昵称下。</p>
-        <form method="post" action="/api/oauth/approve"><input type="hidden" name="state" value="{html.escape(state)}"><label>梦中称呼<br><input name="name" maxlength="40" value="山间读者" required></label><p><button type="submit">同意并回到入梦书</button></p></form><p role="alert" id="error"></p><a href="/">暂时不登录</a></main>
-        <script>document.querySelector('form').addEventListener('submit',async event=>{{event.preventDefault();const form=event.currentTarget;const button=form.querySelector('button');button.disabled=true;try{{const response=await fetch(form.action,{{method:'POST',body:new URLSearchParams(new FormData(form)),credentials:'same-origin'}});if(!response.ok){{const error=await response.json();throw new Error(error.detail||'授权暂未完成');}}location.assign('/');}}catch(error){{document.querySelector('#error').textContent=error.message;button.disabled=false;}}}});</script></html>'''
+        <form method="post" action="/api/oauth/approve"><input type="hidden" name="state" value="{html.escape(state)}"><label>梦中称呼<br><input name="name" maxlength="40" value="山间读者" required></label><p><button type="submit">同意并回到入梦书</button></p></form><a href="{html.escape(frontend_url)}">暂时不登录</a></main></html>'''
 
     @app.post('/api/oauth/approve')
     async def approve(request: Request):
@@ -267,30 +313,60 @@ def create_app(settings: Settings | None = None):
         codes[digest(code)] = {'expires': time.time() + 60, 'state': tx['state'], 'subject': 'mock-' + digest(name)[:24], 'name': name}
         return RedirectResponse('/api/auth/callback?' + urlencode({'authorization_code': code, 'state': state}), 303)
 
-    async def exchange(code, state):
+    async def exchange(code, state, redirect_uri=callback_url):
         if config.mode == 'mock':
             value = codes.pop(digest(code), None)
             if not value or value['expires'] < time.time() or value['state'] != state: raise HTTPException(400, '授权码已使用或已过期')
             return {'id': value['subject'], 'name': value['name'], 'avatar': '/api/avatar.svg', 'expires': time.time() + 86400, 'token': None}
         try:
             async with httpx.AsyncClient(timeout=15, follow_redirects=False) as client:
-                response = await client.post('https://openapi.zhihu.com/access_token', data={'app_id': config.app_id, 'app_key': config.app_key, 'grant_type': 'authorization_code', 'redirect_uri': config.origin + '/api/auth/callback', 'code': code})
+                response = await client.post('https://openapi.zhihu.com/access_token', data={'app_id': config.app_id, 'app_key': config.app_key, 'grant_type': 'authorization_code', 'redirect_uri': redirect_uri, 'code': code})
                 response.raise_for_status()
                 payload = response.json(); token_data = payload.get('data', payload)
                 token = token_data.get('access_token')
-                if not token: raise ValueError('missing token')
-                profile = await client.get(config.profile_url, headers={'Authorization': 'Bearer ' + config.access_secret, 'X-OAuth-Token': token, 'X-Request-Timestamp': str(int(time.time()))})
+                if not isinstance(token, str) or not token: raise ValueError('missing token')
+                profile = await client.get(config.profile_url, headers={'Authorization': 'Bearer ' + token})
                 profile.raise_for_status()
                 body = profile.json(); user = body.get('data', body)
-                if not isinstance(user.get('id'), (str, int)) or not user.get('name'): raise ValueError('missing identity')
-                avatar = user.get('avatar_url', '')
+                subject = user.get('uid') or user.get('hash_id')
+                if not isinstance(subject, (str, int)) or not user.get('fullname'): raise ValueError('missing identity')
+                avatar = user.get('avatar_path', '')
                 if not isinstance(avatar, str) or urlparse(avatar).scheme != 'https': avatar = '/api/avatar.svg'
-                return {'id': 'zhihu-' + str(user['id']), 'name': str(user['name'])[:80], 'avatar': avatar, 'expires': time.time() + min(int(token_data.get('expires_in', 3600)), 86400), 'token': token}
-        except (httpx.HTTPError, ValueError, TypeError, KeyError):
+                return {'id': 'zhihu-' + str(subject), 'name': str(user['fullname'])[:80], 'avatar': avatar, 'expires': time.time() + min(int(token_data.get('expires_in', 3600)), 86400), 'token': token}
+        except (httpx.HTTPError, ValueError, TypeError, KeyError, AttributeError):
             raise HTTPException(502, '知乎授权暂未完成，请稍后重试。') from None
+
+    def require_oauth():
+        if config.mode != 'zhihu' or not all([config.app_id, config.app_key, config.profile_url == 'https://openapi.zhihu.com/user']):
+            raise HTTPException(503, '真实知乎登录尚未配置完整。')
+
+    @app.post('/api/auth/start')
+    def browser_start(body: AuthStartInput):
+        if config.mode == 'mock':
+            return {'mode': 'mock', 'url': api_origin + '/api/auth/start'}
+        require_oauth()
+        proof = browser_auth.issue('transaction', {'state': body.state, 'challenge': body.challenge}, 600)
+        params = {'app_id': config.app_id, 'response_type': 'code', 'redirect_uri': browser_callback_url, 'state': body.state}
+        return {'mode': 'zhihu', 'url': 'https://openapi.zhihu.com/authorize?' + urlencode(params), 'transaction': proof}
+
+    @app.post('/api/auth/exchange')
+    async def browser_exchange(body: AuthExchangeInput):
+        require_oauth()
+        proof = browser_auth.read(body.transaction, 'transaction')['data']
+        if not (secrets.compare_digest(proof.get('state', ''), body.state)
+                and secrets.compare_digest(proof.get('challenge', ''), challenge(body.verifier))):
+            raise HTTPException(400, '授权与当前标签页不匹配，请重新登录。')
+        # 授权码由知乎单次兑换；请求证明不依赖 FC 进程中的临时字典。
+        identity = await exchange(body.code, body.state, browser_callback_url)
+        lifetime = min(3600, int(identity['expires'] - time.time()))
+        if lifetime < 1: raise HTTPException(401, '知乎授权已过期，请重新登录。')
+        user = {key: identity[key] for key in ('id', 'name', 'avatar')}
+        token = browser_auth.issue('session', user, lifetime)
+        return {'session_token': token, 'expires_in': lifetime, 'user': user | {'simulation': False}}
 
     @app.get('/api/auth/callback')
     async def callback(request: Request, state: str = '', authorization_code: str = '', code: str = ''):
+        if config.mode != 'mock': raise HTTPException(409, '知乎回调地址已改到作品的 oauth-callback.html 页面，请更新平台登记。')
         transaction(request, state)
         transactions.pop(digest(request.cookies.get('dream_oauth', '')), None)
         auth_code = authorization_code or code
@@ -301,7 +377,7 @@ def create_app(settings: Settings | None = None):
         previous = digest(request.cookies.get('dream_session', '')); sessions.pop(previous, None)
         secret = secrets.token_urlsafe(32)
         sessions[digest(secret)] = identity
-        response = RedirectResponse('/?login=success', 303)
+        response = RedirectResponse(frontend_url + '?login=success', 303)
         cookie(response, 'dream_session', secret, max(1, int(identity['expires'] - time.time())))
         response.delete_cookie('dream_oauth', path='/api')
         return response

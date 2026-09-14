@@ -1,21 +1,25 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
+import { apiRequest, avatarUrl, clearSession } from './client';
+import { beginLogin } from './oauth';
+import './session.css';
 
 export interface User { id: string; name: string; avatar: string; simulation: boolean }
 export async function api<T>(path: string, body?: unknown, method?: string): Promise<T> {
-  const response = await fetch(`/api${path}`, { method: method ?? (body === undefined ? 'GET' : 'POST'), credentials: 'same-origin',
-    ...(body !== undefined ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(15000) });
-  if (!response.ok) {
-    const payload = await response.json().catch(() => null);
-    throw new Error(typeof payload?.detail === 'string' ? payload.detail : response.status === 401 ? '登录已过期，请重新登录。' : '书屋后端暂时未连接，请稍后重试。');
-  }
+  const response = await apiRequest(path, body, method);
   return response.status === 204 ? undefined as T : response.json() as Promise<T>;
 }
-const Session = createContext<{ user: User | null; refresh: () => Promise<void>; logout: () => Promise<void> }>({ user: null, refresh: async () => {}, logout: async () => {} });
+const Session = createContext<{ user: User | null; refresh: () => Promise<void>; logout: () => Promise<void>; login: () => void; loginBusy: boolean }>({ user: null, refresh: async () => {}, logout: async () => {}, login: () => {}, loginBusy: false });
 export const useAccount = () => useContext(Session);
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const refresh = useCallback(async () => { const result = await api<{ user: User | null }>('/session'); setUser(result.user); }, []);
+  const [loginBusy, setLoginBusy] = useState(false), [loginError, setLoginError] = useState('');
+  const refresh = useCallback(async () => { const result = await api<{ user: User | null }>('/session'); if (!result.user) clearSession(); setUser(result.user ? { ...result.user, avatar: avatarUrl(result.user.avatar) } : null); }, []);
   useEffect(() => { void refresh().catch(() => {}); }, [refresh]);
-  const logout = async () => { await api('/auth/logout', {}, 'POST'); setUser(null); };
-  return <Session.Provider value={{ user, refresh, logout }}>{children}</Session.Provider>;
+  const logout = async () => { try { await api('/auth/logout', {}, 'POST'); } finally { clearSession(); setUser(null); } };
+  const login = () => {
+    if (loginBusy) return;
+    setLoginBusy(true); setLoginError('');
+    void beginLogin().then(url => window.location.assign(url)).catch(error => { setLoginError(error instanceof Error ? error.message : '暂时无法登录，请稍后重试。'); setLoginBusy(false); });
+  };
+  return <Session.Provider value={{ user, refresh, logout, login, loginBusy }}>{children}{loginError && <div role="alert" className="login-error"><span>{loginError}</span><button onClick={() => setLoginError('')}>关闭</button></div>}</Session.Provider>;
 }

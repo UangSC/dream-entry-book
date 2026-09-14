@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { DreamPackage } from './schema';
 import type { SaveState } from './engine';
 import { validateSave } from './replay';
+import { validateJournal, type ReaderJournal } from './reader';
 
 /**
  * 存档层。三条来自契约的规则：
@@ -75,10 +76,10 @@ const isQuotaError = (e: unknown): boolean => {
   return e instanceof Error && /quota|exceeded/i.test(e.message);
 };
 
-export const writeSave = (kv: KV, state: SaveState): WriteOutcome => {
+export const writeSave = (kv: KV, state: SaveState, reader?: ReaderJournal): WriteOutcome => {
   let payload: string;
   try {
-    payload = JSON.stringify(state);
+    payload = JSON.stringify({ ...state, ...(reader ? { reader } : {}) });
   } catch (e) {
     return { ok: false, reason: 'serialize', message: `存档序列化失败：${String(e)}` };
   }
@@ -96,7 +97,7 @@ export const writeSave = (kv: KV, state: SaveState): WriteOutcome => {
 
 export type ReadOutcome =
   | { status: 'none' }
-  | { status: 'ok'; state: SaveState }
+  | { status: 'ok'; state: SaveState; reader?: ReaderJournal }
   /** 构建号变了：旧档已备份，等玩家决定，不自动迁移。 */
   | { status: 'build-mismatch'; savedBuildId: string; currentBuildId: string; backedUp: boolean }
   /** 结构损坏或与梦包不符：已备份，不编造状态。 */
@@ -181,8 +182,20 @@ export const readSave = (kv: KV, pkg: DreamPackage, now: string): ReadOutcome =>
 
   const issue = validateSave(pkg, state);
   if (issue) return { status: 'corrupt', message: issue, backedUp: backup() };
-  return { status: 'ok', state };
+  const rawReader = (parsedJson as { reader?: unknown }).reader;
+  const reader = rawReader === undefined ? undefined : validateJournal(pkg, state, rawReader);
+  if (reader === null) return { status: 'corrupt', message: '对话队列与存档路线不一致', backedUp: backup() };
+  return { status: 'ok', state, reader };
 };
+
+export type SaveSlot = 'auto' | 'manual';
+const slotKey = (packageId: string, slot: SaveSlot) => `${NS}:slot:${slot}:${packageId}`;
+const slotKV = (kv: KV, packageId: string, slot: SaveSlot): KV => ({ ...kv,
+  get: key => kv.get(key === saveKey(packageId) ? slotKey(packageId, slot) : key),
+  set: (key, value) => kv.set(key === saveKey(packageId) ? slotKey(packageId, slot) : key, value),
+});
+export const readSlot = (kv: KV, pkg: DreamPackage, slot: SaveSlot, at: string) => readSave(slotKV(kv, pkg.packageId, slot), pkg, at);
+export const writeSlot = (kv: KV, state: SaveState, reader: ReaderJournal, slot: SaveSlot) => writeSave(slotKV(kv, state.packageId, slot), state, reader);
 
 export const clearSave = (kv: KV, packageId: string): WriteOutcome => {
   try {
@@ -303,7 +316,7 @@ export const importAll = (kv: KV, json: string, packages: readonly DreamPackage[
   let skipped = 0;
   for (const [key, value] of Object.entries(parsed.data.data)) {
     // 只接受本命名空间的键，不让导入文件往别处写
-    if (!key.startsWith(`${NS}:save:`) && key !== ALBUM_KEY) {
+    if (!key.startsWith(`${NS}:save:`) && !key.startsWith(`${NS}:slot:`) && key !== ALBUM_KEY) {
       skipped += 1;
       continue;
     }
@@ -317,9 +330,12 @@ export const importAll = (kv: KV, json: string, packages: readonly DreamPackage[
       writes.push([key, JSON.stringify({ albumVersion: 1, entries: merged })]);
     } else {
       const saved = saveStateSchema.safeParse(data);
-      const pkg = packages.find(p => key === saveKey(p.packageId));
+      const pkg = packages.find(p => key === saveKey(p.packageId) || key === slotKey(p.packageId, 'auto') || key === slotKey(p.packageId, 'manual'));
       if (!saved.success || !pkg || validateSave(pkg, saved.data)) return { ok: false, message: '备份进度与当前故事路线或版本不符' };
-      writes.push([key, JSON.stringify(saved.data)]);
+      const rawReader = (data as { reader?: unknown }).reader;
+      const reader = rawReader === undefined ? undefined : validateJournal(pkg, saved.data, rawReader);
+      if (reader === null) return { ok: false, message: '备份对话队列与故事路线不符' };
+      writes.push([key, JSON.stringify({ ...saved.data, ...(reader ? { reader } : {}) })]);
     }
   }
   const previous = new Map<string, string | null>();

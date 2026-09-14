@@ -2,13 +2,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { ArtAsset } from '../runtime/library';
 import { planTransition, TransitionController } from '../runtime/transition';
 
-export function Scene({ asset, motion }: { asset: ArtAsset | undefined; motion: boolean }) {
+export function Scene({ asset, motion, onBusy }: { asset: ArtAsset | undefined; motion: boolean; onBusy?: (busy: boolean) => void }) {
   const shown = useRef<ArtAsset>();
   const [layers, setLayers] = useState<{ previous?: ArtAsset; current?: ArtAsset }>({});
   const [failed, setFailed] = useState(false);
   const previousRef = useRef<HTMLImageElement>(null), currentRef = useRef<HTMLImageElement>(null);
   const root = useRef<HTMLDivElement>(null);
-  const transitionKey = useRef('');
+  const finishedKey = useRef('');
   useLayoutEffect(() => {
     if (!asset || shown.current?.src === asset.src) return;
     setLayers({ previous: shown.current, current: asset }); shown.current = asset;
@@ -26,17 +26,17 @@ export function Scene({ asset, motion }: { asset: ArtAsset | undefined; motion: 
   }, [asset]);
   useLayoutEffect(() => {
     const incoming = currentRef.current, outgoing = previousRef.current;
-    if (!incoming || !outgoing) return;
+    if (!incoming || !outgoing) { onBusy?.(false); return; }
     const key = `${layers.previous?.src ?? ''}|${layers.current?.src ?? ''}`;
-    if (transitionKey.current === key) {
+    if (finishedKey.current === key) {
       incoming.style.opacity = '1'; outgoing.style.opacity = '0'; incoming.style.filter = 'none'; outgoing.style.filter = 'none'; incoming.style.maskImage = 'none';
       if (root.current) root.current.dataset.transitioning = 'false';
-      return;
+      onBusy?.(false); return;
     }
-    transitionKey.current = key;
     const controller = new TransitionController();
     const plan = planTransition(layers.previous?.luminance ?? null, layers.current?.luminance ?? null, { animationsOff: !motion || !layers.previous });
     controller.start(plan, performance.now());
+    onBusy?.(plan.durationMs > 0);
     let frame = 0;
     const render = (now: number) => {
       const state = controller.frame(now);
@@ -47,10 +47,11 @@ export function Scene({ asset, motion }: { asset: ArtAsset | undefined; motion: 
       const radius = state.rippleRadius * diagonal;
       incoming.style.maskImage = plan.mode === 'ripple' && !state.done ? `radial-gradient(circle at 50% 42%, black ${Math.max(0, radius - state.rippleFeather * diagonal)}px, transparent ${radius}px)` : 'none';
       if (!state.done) frame = requestAnimationFrame(render);
+      else { finishedKey.current = key; onBusy?.(false); }
     };
     render(performance.now());
-    return () => cancelAnimationFrame(frame);
-  }, [layers, motion]);
+    return () => { cancelAnimationFrame(frame); onBusy?.(false); };
+  }, [layers, motion, onBusy]);
   return <div ref={root} className={`scene ${failed ? 'scene-failed' : ''}`} data-scene={asset?.id ?? 'fallback'} aria-hidden="true">
     {layers.current && <><img ref={previousRef} className="scene-image" src={(layers.previous ?? layers.current).src} alt="" /><img ref={currentRef} className="scene-image" src={layers.current.src} alt="" /></>}
   </div>;

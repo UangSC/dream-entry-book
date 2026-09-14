@@ -1,5 +1,7 @@
 # 知乎接入复核与产品实施建议
 
+> **当前部署更新：** 下文保留早期排查证据，不作为当前配置指南。用户已取得并配置赛事凭据；本地代码已适配新版 `/user` 和前端跳转方案，仍待部署后真实授权验收。当前回调为 `https://uangsc.github.io/dream-entry-book/oauth-callback.html`，真实登录采用不依赖第三方 Cookie、可跨 FC 实例验证的短期应用会话。下文旧 `/api/auth/callback`、资料占位和内存登录限制只描述历史版本，最新步骤以 [FC 部署说明](../FC_DEPLOYMENT.md) 为准。
+
 > **2026-09-14 后续更正：下文关于黑客松 `state` 和基础资料协议缺失的结论已被新版官方 Skill 补齐。** 本地 Skill 为 `0.5.3-beta.20260904115023`；状态检查发现新版 `0.7.2-beta.20260911131715`，读取并验证官方包 SHA-256 后确认：黑客松 OAuth 已支持 `state` 原样透传；基础信息为 `GET https://openapi.zhihu.com/user`，仅使用 OAuth Token 的 Bearer 鉴权，字段为 `uid/hash_id/fullname/avatar_path` 等。当前剩余工作是领取并配置赛事 App ID/App Key、登记回调、按新版协议修正资料适配并实测登录。旧文与旧通用 OAuth 实测不能覆盖新版黑客松说明。此前仅检查旧本地资料和通用官网页面，未检查 Skill 更新，导致判断不完整。
 >
 > 官方包：[0.7.2 版 Skill](https://developer-cdn.zhihu.com/zhihu-cli/releases/beta/skill/0.7.2-beta.20260911131715/zhihu-cli-skill-0.7.2-beta.20260911131715.zip)，依据为其中 `references/hackathon-oauth.md` 和 `references/hackathon-user-profile-api.md`。此次仅下载核对，未安装升级本地 Skill。

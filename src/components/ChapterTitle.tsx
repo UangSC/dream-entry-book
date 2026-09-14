@@ -18,6 +18,10 @@ export function ChapterTitle({ title, subtitle, phase }: { title: string; subtit
     <span className="eyebrow">{subtitle}</span>
     <h1 aria-label={title}>{[...title].map((letter, i) => <span aria-hidden="true" className="chapter-letter" key={i} style={{ '--delay': `${i % 10 * 65}ms`, '--drift': `${(i % 3 - 1) * 36}px`, '--rise': `${-35 - i % 4 * 12}px` } as CSSProperties}>{letter === ' ' ? '\u00a0' : letter}</span>)}</h1>
     <span className="chapter-decoration" aria-hidden="true">✧</span>
-    {phase === 'ash' && <div className="chapter-dust" aria-hidden="true">{Array.from({ length: 42 }, (_, i) => <i key={i} style={{ '--x': `${8 + i * 2}%`, '--delay': `${i % 9 * 85}ms`, '--drift': `${(i % 7 - 3) * 24}px`, '--rise': `${-45 - i % 6 * 22}px`, '--size': `${i % 3 + 1}px` } as CSSProperties} />)}</div>}
+    {phase === 'ash' && <AshParticles />}
   </div>;
+}
+
+export function AshParticles({ brand = false }: { brand?: boolean }) {
+  return <span className={`chapter-dust ${brand ? 'brand-dust' : ''}`} aria-hidden="true">{Array.from({ length: brand ? 64 : 108 }, (_, i) => <i key={i} style={{ '--x': `${4 + (i * 37 % 92)}%`, '--delay': `${i % 13 * 90}ms`, '--drift': `${(i % 13 - 6) * (brand ? 26 : 48)}px`, '--rise': `${-80 - i % 11 * (brand ? 15 : 26)}px`, '--size': `${i % 3 + 1}px` } as CSSProperties} />)}</span>;
 }

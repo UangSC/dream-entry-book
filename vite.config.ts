@@ -9,6 +9,6 @@ export default defineConfig({
   plugins: [react()],
   server: { proxy: { '/api': 'http://127.0.0.1:62561' } },
   preview: { proxy: { '/api': 'http://127.0.0.1:62561' } },
-  build: { target: 'es2022', assetsInlineLimit: 2048 },
+  build: { target: 'es2022', assetsInlineLimit: 2048, rollupOptions: { input: { main: 'index.html', callback: 'oauth-callback.html' } } },
   test: { environment: 'node', include: ['src/**/*.test.ts'] },
 });

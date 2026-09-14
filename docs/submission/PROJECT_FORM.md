@@ -14,17 +14,15 @@
 
 ## 作品链接
 
-待填：部署后可公开访问的 HTTPS 地址。
+填写：`https://uangsc.github.io/dream-entry-book/`
 
-填写格式：`https://你的作品域名/`
-
-本地验收地址为 `http://127.0.0.1:62560/`，仅用于本机开发，不可作为发布时供评委访问的作品链接。当前仓库没有确认的公网作品地址。
+该地址为 GitHub Pages 作品地址，提交前确认最新前端已发布。本地 `http://127.0.0.1:62560/` 仅用于本机开发，不可作为评委访问链接。
 
 ## 知乎登录回调地址
 
-填写格式：`https://你的作品域名/api/auth/callback`
+填写：`https://uangsc.github.io/dream-entry-book/oauth-callback.html`
 
-请单独填写这一项，不要留空沿用首页。它应与后端 `APP_ORIGIN` 加 `/api/auth/callback` 完全一致。Access Secret 与创建项目后发放的 OAuth App ID、App Key 是不同凭据；当前已有 Access Secret 不等于已完成真实知乎登录。
+请单独填写这一项，不要沿用首页或旧 FC 回调。它应与后端 `FRONTEND_URL` 下的 `oauth-callback.html` 完全一致，新前端和 FC 代码均需更新。Access Secret 与创建项目后发放的 OAuth App ID、App Key 是不同凭据；获得凭据不等于真实登录已经验收。完整步骤见 [FC 部署说明](../FC_DEPLOYMENT.md)。
 
 ## GitHub 链接
 

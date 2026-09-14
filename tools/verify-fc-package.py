@@ -1,4 +1,5 @@
 """在 Linux Python 3.12 下，解压并验证实际交付包，不加载项目环境配置。"""
+import argparse
 import io
 import json
 import os
@@ -13,7 +14,12 @@ import zipfile
 
 
 def main():
-    output = Path(sys.argv[1]).resolve()
+    parser = argparse.ArgumentParser(description='在 Linux Python 3.12 中验证 FC ZIP，不加载项目 .env。')
+    parser.add_argument('output', type=Path, help='新代码包所在目录')
+    parser.add_argument('--layers-dir', type=Path, help='复用已验证的依赖层、素材层 ZIP 所在目录')
+    args = parser.parse_args()
+    output = args.output.resolve()
+    layer_source = args.layers_dir.resolve() if args.layers_dir else output
     assert platform.system() == 'Linux' and sys.version_info[:2] == (3, 12)
     assert platform.machine() == 'x86_64'
     with tempfile.TemporaryDirectory(prefix='rumengshu-fc-check-') as temporary:
@@ -22,7 +28,8 @@ def main():
         for filename, target in [('rumengshu-fc-code.zip', code),
                                  ('rumengshu-fc-dependencies-py312-x86_64.zip', layers),
                                  ('rumengshu-fc-demo-assets.zip', layers)]:
-            with zipfile.ZipFile(output / filename) as archive:
+            source = output if filename == 'rumengshu-fc-code.zip' else layer_source
+            with zipfile.ZipFile(source / filename) as archive:
                 assert archive.testzip() is None
                 for name in archive.namelist():
                     assert not Path(name).is_absolute() and '..' not in Path(name).parts
@@ -32,7 +39,7 @@ def main():
         sys.path = [str(code), str(layers / 'python')] + [item for item in sys.path if '/mnt/' not in item]
         os.chdir(root)
         os.environ.update(PYTHON_DOTENV_DISABLED='1', OAUTH_MODE='mock',
-                          APP_ORIGIN='http://testserver', MOCK_STAGE_SECONDS='0.01',
+                          APP_ORIGIN='http://testserver', API_ORIGIN='', FRONTEND_URL='', MOCK_STAGE_SECONDS='0.01',
                           RUMENGSHU_DATA_DIR=str(root / 'data'),
                           RUMENGSHU_DEMO_BOOK=str(layers / 'rumengshu/books/little-demon.dreambook'),
                           ZHIHU_ACCESS_SECRET='', ZHIHU_OAUTH_APP_ID='', ZHIHU_OAUTH_APP_KEY='')

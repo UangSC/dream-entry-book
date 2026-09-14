@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ArtAsset } from '../runtime/library';
 
-export function DialoguePortrait({ portrait, name, label, motion = true, narrator = false }: { portrait?: ArtAsset; name: string; label: string; motion?: boolean; narrator?: boolean }) {
+export function DialoguePortrait({ portrait, name, label, motion = true, narrator = false, direct = false }: { portrait?: ArtAsset; name: string; label: string; motion?: boolean; narrator?: boolean; direct?: boolean }) {
   const [shown, setShown] = useState(portrait), [previous, setPrevious] = useState<ArtAsset>();
   const [failed, setFailed] = useState<string>();
   useEffect(() => {
@@ -24,7 +24,7 @@ export function DialoguePortrait({ portrait, name, label, motion = true, narrato
     return () => clearTimeout(timer);
   }, [previous]);
   const hasImage = shown && failed !== shown.src;
-  return <figure className={`dialogue-portrait ${hasImage ? '' : 'portrait-name-only'} ${narrator ? 'portrait-narrator' : ''}`}>
+  return <figure className={`dialogue-portrait ${hasImage ? '' : 'portrait-name-only'} ${narrator ? 'portrait-narrator' : ''} ${direct ? 'portrait-direct' : ''}`}>
     {previous && motion && <img className="portrait-outgoing" src={previous.src} alt="" aria-hidden="true" />}
     {hasImage && <img key={shown.src} className={motion && previous ? 'portrait-incoming' : ''} src={shown.src} alt={label} onError={() => setFailed(shown.src)} />}
     <figcaption>{name}</figcaption>

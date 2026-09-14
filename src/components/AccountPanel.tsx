@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api, useAccount } from '../account/session';
+import { apiRequest, apiUrl } from '../account/client';
 import { readDreamBook } from '../books/archive';
 import { Dialog } from './Dialog';
 import { Icon } from './Icon';
@@ -13,9 +14,9 @@ interface Ledger { plays: Play[]; jobs: Job[]; imports: Import[] }
 const when = (stamp: number) => new Date(stamp * 1000).toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 
 export function AccountButton({ onOpen }: { onOpen: () => void }) {
-  const { user } = useAccount();
-  return user ? <button className="account-avatar" aria-label={`${user.name}，打开游玩记录与任务`} onClick={onOpen} title={user.name}><img src={user.avatar} referrerPolicy="no-referrer" alt={user.name} onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = '/api/avatar.svg'; }} /><i /></button>
-    : <a className="account-login" href="/api/auth/start" aria-label="知乎登录"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 22v-2a8 8 0 0 1 16 0v2"/></svg><span>知乎登录</span></a>;
+  const { user, login, loginBusy } = useAccount();
+  return user ? <button className="account-avatar" aria-label={`${user.name}，打开游玩记录与任务`} onClick={onOpen} title={user.name}><img src={user.avatar} referrerPolicy="no-referrer" alt={user.name} onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = apiUrl('/avatar.svg'); }} /><i /></button>
+    : <button className="account-login" onClick={login} disabled={loginBusy} aria-label="知乎登录"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 22v-2a8 8 0 0 1 16 0v2"/></svg><span>{loginBusy ? '正在前往知乎…' : '知乎登录'}</span></button>;
 }
 
 export function AccountPanel({ onClose, library }: { onClose: () => void; library: LibraryActions }) {
@@ -45,8 +46,7 @@ export function AccountPanel({ onClose, library }: { onClose: () => void; librar
     finally { setBusy(''); }
   };
   const collect = (job: Job) => void run(job.id, async () => {
-    const response = await fetch(`/api/jobs/${job.id}/result`, { credentials: 'same-origin' });
-    if (!response.ok) throw new Error('入梦书暂未取来，请重试');
+    const response = await apiRequest(`/jobs/${job.id}/result`);
     const book = await readDreamBook(new Uint8Array(await response.arrayBuffer()));
     await library.importArchive(book);
     await api('/imports', { package_id: book.pkg.packageId, build_id: book.pkg.buildId, title: book.pkg.title, job_id: job.id });

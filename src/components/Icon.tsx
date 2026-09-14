@@ -1,5 +1,6 @@
-export type IconName = 'book' | 'arrow' | 'sound' | 'mute' | 'settings' | 'close' | 'bookmark' | 'history' | 'home' | 'download' | 'spark' | 'check' | 'moon' | 'play' | 'pause';
+export type IconName = 'book' | 'arrow' | 'back' | 'sound' | 'mute' | 'settings' | 'close' | 'bookmark' | 'history' | 'home' | 'download' | 'spark' | 'check' | 'moon' | 'play' | 'pause';
 const paths: Record<IconName, string> = {
+  back: 'M20 12H5m6-6-6 6 6 6',
   play: 'm8 4 12 8-12 8V4',
   pause: 'M8 4v16M16 4v16',
   book: 'M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1m0-15c3-2 6-2 9-1v15c-3-1-6-1-9 1V5',
