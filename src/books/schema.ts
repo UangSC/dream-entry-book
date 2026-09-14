@@ -6,14 +6,17 @@ const choiceMood = z.enum(['warm', 'resolute', 'hesitant', 'guarded', 'bashful',
 export const safePath = (path: string) => path.length < 180 && /^[a-zA-Z0-9][a-zA-Z0-9_./-]*$/.test(path) && !path.split('/').some(p => !p || p === '.' || p === '..');
 const path = z.string().refine(safePath, '素材路径必须是包内相对路径');
 const loop = z.object({ mode: z.enum(['fadeLoop', 'seamless', 'once']), startSeconds: z.number().min(0), endSeconds: z.number().positive(), overlapMs: z.number().min(0).max(8000), verified: z.boolean().optional() }).strict();
+const vocal = z.object({ minPlaySeconds: z.number().min(90).max(600), gapSeconds: z.number().min(2).max(30), successor: assetId.refine(id => id.startsWith('BGM_')) }).strict();
 export const bookAssetSchema = z.object({
   id: assetId, kind: z.enum(['image', 'music', 'sfx']), path,
   mime: z.enum(['image/webp', 'image/png', 'image/jpeg', 'audio/mpeg', 'audio/wav', 'audio/ogg']),
   bytes: z.number().int().positive().max(BOOK_LIMITS.file), sha256: z.string().regex(/^[a-f0-9]{64}$/),
   luminance: z.number().min(0).max(1).optional(), durationSeconds: z.number().positive().max(600).optional(), loop: loop.optional(),
+  vocal: vocal.optional(),
   credit: z.string().max(600), rights: z.string().max(800),
 }).strict().superRefine((asset, context) => {
   if (!asset.id.startsWith(asset.kind === 'image' ? 'BG_' : asset.kind === 'music' ? 'BGM_' : 'SFX_')) context.addIssue({ code: z.ZodIssueCode.custom, message: '素材 ID 前缀与类别不一致' });
+  if (asset.vocal && (asset.kind !== 'music' || asset.loop?.mode !== 'once' || asset.loop.startSeconds !== 0)) context.addIssue({ code: z.ZodIssueCode.custom, message: '人声音乐必须从头完整播放一次' });
 });
 export const presentationSchema = z.object({
   cover: assetId, subtitle: z.string().max(100), description: z.string().max(800),

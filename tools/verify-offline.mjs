@@ -56,7 +56,14 @@ const request = (url, mode = 'cors', headers = {}) => runEvent('fetch', { reques
 const home = await request(scope, 'navigate'); assert.match(await home.text(), /入梦书/);
 const pkg = await (await request(scope + 'dreams/little-demon.json')).json();
 assert.equal(pkg.edition, 'longform');
-assert.equal(pkg.nodes.filter(node => node.kind === 'ending').length, 7);
+assert.equal(pkg.nodes.length, 51);
+assert.equal(pkg.flags.length, 29);
+assert.equal(pkg.nodes.filter(node => node.kind === 'ending').length, 8);
+const audio = await (await request(scope + 'audio/manifest.json')).json();
+for (const id of ['BGM_SEEK_HER', 'BGM_FAREWELL', 'BGM_ACID']) {
+  const asset = audio.assets.find(asset => asset.id === id);
+  assert.equal(asset.loop.mode, 'once'); assert.equal(asset.vocal.minPlaySeconds, 90); assert.equal(asset.vocal.gapSeconds, 2);
+}
 assert.equal(await request(new URL('/api/auth/start', scope).href, 'navigate'), undefined, '授权导航不能被离线首页接管');
 const store = [...stores.values()][0];
 assert.equal([...store.keys()].some(url => url.includes('sfx-new')), false, '未引用原件不应阻断缓存更新');

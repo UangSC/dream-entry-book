@@ -85,12 +85,14 @@ little-demon.dreambook
 | 类型 | ID | 格式 | 额外字段 |
 |---|---|---|---|
 | `image` | `BG_...` | WebP / PNG / JPEG | 可选 `luminance`，范围 0–1 |
-| `music` | `BGM_...` | MP3 / WAV / OGG | 必需 `durationSeconds`；可选 `loop` |
+| `music` | `BGM_...` | MP3 / WAV / OGG | 必需 `durationSeconds`；可选 `loop`、`vocal` |
 | `sfx` | `SFX_...` | MP3 / WAV / OGG | 必需 `durationSeconds`，不允许 loop |
 
 `mime` 使用对应的 `image/webp`、`image/png`、`image/jpeg`、`audio/mpeg`、`audio/wav`、`audio/ogg`。导入器检查文件头、字节数和 SHA-256，不只相信扩展名。
 
 `loop` 为 `{mode, startSeconds, endSeconds, overlapMs, verified?}`；mode 为 `fadeLoop/seamless/once`。开始必须早于结束，结束不能超过音频时长，重叠不能超过区间一半。每条声音最多 600 秒。`verified` 记录人工循环听测状态，不能因为程序播放成功就写成 true。
+
+人声曲可声明 `vocal: {minPlaySeconds: 90, gapSeconds: 2, successor: "BGM_CARE"}`，并使用从 0 到完整时长的 `once` 区间。保护时长取实际解码时长与下限的较大值；短曲播放结束后等待，不循环补时。保护结束后至少静默两秒，再执行挂起的换曲。没有新 cue 时转到声明的器乐后继；后继必须在清单内，不能指向另一首人声或自身。快进中的人声 cue 按顺序保留，后台暂停不计入保护时间。
 
 `credit` 保留素材署名；`rights` 保存使用依据或待核对状态。入梦书导出会原样保留这些记录；导入通过不代表获得作品的再分发授权。
 

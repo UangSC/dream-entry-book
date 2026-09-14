@@ -15,7 +15,7 @@ export function mountBook(book: LoadedBook, shell?: GameData): GameData {
   for (const asset of book.manifest.assets) {
     const src = URL.createObjectURL(new Blob([book.files[asset.path]!.slice().buffer as ArrayBuffer], { type: asset.mime })); urls.push(src);
     if (asset.kind === 'image') art[asset.id] = { id: asset.id, file: asset.path, src, luminance: asset.luminance };
-    else { audioUrls[asset.id] = src; audioAssets.set(asset.id, { id: asset.id, file: asset.path, kind: asset.kind, durationSeconds: asset.durationSeconds!, ...(asset.loop ? { loop: asset.loop } : {}) }); }
+    else { audioUrls[asset.id] = src; audioAssets.set(asset.id, { id: asset.id, file: asset.path, kind: asset.kind, durationSeconds: asset.durationSeconds!, ...(asset.loop ? { loop: asset.loop } : {}), ...(asset.vocal ? { vocal: asset.vocal } : {}) }); }
   }
   if (shell) { art.BG_GATE = shell.art.BG_GATE!; audioUrls.BGM_GATE = shell.audioUrls.BGM_GATE!; const gate = shell.audio.assets.find(a => a.id === 'BGM_GATE'); if (gate) audioAssets.set(gate.id, gate); }
   return { pkg: book.pkg, art, audioUrls, audio: { manifestVersion: 1, status: 'draft', assets: [...audioAssets.values()] }, beats: shell?.beats ?? null, notices: [], presentation: book.manifest.presentation, book, release: () => urls.forEach(url => URL.revokeObjectURL(url)) };

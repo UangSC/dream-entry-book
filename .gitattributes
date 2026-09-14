@@ -1,3 +1,5 @@
 # 字节哈希参与剧情与素材校验，跨平台检出时保持一致。
-/content/final/*.md text eol=lf
+# 定稿末尾的原有空行也参与来源哈希，保留；其余空白检查照常。
+/content/final/*.md text eol=lf whitespace=-blank-at-eof
+/content/final/sources.json text eol=lf
 /public/mascot/*.svg binary

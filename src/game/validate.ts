@@ -11,7 +11,7 @@ import {
   type DreamPackage,
   type SceneNode,
 } from './schema';
-import { evaluateCondition, type StoryVars } from './engine';
+import { evaluateCondition, resolveNext, successorIds, type StoryVars } from './engine';
 import { initialVars, settleChoice, varsKey } from './settle';
 
 export type Severity = 'error' | 'warning';
@@ -126,8 +126,9 @@ export function validateDreamPackage(
   // ---------- 条件引用 ----------
   const checkCondition = (cond: Condition | undefined, at: string) => {
     if (cond === undefined) return;
-    for (const [i, p] of cond.all.entries()) {
-      const where = `${at}.when.all.${i}`;
+    for (const [group, predicates] of [['all', cond.all], ['any', cond.any ?? []]] as const) {
+    for (const [i, p] of predicates.entries()) {
+      const where = `${at}.when.${group}.${i}`;
       if (p.kind === 'flag' && !flagSet.has(p.id)) {
         err('unknown-ref', `条件引用未声明的标记 ${p.id}`, where);
       }
@@ -137,6 +138,7 @@ export function validateDreamPackage(
       if (p.kind === 'relationship' && !relationshipSet.has(p.id)) {
         err('unknown-ref', `条件引用未声明的关系 ${p.id}`, where);
       }
+    }
     }
   };
 
@@ -170,6 +172,10 @@ export function validateDreamPackage(
     if (isSceneNode(node)) {
       if (node.next !== undefined && !nodeMap.has(node.next)) {
         err('unknown-ref', `节点 ${node.id} 的 next 指向不存在的节点 ${node.next}`, `${nAt}.next`);
+      }
+      for (const [ri, route] of (node.nextWhen ?? []).entries()) {
+        checkCondition(route.when, `${nAt}.nextWhen.${ri}`);
+        if (!nodeMap.has(route.target)) err('unknown-ref', `节点 ${node.id} 的条件后继不存在：${route.target}`, `${nAt}.nextWhen.${ri}.target`);
       }
       for (const [ci, choice] of (node.choices ?? []).entries()) {
         const cAt = `${nAt}.choices.${ci}`;
@@ -223,9 +229,7 @@ export function validateDreamPackage(
   }
 
   const successors = (node: DreamNode): string[] => {
-    if (!isSceneNode(node)) return [];
-    if (node.next !== undefined) return nodeMap.has(node.next) ? [node.next] : [];
-    return (node.choices ?? []).map((c) => c.target).filter((t) => nodeMap.has(t));
+    return successorIds(node).filter(target => nodeMap.has(target));
   };
 
   const reached = new Set<string>();
@@ -360,6 +364,15 @@ function analyzeValueRanges(
     { nodeId: pkg.entryNodeId, vars: start },
   ];
   seen.add(`${pkg.entryNodeId}@${varsKey(start)}`);
+  const enqueue = (nodeId: string, vars: StoryVars) => {
+    const key = `${nodeId}@${varsKey(vars)}`;
+    if (!seen.has(key)) { seen.add(key); queue.push({ nodeId, vars }); }
+  };
+  const follow = (node: SceneNode, vars: StoryVars) => {
+    const route = resolveNext(node, vars);
+    if (route.ok) enqueue(route.target, vars);
+    else out.push({ severity: 'error', code: 'invalid-route', message: route.message });
+  };
 
   let steps = 0;
   const endings = new Set<string>();
@@ -375,15 +388,13 @@ function analyzeValueRanges(
     const cur = queue[steps++]!;
     const node = nodeMap.get(cur.nodeId);
     if (node === undefined) continue;
-    if (!node.beats.some(beat => evaluateCondition(beat.when, cur.vars))) out.push({ severity: 'error', code: 'all-conditional', message: `节点 ${node.id} 存在无可见正文的可达状态` });
+    const entryBeats = node.kind === 'scene' && node.choiceAfter
+      ? node.beats.slice(0, node.beats.findIndex(beat => beat.id === node.choiceAfter) + 1) : node.beats;
+    if (!entryBeats.some(beat => evaluateCondition(beat.when, cur.vars))) out.push({ severity: 'error', code: 'all-conditional', message: `节点 ${node.id} 存在无可见正文的可达状态` });
     if (node.kind === 'ending') { endings.add(node.id); continue; }
 
-    if (node.next !== undefined) {
-      const key = `${node.next}@${varsKey(cur.vars)}`;
-      if (!seen.has(key)) {
-        seen.add(key);
-        queue.push({ nodeId: node.next, vars: cur.vars });
-      }
+    if (node.choices === undefined) {
+      follow(node, cur.vars);
       continue;
     }
 
@@ -402,11 +413,8 @@ function analyzeValueRanges(
         });
         continue;
       }
-      const key = `${choice.target}@${varsKey(settled.vars)}`;
-      if (!seen.has(key)) {
-        seen.add(key);
-        queue.push({ nodeId: choice.target, vars: settled.vars });
-      }
+      if (node.choiceAfter) follow(node, settled.vars);
+      else enqueue(choice.target, settled.vars);
     }
   }
   for (const node of pkg.nodes) if (node.kind === 'ending' && !endings.has(node.id)) out.push({ severity: 'error', code: 'ending-unreachable', message: `终幕 ${node.id} 没有可执行的见证路径` });
@@ -455,8 +463,7 @@ function findEffectGapViolation(
       .slice(v.index + 1)
       .every((b) => skippable(b));
     if (tailAllSkippable && node.kind === 'scene') {
-      const targets =
-        node.next !== undefined ? [node.next] : (node.choices ?? []).map((c) => c.target);
+      const targets = successorIds(node);
       for (const t of targets) {
         const nextNode = nodeMap.get(t);
         if (nextNode === undefined) continue;

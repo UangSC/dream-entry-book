@@ -59,6 +59,11 @@ async function parseDreamBook(archive: Uint8Array): Promise<LoadedBook> {
   if (!result.ok || !result.data) throw new Error(`剧情校验失败：${result.findings.filter(f => f.severity === 'error').slice(0, 2).map(f => f.message).join('；')}`);
   const byId = new Map(manifest.assets.map(a => [a.id, a]));
   const assertKind = (id: string | undefined, kind: 'image' | 'music' | 'sfx') => { if (id && byId.get(id)?.kind !== kind) throw new Error(`素材引用类别错误：${id}`); };
+  for (const asset of manifest.assets) if (asset.vocal) {
+    assertKind(asset.vocal.successor, 'music');
+    if (byId.get(asset.vocal.successor)?.vocal || asset.vocal.successor === asset.id) throw new Error(`人声后继须为器乐，不能自动循环人声：${asset.id}`);
+    if (asset.loop?.endSeconds !== asset.durationSeconds) throw new Error(`人声必须完整保留尾部：${asset.id}`);
+  }
   assertKind(manifest.presentation.cover, 'image'); assertKind(manifest.presentation.endingScene, 'image');
   assertKind(manifest.presentation.dreamMusic, 'music'); assertKind(manifest.presentation.endingMusic, 'music');
     for (const [id, scene] of Object.entries(manifest.presentation.scenes)) { assertKind(id, 'image'); assertKind(scene.ambience, 'music'); }

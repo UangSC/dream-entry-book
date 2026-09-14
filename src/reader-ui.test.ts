@@ -18,7 +18,7 @@ vi.mock('./components/Atmosphere', () => ({ Atmosphere: () => null }));
 vi.mock('./components/Portal', () => ({ usePortal: () => ({ busy: false, cross: (update: () => void) => update(), layer: null }) }));
 vi.mock('./runtime/offline', () => ({ registerOffline: () => () => {} }));
 vi.mock('./runtime/pulse', () => ({ prefersReducedMotion: () => false, PulseDriver: class { setOptions() {} setBeatMap() {} sample() { return { envelope: 0 }; } visual() { return { scale: 1, brightness: 1 }; } } }));
-vi.mock('./runtime/audio', () => ({ AudioEngine: class { loadManifest() {} setVolumes() {} silence() {} pause() {} resume() {} dispose() {} unlock() { return Promise.resolve({ state: 'ready' }); } preload() { return Promise.resolve([]); } getStatus() { return { state: 'ready' }; } playMusic() {} playSfx() {} positionOf() { return null; } } }));
+vi.mock('./runtime/audio', () => ({ AudioEngine: class { loadManifest() {} setVolumes() {} silence() {} pause() {} resume() {} dispose() {} unlock() { return Promise.resolve({ state: 'ready' }); } preload() { return Promise.resolve([]); } requestMusic() { return Promise.resolve([]); } getStatus() { return { state: 'ready' }; } playMusic() {} playSfx() {} positionOf() { return null; } } }));
 
 const raw = dreamPackageSchema.parse(JSON.parse(readFileSync('public/dreams/little-demon.json', 'utf8')));
 const pkg: DreamPackage = { ...raw, packageId: 'ui-fixture', entryNodeId: 'intro', characters: [{ id: 'little-demon', name: '小妖怪', bio: '还未相识的人' }, { id: 'friend', name: '朋友', bio: '山中的来客' }], resources: [], relationships: [], flags: [], nodes: [
@@ -51,6 +51,13 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 describe('阅读交互', () => {
+  it('定稿八个终幕全部列名，三种不敢应声保持独立标题', () => {
+    render(createElement(Game, { data: { ...data, pkg: raw }, library })); click('暂时静音'); click(/^我的梦册/);
+    const dialog = screen.getByRole('dialog', { name: '你带回来的梦' });
+    expect(within(dialog).getAllByRole('heading', { level: 3 }).map(heading => heading.textContent)).toEqual([
+      '已得万人心', '先欠着', '酸尽回甘', '不敢应声·空山', '不敢应声·一声', '不敢应声·满山', '妖王不吃鸡腿', '心甘情愿',
+    ]);
+  });
   it('游客不能开始、打开书架、导入或设置，但可关闭声音提示', () => {
     bridge.authenticated = false;
     render(createElement(Game, { data, library })); click('暂时静音');

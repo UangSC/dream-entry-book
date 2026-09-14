@@ -75,14 +75,18 @@ describe('入梦书 v1 的真实示例和不可信文件', () => {
     expect(sourceSchema.safeParse({ ...original, sourceUrl: 'https://user:password@example.com/' }).success).toBe(false);
     expect(sourceSchema.safeParse({ ...original, kind: 'external_excerpt', completeness: 'complete' }).success).toBe(false);
   });
-  it('完整示例可回读，包含作者、七份终幕、夜间声音与白昼粒子', async () => {
+  it('完整示例可回读，包含作者、八份终幕、夜间声音与白昼粒子', async () => {
     const book = await readDreamBook(archive);
-    expect(book.pkg.source.author).toBe('女巫'); expect(book.pkg.nodes.filter(n => n.kind === 'ending')).toHaveLength(7);
+    expect(book.pkg.source.author).toBe('女巫'); expect(book.pkg.nodes.filter(n => n.kind === 'ending')).toHaveLength(8);
     expect(book.pkg.source.authorUrl).toBe('https://www.zhihu.com/people/cc09d82355e21162462ba02ac9717dba');
     expect(book.pkg.source.sourceUrl).toBe('https://www.zhihu.com/market/paid_column/2025960728138401447/section/2025954672918163637');
     expect(book.pkg.source.publishedAt).toBe('2026-04-10');
     expect(book.manifest.presentation.scenes.BG_SHRINE_N?.ambience).toBe('BGM_SHRINE_AMBIENCE');
     expect(book.manifest.presentation.scenes.BG_COTTAGE_D?.particles).toBe('leaves');
+    for (const id of ['BGM_SEEK_HER', 'BGM_FAREWELL', 'BGM_ACID']) {
+      const asset = book.manifest.assets.find(asset => asset.id === id)!;
+      expect(asset.loop?.mode).toBe('once'); expect(asset.vocal?.minPlaySeconds).toBe(90); expect(asset.vocal?.gapSeconds).toBe(2);
+    }
   });
   it('重新压缩不改变包内容身份', async () => {
     const one = await readDreamBook(archive), two = await readDreamBook(zipSync(files, { level: 1, mtime: new Date('2025-01-01') }));

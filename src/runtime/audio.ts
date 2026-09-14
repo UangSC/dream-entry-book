@@ -27,6 +27,7 @@ export interface AudioAsset {
   file: string;
   durationSeconds: number;
   loop?: LoopSpec;
+  vocal?: { minPlaySeconds: number; gapSeconds: number; successor: string };
 }
 
 export interface AudioManifest {
@@ -76,6 +77,8 @@ interface MusicVoice {
   stopAt: number;
 }
 
+interface MusicRequest { trackId: string | null; fadeMs: number }
+
 export class AudioEngine {
   private ctx: AudioContext | null = null;
   private masterGain: GainNode | null = null;
@@ -95,6 +98,13 @@ export class AudioEngine {
   private suspendedTrack: string | null = null;
   private loopTimer: number | null = null;
   private pendingLoop: { trackId: string; buf: AudioBuffer; overlapSec: number; nextAt: number } | null = null;
+  private desiredTrack: string | null | undefined;
+  private musicQueue: MusicRequest[] = [];
+  private vocalGuard: { trackId: string; releaseAt: number; nextAt: number; successor: string } | null = null;
+  private vocalTimer: number | null = null;
+  private failedMusic = new Set<string>();
+  private generation = 0;
+  private disposed = false;
 
   private volumes: Volumes = { ...DEFAULT_VOLUMES };
   private status: AudioStatus = { state: 'idle' };
@@ -156,6 +166,7 @@ export class AudioEngine {
           file: a.file,
           durationSeconds: a.durationSeconds,
           ...(a.loop !== undefined ? { loop: a.loop } : {}),
+          ...(a.vocal !== undefined ? { vocal: a.vocal } : {}),
         });
       }
     }
@@ -166,6 +177,7 @@ export class AudioEngine {
    * 之后即使 resume 也可能被拒。
    */
   async unlock(): Promise<AudioStatus> {
+    this.disposed = false;
     if (this.unlocked && this.ctx?.state === 'running') return this.status;
     try {
       const Ctor: typeof AudioContext | undefined =
@@ -188,6 +200,7 @@ export class AudioEngine {
       if (this.ctx.state === 'suspended') await this.ctx.resume();
       this.unlocked = this.ctx.state === 'running';
       this.status = this.unlocked ? { state: 'ready' } : { state: 'blocked' };
+      if (this.unlocked) { this.scheduleVocalAdvance(); this.flushMusicQueue(); }
       return this.status;
     } catch (e) {
       // 被拒不是错误路径的终点：静音继续，让玩家自己开
@@ -200,6 +213,7 @@ export class AudioEngine {
   /** 预取并解码。失败如实记录，不抛——缺一条音效不该拦住阅读。 */
   async preload(ids: readonly string[]): Promise<readonly LoadFailure[]> {
     const out: LoadFailure[] = [];
+    const generation = this.generation;
     await Promise.all(
       ids.map(async (id) => {
         if (this.buffers.has(id)) return;
@@ -216,6 +230,7 @@ export class AudioEngine {
           const ctx = this.ctx;
           if (ctx === null) throw new Error('AudioContext 尚未建立');
           const buf = await ctx.decodeAudioData(raw);
+          if (this.disposed || generation !== this.generation) return;
           this.buffers.set(id, buf);
           // 用首个音乐资产推断解码是否剥掉了编码器延迟
           if (asset.kind === 'music' && this.decodeOffsetSeconds === 0) {
@@ -258,24 +273,102 @@ export class AudioEngine {
    */
   playMusic(trackId: string, fadeMs = CROSSFADE_MS): void {
     if (this.ctx === null || this.bgmGain === null) return;
-    if (this.currentTrack === trackId && this.voices.length > 0) return;
-    const buf = this.buffers.get(trackId);
-    if (buf === undefined) {
+    if (!this.buffers.has(trackId)) {
       this.failures = [...this.failures, { id: trackId, message: `${trackId} 未解码，无法播放` }];
       return;
     }
-    this.fadeOutAll(fadeMs);
-    this.currentTrack = trackId;
-    this.suspendedTrack = trackId;
-    this.startVoice(trackId, buf, fadeMs);
+    this.enqueueMusic({ trackId, fadeMs });
+    this.flushMusicQueue();
   }
 
-  /** 真正静默：淡出到无声并停下，不是把音量拧到 0 继续跑。 */
+  /** 在解码前登记原文 cue，保证慢请求和快进都不能重排或吞掉人声曲。 */
+  async requestMusic(trackId: string | null, fadeMs = CROSSFADE_MS): Promise<readonly LoadFailure[]> {
+    if (this.disposed || this.ctx === null) return [];
+    const generation = this.generation;
+    this.enqueueMusic({ trackId, fadeMs });
+    this.flushMusicQueue();
+    if (trackId === null) return [];
+    this.failedMusic.delete(trackId);
+    const successor = this.assets.get(trackId)?.vocal?.successor;
+    const failures = await this.preload(successor ? [trackId, successor] : [trackId]);
+    if (this.disposed || generation !== this.generation) return failures;
+    for (const failure of failures) this.failedMusic.add(failure.id);
+    this.flushMusicQueue();
+    return failures;
+  }
+
+  private enqueueMusic(request: MusicRequest): void {
+    if (this.disposed || (this.desiredTrack === request.trackId && (request.trackId === null || !this.failedMusic.has(request.trackId)))) return;
+    this.desiredTrack = request.trackId;
+    if (request.trackId === this.vocalGuard?.trackId) {
+      while (this.musicQueue.length && !this.assets.get(this.musicQueue.at(-1)!.trackId ?? '')?.vocal) this.musicQueue.pop();
+      return;
+    }
+    if (request.trackId) this.failedMusic.delete(request.trackId);
+    const last = this.musicQueue.at(-1);
+    // 快进可合并尚未播放的器乐换曲，但每首已触发的人声保留顺序。
+    const vocal = (track: string | null) => track !== null && this.assets.get(track)?.vocal !== undefined;
+    if (last && !vocal(last.trackId) && !vocal(request.trackId)) this.musicQueue.pop();
+    if (this.musicQueue.at(-1)?.trackId !== request.trackId) this.musicQueue.push(request);
+  }
+
+  private flushMusicQueue(): void {
+    const ctx = this.ctx;
+    if (this.disposed || !ctx || ctx.state !== 'running') return;
+    if (this.vocalGuard) {
+      if (ctx.currentTime < this.vocalGuard.nextAt) { this.scheduleVocalAdvance(); return; }
+      const fallback = this.vocalGuard.successor;
+      this.vocalGuard = null;
+      this.clearVocalTimer();
+      if (!this.musicQueue.length) this.musicQueue.push({ trackId: fallback, fadeMs: CROSSFADE_MS });
+    }
+    while (this.musicQueue.length) {
+      const request = this.musicQueue[0]!;
+      const buf = request.trackId ? this.buffers.get(request.trackId) : undefined;
+      if (request.trackId && !buf) {
+        if (this.failedMusic.has(request.trackId)) { this.musicQueue.shift(); continue; }
+        return;
+      }
+      this.musicQueue.shift();
+      if (request.trackId === this.currentTrack && this.voices.some(voice => voice.trackId === request.trackId && voice.stopAt > ctx.currentTime)) continue;
+      this.suspendedTrack = request.trackId ?? this.currentTrack ?? this.suspendedTrack;
+      this.fadeOutAll(request.fadeMs);
+      this.currentTrack = request.trackId;
+      if (request.trackId && buf) {
+        this.startVoice(request.trackId, buf, request.fadeMs);
+        const policy = this.assets.get(request.trackId)?.vocal;
+        if (policy) {
+          const releaseAt = ctx.currentTime + Math.max(buf.duration, policy.minPlaySeconds, 90);
+          this.vocalGuard = { trackId: request.trackId, releaseAt, nextAt: releaseAt + Math.max(2, policy.gapSeconds), successor: policy.successor };
+          this.scheduleVocalAdvance();
+          // 同步调用 playMusic 的调用方也会需要后继曲；加载完成后按音频时钟推进。
+          if (!this.buffers.has(policy.successor)) void this.preload([policy.successor]).then(failures => {
+            if (this.disposed) return;
+            for (const failure of failures) this.failedMusic.add(failure.id);
+            this.flushMusicQueue();
+          });
+          return;
+        }
+      }
+    }
+  }
+
+  private clearVocalTimer(): void {
+    if (this.vocalTimer !== null) clearTimeout(this.vocalTimer);
+    this.vocalTimer = null;
+  }
+
+  private scheduleVocalAdvance(): void {
+    this.clearVocalTimer();
+    if (!this.ctx || this.ctx.state !== 'running' || !this.vocalGuard || this.disposed) return;
+    const delay = Math.max(1, (this.vocalGuard.nextAt - this.ctx.currentTime) * 1000);
+    this.vocalTimer = window.setTimeout(() => { this.vocalTimer = null; this.flushMusicQueue(); }, delay);
+  }
+
+  /** 剧情中的静默同样等待人声保护；主动静音使用音量和 pause，不删除音乐时间轴。 */
   silence(fadeMs = CROSSFADE_MS): void {
-    this.suspendedTrack = this.currentTrack ?? this.suspendedTrack;
-    this.fadeOutAll(fadeMs);
-    this.currentTrack = null;
-    this.clearLoopTimer();
+    this.enqueueMusic({ trackId: null, fadeMs });
+    this.flushMusicQueue();
   }
 
   resumeMusic(fadeMs = CROSSFADE_MS): void {
@@ -288,7 +381,8 @@ export class AudioEngine {
     const bgm = this.bgmGain;
     if (ctx === null || bgm === null) return;
     const asset = this.assets.get(trackId);
-    const loop = asset?.loop;
+    // 人声总从解码音频的头部放到末尾，旧循环区间不能截掉尾唱。
+    const loop = asset?.vocal ? undefined : asset?.loop;
     const start = atTime ?? ctx.currentTime;
 
     const gain = ctx.createGain();
@@ -422,6 +516,7 @@ export class AudioEngine {
     if (this.ctx === null) return;
     this.suspendedTrack = this.currentTrack;
     this.clearLoopTimer();
+    this.clearVocalTimer();
     for (const sfx of this.activeSfx) try { sfx.stop(); } catch { /* 已结束 */ }
     this.activeSfx = [];
     try {
@@ -439,9 +534,12 @@ export class AudioEngine {
       const pending = this.pendingLoop;
       if (pending && pending.trackId === this.currentTrack) this.scheduleLoop(pending.trackId, pending.buf, pending.overlapSec, pending.nextAt);
       // suspend 期间排好的 loop timer 已被清掉，这里重新接上
-      if (this.currentTrack !== null && this.voices.length === 0) {
+      this.scheduleVocalAdvance();
+      this.flushMusicQueue();
+      if (this.currentTrack !== null && this.voices.length === 0 && !this.vocalGuard && !this.assets.get(this.currentTrack)?.vocal) {
         const track = this.currentTrack;
         this.currentTrack = null;
+        this.desiredTrack = undefined;
         this.playMusic(track, 400);
       }
     } catch {
@@ -450,6 +548,13 @@ export class AudioEngine {
   }
 
   async dispose(): Promise<void> {
+    this.disposed = true;
+    this.generation++;
+    this.clearVocalTimer();
+    this.vocalGuard = null;
+    this.musicQueue = [];
+    this.desiredTrack = undefined;
+    this.currentTrack = null;
     this.fadeOutAll(0);
     this.clearLoopTimer();
     try {

@@ -1,21 +1,639 @@
 {
-  "buildId": "final-48a4194d7897",
+  "buildId": "final-1c72d24a7826",
+  "baselineConvention": "han-lines-v1-includes-numbered-reflections",
+  "originalHistoricalTotal": 42898,
+  "originalBodyTotal": 41951,
   "files": [
-  {
-    "file": "02_共用脊干_节点1-9.md",
-    "sha256": "2d99e1d36d31238d5b2ef7c32abd45341a981e3151d48fa14dbcc5729270f1aa"
-  },
-  {
-    "file": "03_主线_清欢线.md",
-    "sha256": "b6d3fc773428bbb4fef4c4df8e378f8b922f0be60f48e8a83ec5b1414aa7f903"
-  },
-  {
-    "file": "04_IF1_酸心线.md",
-    "sha256": "683c66f294b929b7ddbd1d0f57b4ac0d0f98cc1ecffa63b5fcdcefd5bbd3f6d0"
-  },
-  {
-    "file": "05_IF2_万心线.md",
-    "sha256": "86d3f726e866888fec7a08dec0831581aa3c8687117c7ae44af3d3dd4676c277"
+    {
+      "file": "02_共用脊干_节点1-9.md",
+      "sha256": "81594ab35b8a47a2cc3aa072f01dca94f4b7614d75b38441d5f860ebf6e0c099",
+      "originalSha256": "81594ab35b8a47a2cc3aa072f01dca94f4b7614d75b38441d5f860ebf6e0c099",
+      "originalTextSha256": "81594ab35b8a47a2cc3aa072f01dca94f4b7614d75b38441d5f860ebf6e0c099",
+      "baseline": {
+        "threshold": {
+          "originalHistorical": 452,
+          "originalBody": 452,
+          "historical": 452,
+          "body": 452
+        },
+        "fireside": {
+          "originalHistorical": 498,
+          "originalBody": 498,
+          "historical": 498,
+          "body": 498
+        },
+        "ember": {
+          "originalHistorical": 216,
+          "originalBody": 216,
+          "historical": 216,
+          "body": 216
+        },
+        "price": {
+          "originalHistorical": 272,
+          "originalBody": 272,
+          "historical": 272,
+          "body": 272
+        },
+        "first-breath": {
+          "originalHistorical": 295,
+          "originalBody": 295,
+          "historical": 295,
+          "body": 295
+        },
+        "doorstep": {
+          "originalHistorical": 1789,
+          "originalBody": 1789,
+          "historical": 1789,
+          "body": 1789
+        },
+        "zhang-gate": {
+          "originalHistorical": 450,
+          "originalBody": 450,
+          "historical": 450,
+          "body": 450
+        },
+        "night-theft": {
+          "originalHistorical": 291,
+          "originalBody": 291,
+          "historical": 291,
+          "body": 291
+        },
+        "chicken-leg": {
+          "originalHistorical": 723,
+          "originalBody": 723,
+          "historical": 723,
+          "body": 723
+        },
+        "zhang-chaos": {
+          "originalHistorical": 454,
+          "originalBody": 454,
+          "historical": 454,
+          "body": 454
+        },
+        "grove-echo": {
+          "originalHistorical": 327,
+          "originalBody": 327,
+          "historical": 327,
+          "body": 327
+        },
+        "promise-day": {
+          "originalHistorical": 493,
+          "originalBody": 493,
+          "historical": 493,
+          "body": 493
+        }
+      },
+      "corrections": []
+    },
+    {
+      "file": "03_主线_清欢线.md",
+      "sha256": "0bddfb88824cb2101ca6d481b7ee92bec70103b21c02ee7b4dd6055f9307a71f",
+      "originalSha256": "da02a545f885e65a8aaeeda9eea03a11cad6f503079f2875f7088fb5827843d2",
+      "originalTextSha256": "da02a545f885e65a8aaeeda9eea03a11cad6f503079f2875f7088fb5827843d2",
+      "baseline": {
+        "red-jacket": {
+          "originalHistorical": 739,
+          "originalBody": 739,
+          "historical": 739,
+          "body": 739
+        },
+        "years-call": {
+          "originalHistorical": 256,
+          "originalBody": 256,
+          "historical": 256,
+          "body": 256
+        },
+        "pit-rescue": {
+          "originalHistorical": 999,
+          "originalBody": 999,
+          "historical": 999,
+          "body": 999
+        },
+        "fame": {
+          "originalHistorical": 989,
+          "originalBody": 989,
+          "historical": 989,
+          "body": 989
+        },
+        "street-kids": {
+          "originalHistorical": 280,
+          "originalBody": 280,
+          "historical": 280,
+          "body": 280
+        },
+        "zhang-return": {
+          "originalHistorical": 1031,
+          "originalBody": 1031,
+          "historical": 1125,
+          "body": 1125
+        },
+        "taoist": {
+          "originalHistorical": 668,
+          "originalBody": 668,
+          "historical": 668,
+          "body": 668
+        },
+        "search": {
+          "originalHistorical": 589,
+          "originalBody": 589,
+          "historical": 589,
+          "body": 589
+        },
+        "farewell-ask": {
+          "originalHistorical": 464,
+          "originalBody": 464,
+          "historical": 464,
+          "body": 464
+        },
+        "ending-ascend": {
+          "originalHistorical": 546,
+          "originalBody": 437,
+          "historical": 544,
+          "body": 437
+        },
+        "ending-deferred": {
+          "originalHistorical": 647,
+          "originalBody": 539,
+          "historical": 647,
+          "body": 539
+        }
+      },
+      "corrections": [
+        {
+          "node": "zhang-return",
+          "reason": "工钱状态随 C2 分流",
+          "before": "**张老爷**：那年李家二亩水田……是我使的绊子！还有！毓娘男人那份工钱——不不不，这份我还了，这份真还了！！",
+          "after": "**张老爷**：那年李家二亩水田……是我使的绊子！还有！毓娘男人那份工钱——不不不，这份我还了，这份真还了！！ 〈条件：faced-zhang〉\n**张老爷**：那年李家二亩水田……是我使的绊子！还有！毓娘男人那份工钱……我还欠着三年！ 〈条件：took-chicken〉"
+        },
+        {
+          "node": "zhang-return",
+          "reason": "只勾销已经讨回的工钱",
+          "before": "**小妖怪**：嗯。就冲这句话，工钱那笔，勾了。接着想。",
+          "after": "**小妖怪**：嗯。就冲这句话，工钱那笔，勾了。接着想。 〈条件：faced-zhang〉\n**小妖怪**：工钱那笔，先记上。接着想。 〈条件：took-chicken〉"
+        },
+        {
+          "node": "zhang-return",
+          "reason": "已还工钱的周目只追讨误工与赔偿",
+          "before": "**小妖怪**：毓娘男人的工钱，三年，本银九两。她被你门房踹的那一脚——疼不要钱，误的工，要钱。你自己算。",
+          "after": "**小妖怪**：毓娘男人的工钱，三年，本银九两。她被你门房踹的那一脚——疼不要钱，误的工，要钱。你自己算。 〈条件：took-chicken〉\n**小妖怪**：毓娘男人的工钱，你还了。她被你门房踹的那一脚——疼不要钱，误的工，要钱。你自己算。 〈条件：faced-zhang〉"
+        },
+        {
+          "node": "ending-ascend",
+          "reason": "回望与烧欠条的实际行动者一致",
+          "before": "  2. 「那张欠条，是她在山脚替你烧的。这笔账，你们谁都没再提。」（`when`: bargained）",
+          "after": "  2. 「那张欠条，是你在山脚烧的。这笔账，你们谁都没再提。」（`when`: bargained）"
+        }
+      ]
+    },
+    {
+      "file": "04_IF1_酸心线.md",
+      "sha256": "3c36f063d6497656fe7dd543570d4d27fa30e6253f72da63d8a65ad5fc149661",
+      "originalSha256": "d938030439ce64915f2a1732275006f1fb038f063aa9b09ef9885d76882cee25",
+      "originalTextSha256": "6d93f9f3bf024627259819e6e8aec2662f291823b6c90c96d68faf49dbcda3ef",
+      "baseline": {
+        "bitter-heart": {
+          "originalHistorical": 663,
+          "originalBody": 663,
+          "historical": 663,
+          "body": 663
+        },
+        "empty-house": {
+          "originalHistorical": 997,
+          "originalBody": 997,
+          "historical": 997,
+          "body": 997
+        },
+        "funeral": {
+          "originalHistorical": 1245,
+          "originalBody": 1245,
+          "historical": 1243,
+          "body": 1243
+        },
+        "crack-money": {
+          "originalHistorical": 773,
+          "originalBody": 773,
+          "historical": 773,
+          "body": 773
+        },
+        "jacket-fit": {
+          "originalHistorical": 596,
+          "originalBody": 596,
+          "historical": 595,
+          "body": 595
+        },
+        "night-fever": {
+          "originalHistorical": 605,
+          "originalBody": 605,
+          "historical": 605,
+          "body": 605
+        },
+        "guarding": {
+          "originalHistorical": 1565,
+          "originalBody": 1565,
+          "historical": 1565,
+          "body": 1565
+        },
+        "beyond-mountains": {
+          "originalHistorical": 482,
+          "originalBody": 482,
+          "historical": 482,
+          "body": 482
+        },
+        "doorstep-answers": {
+          "originalHistorical": 746,
+          "originalBody": 746,
+          "historical": 746,
+          "body": 746
+        },
+        "village-altar": {
+          "originalHistorical": 1661,
+          "originalBody": 1661,
+          "historical": 1661,
+          "body": 1661
+        },
+        "raised-claw": {
+          "originalHistorical": 1353,
+          "originalBody": 1353,
+          "historical": 1353,
+          "body": 1353
+        },
+        "taoist-danger": {
+          "originalHistorical": 1254,
+          "originalBody": 1254,
+          "historical": 1257,
+          "body": 1257
+        },
+        "burn-mountain": {
+          "originalHistorical": 768,
+          "originalBody": 768,
+          "historical": 768,
+          "body": 768
+        },
+        "ending-aftertaste": {
+          "originalHistorical": 1603,
+          "originalBody": 1487,
+          "historical": 1603,
+          "body": 1487
+        },
+        "ending-bitter": {
+          "originalHistorical": 1047,
+          "originalBody": 902,
+          "historical": 1047,
+          "body": 902
+        },
+        "ending-bitter-echo": {
+          "originalHistorical": 1006,
+          "originalBody": 928,
+          "historical": 1006,
+          "body": 928
+        },
+        "ending-bitter-mountains": {
+          "originalHistorical": 1659,
+          "originalBody": 1528,
+          "historical": 1663,
+          "body": 1532
+        }
+      },
+      "corrections": [
+        {
+          "node": "funeral",
+          "reason": "B 线此时只发生过救念念",
+          "before": "有人当场就跑了——去砸青石板上的供台，去门楣上贴符，去庙里烧香。赵婶子张着嘴，看看念念，又看看山，一个字也说不出。她救过自己一家啊——可念念的娘，确实死了。 〈条件：said-truth〉",
+          "after": "有人当场就跑了——去砸青石板上的供台，去门楣上贴符，去庙里烧香。赵婶子张着嘴，看看念念，又看看山，一个字也说不出。她救过念念啊——可念念的娘，确实死了。 〈条件：said-truth〉"
+        },
+        {
+          "node": "jacket-fit",
+          "reason": "七岁到十四岁为七年",
+          "before": "那件红袄，念念贴身穿了十几年。",
+          "after": "那件红袄，念念贴身穿了七年。"
+        },
+        {
+          "node": "ending-aftertaste",
+          "reason": "同步红袄尺寸回望中的年龄",
+          "before": "  3. 「红袄越来越小——她穿了十几年才明白，娘量的从来不是她的尺寸，是托付。」",
+          "after": "  3. 「红袄越来越小——她穿到十四岁才明白，娘量的从来不是她的尺寸，是托付。」"
+        },
+        {
+          "node": "taoist-danger",
+          "reason": "不引用 A 线已发生的救赵家事件",
+          "before": "**二狗**（画外，在坑边，声音发飘）：爹……当年，也是这个坑。",
+          "after": "**二狗**（画外，在坑边，声音发飘）：爹……这个坑，怎么又深了。"
+        },
+        {
+          "node": "taoist-danger",
+          "reason": "指痕来自本周目刚发生的救援",
+          "before": "你在坑底躺了两天。坑壁上，有大狗二狗当年抓挠的指痕。",
+          "after": "你在坑底躺了两天。坑壁上，还留着大狗二狗刚才抓挠的指痕。"
+        },
+        {
+          "node": "ending-bitter",
+          "reason": "B 线此前未驱逐过这位老道",
+          "before": "老道士走了。这一次，赶他下山的话，和很多年前一模一样。",
+          "after": "老道士走了。这一次，赶他下山的话，是村人自己喊出来的。"
+        },
+        {
+          "node": "ending-bitter-mountains",
+          "reason": "赵家回忆本周目近期救援",
+          "before": "赵家三口跪在山口。二狗说：当年坑里救我们的，也是这只手。大狗说：凉的怎么了。凉的手，救了我们两回。",
+          "after": "赵家三口跪在山口。二狗说：前些日子领我们出山的，也是这只手。大狗说：凉的怎么了。凉的手，救了我们两回。"
+        },
+        {
+          "node": "ending-bitter-mountains",
+          "reason": "满山路线未因迟到留下腿疾",
+          "before": "**大狗**（画外，拄着枪站在最前）：滚你的吧！再敢来，来一次打一次！",
+          "after": "**大狗**（画外，站在最前）：滚你的吧！再敢来，来一次打一次！"
+        },
+        {
+          "node": "ending-bitter-mountains",
+          "reason": "B 线不复用 A 线驱逐老道的历史",
+          "before": "赶他下山的话，和很多年前一模一样。只是这一回——山里有他们要护的妖。",
+          "after": "赶他下山的话，村人一声接一声。这一回——山里有他们要护的妖。"
+        },
+        {
+          "node": "ending-bitter-mountains",
+          "reason": "红袄在念念怀中，寻找对象应是小妖怪",
+          "before": "**念念**：小红袄！大家帮帮她——找红袄——她妖力不济，红袄会露出来的！",
+          "after": "**念念**：小妖怪！大家帮帮她——她妖力不济，走不远的！"
+        },
+        {
+          "node": "ending-bitter-mountains",
+          "reason": "念念是否知情随 C4 分流",
+          "before": "**小妖怪**：念念的？她不知道我……",
+          "after": "**小妖怪**：念念的？她不知道我…… 〈条件：lied〉\n**小妖怪**：念念的？她还恨着我…… 〈条件：said-truth〉"
+        }
+      ]
+    },
+    {
+      "file": "05_IF2_万心线.md",
+      "sha256": "c95ef8941082de601f92f60ea6ed306a479146a92f4eb0caa3fcd2d694ba2d4f",
+      "originalSha256": "2bf179580bb86afe874821c9d62b37519bbf775982d79676e45f2cef8af981bf",
+      "originalTextSha256": "2bf179580bb86afe874821c9d62b37519bbf775982d79676e45f2cef8af981bf",
+      "baseline": {
+        "blood-words": {
+          "originalHistorical": 641,
+          "originalBody": 641,
+          "historical": 641,
+          "body": 641
+        },
+        "patient-trap": {
+          "originalHistorical": 946,
+          "originalBody": 946,
+          "historical": 946,
+          "body": 946
+        },
+        "heart-taste": {
+          "originalHistorical": 787,
+          "originalBody": 787,
+          "historical": 787,
+          "body": 787
+        },
+        "fork-c8": {
+          "originalHistorical": 197,
+          "originalBody": 197,
+          "historical": 220,
+          "body": 220
+        },
+        "demon-road": {
+          "originalHistorical": 1070,
+          "originalBody": 1070,
+          "historical": 1094,
+          "body": 1094
+        },
+        "borrowed-blade": {
+          "originalHistorical": 806,
+          "originalBody": 806,
+          "historical": 805,
+          "body": 805
+        },
+        "years-of-the-king": {
+          "originalHistorical": 1447,
+          "originalBody": 1447,
+          "historical": 1447,
+          "body": 1447
+        },
+        "ending-demon-king": {
+          "originalHistorical": 1854,
+          "originalBody": 1726,
+          "historical": 1854,
+          "body": 1726
+        },
+        "master-comes": {
+          "originalHistorical": 1864,
+          "originalBody": 1864,
+          "historical": 1852,
+          "body": 1852
+        },
+        "ten-thousand-shield": {
+          "originalHistorical": 637,
+          "originalBody": 637,
+          "historical": 634,
+          "body": 634
+        },
+        "ending-willing": {
+          "originalHistorical": 1158,
+          "originalBody": 1026,
+          "historical": 1158,
+          "body": 1026
+        }
+      },
+      "corrections": [
+        {
+          "node": "fork-c8",
+          "reason": "请老道的人随 C6 历史分流",
+          "before": "两个儿子。请老道的人。对你们来说，一个是\"吓出来的道士\"，一个是\"怕出来的道士\"——来路不同，雇主相同。",
+          "after": "两个儿子。老道上山的时候，他们就站在旁边笑。张老爷请来的刀，也落在你身上了。 〈条件：scared-him〉\n两个儿子。请老道的人。他们背着张老爷凑钱，把那把刀请上了山。 〈条件：just-debt〉"
+        },
+        {
+          "node": "demon-road",
+          "reason": "出资人随 C6 历史分流",
+          "before": "**小妖怪**：我知道是你出的银子。",
+          "after": "**小妖怪**：我知道是你出的银子。 〈条件：scared-him〉\n**小妖怪**：他们背着你请人。可他们学的，是你这一套。 〈条件：just-debt〉"
+        },
+        {
+          "node": "years-of-the-king",
+          "reason": "C 线毓娘未被吃心，回应的是她家的救命之约",
+          "before": "**小妖怪（心声）**：你娘的账……我吃了。",
+          "after": "**小妖怪（心声）**：你娘的账……我记着。"
+        },
+        {
+          "node": "master-comes",
+          "reason": "老道死于坑中被食心，并非被剑所杀",
+          "before": "**镇上道人**（画外）：妖杀。剑下亡。",
+          "after": "**镇上道人**（画外）：妖杀。心已被食。"
+        },
+        {
+          "node": "master-comes",
+          "reason": "C 线只回忆共同段实际发生的捕兽坑救援",
+          "before": "**大狗**（画外）：道长来烧山那回，是谁拦的火？我爹的腿卡在石缝里，是谁掰的石头？如今坟里躺了个想烧咱们山的人，你们倒要替他讨公道？",
+          "after": "**大狗**（画外）：当年掉进坑里，是谁把我们拎上来的？如今坟里躺了个想害她的道长，你们倒要替他讨公道？"
+        },
+        {
+          "node": "ten-thousand-shield",
+          "reason": "C 线没有吃毓娘的心，恐惧来自娘以命挡剑的记忆",
+          "before": "**小妖怪（心声）**：不行。不行！上一回说这句话的人，我吃了她的心。",
+          "after": "**小妖怪（心声）**：不行。不行！娘说过这句话。她替我挡了剑。"
+        },
+        {
+          "node": "borrowed-blade",
+          "reason": "选择前不预设已吃村正的心，兼容放过村正的 judge-rule 分支",
+          "before": "你吃他心之前，他哭着说了实话：王屠户的田，临着河，明年要开渠，一亩顶三亩。全村都知道。只有\"妖判官\"不知道。",
+          "after": "你伸爪之前，他哭着说了实话：王屠户的田，临着河，明年要开渠，一亩顶三亩。全村都知道。只有\"妖判官\"不知道。"
+        }
+      ]
+    }
+  ],
+  "source": {
+    "kind": "hackathon_excerpt",
+    "title": "吃人心的小妖怪",
+    "author": "女巫",
+    "workId": "2025954672918163637",
+    "authorUrl": "https://www.zhihu.com/people/cc09d82355e21162462ba02ac9717dba",
+    "publishedAt": "2026-04-10",
+    "completeness": "excerpt",
+    "trailingFragment": true,
+    "sourceHash": "11e02bb6d56881af6175bf1682a7590dad9f610910359d85064afdcbcfbd9b9b",
+    "paragraphIds": [
+      "p-0001",
+      "p-0002",
+      "p-0003",
+      "p-0004",
+      "p-0005",
+      "p-0006",
+      "p-0007",
+      "p-0008",
+      "p-0009",
+      "p-0010",
+      "p-0011",
+      "p-0012",
+      "p-0013",
+      "p-0014",
+      "p-0015",
+      "p-0016",
+      "p-0017",
+      "p-0018",
+      "p-0019",
+      "p-0020",
+      "p-0021",
+      "p-0022",
+      "p-0023",
+      "p-0024",
+      "p-0025",
+      "p-0026",
+      "p-0027",
+      "p-0028",
+      "p-0029",
+      "p-0030",
+      "p-0031",
+      "p-0032",
+      "p-0033",
+      "p-0034",
+      "p-0035",
+      "p-0036",
+      "p-0037",
+      "p-0038",
+      "p-0039",
+      "p-0040",
+      "p-0041",
+      "p-0042",
+      "p-0043",
+      "p-0044",
+      "p-0045",
+      "p-0046",
+      "p-0047",
+      "p-0048",
+      "p-0049",
+      "p-0050",
+      "p-0051",
+      "p-0052",
+      "p-0053",
+      "p-0054",
+      "p-0055",
+      "p-0056",
+      "p-0057",
+      "p-0058",
+      "p-0059",
+      "p-0060",
+      "p-0061",
+      "p-0062",
+      "p-0063",
+      "p-0064",
+      "p-0065",
+      "p-0066",
+      "p-0067",
+      "p-0068",
+      "p-0069",
+      "p-0070",
+      "p-0071",
+      "p-0072",
+      "p-0073",
+      "p-0074",
+      "p-0075",
+      "p-0076",
+      "p-0077",
+      "p-0078",
+      "p-0079",
+      "p-0080",
+      "p-0081",
+      "p-0082",
+      "p-0083",
+      "p-0084",
+      "p-0085",
+      "p-0086",
+      "p-0087",
+      "p-0088",
+      "p-0089",
+      "p-0090",
+      "p-0091",
+      "p-0092",
+      "p-0093",
+      "p-0094",
+      "p-0095",
+      "p-0096",
+      "p-0097",
+      "p-0098",
+      "p-0099",
+      "p-0100",
+      "p-0101",
+      "p-0102",
+      "p-0103",
+      "p-0104",
+      "p-0105",
+      "p-0106",
+      "p-0107",
+      "p-0108",
+      "p-0109",
+      "p-0110",
+      "p-0111",
+      "p-0112",
+      "p-0113",
+      "p-0114",
+      "p-0115",
+      "p-0116",
+      "p-0117",
+      "p-0118",
+      "p-0119",
+      "p-0120",
+      "p-0121",
+      "p-0122",
+      "p-0123",
+      "p-0124",
+      "p-0125",
+      "p-0126",
+      "p-0127",
+      "p-0128",
+      "p-0129",
+      "p-0130",
+      "p-0131",
+      "p-0132",
+      "p-0133",
+      "p-0134",
+      "p-0135",
+      "p-0136",
+      "p-0137",
+      "p-0138"
+    ],
+    "sourceUrl": "https://www.zhihu.com/market/paid_column/2025960728138401447/section/2025954672918163637",
+    "linkStatus": "verified",
+    "rightsRef": "zhihu-hackathon-local-review"
   }
-  ]
 }

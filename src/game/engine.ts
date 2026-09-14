@@ -79,6 +79,7 @@ export type EngineError =
   | { code: 'flag-reset'; message: string }
   | { code: 'no-visible-beat'; message: string }
   | { code: 'wrong-phase'; message: string }
+  | { code: 'invalid-route'; message: string }
   | { code: 'save-mismatch'; message: string };
 
 export type EngineResult =
@@ -115,9 +116,10 @@ const evaluatePredicate = (p: Predicate, vars: StoryVars): boolean => {
   return current <= p.value;
 };
 
-/** 首版只有 all，没有 OR。 */
+/** AND 与 OR 使用同一求值器，正文、选项、后继路由和回放共享语义。 */
 export const evaluateCondition = (cond: Condition | undefined, vars: StoryVars): boolean =>
-  cond === undefined || cond.all.every((p) => evaluatePredicate(p, vars));
+  cond === undefined || (cond.all.every((p) => evaluatePredicate(p, vars)) &&
+    (cond.any === undefined || cond.any.some((p) => evaluatePredicate(p, vars))));
 
 export const isBeatVisible = (beat: Beat, vars: StoryVars): boolean =>
   evaluateCondition(beat.when, vars);
@@ -125,15 +127,37 @@ export const isBeatVisible = (beat: Beat, vars: StoryVars): boolean =>
 export const visibleChoices = (node: SceneNode, vars: StoryVars): readonly Choice[] =>
   (node.choices ?? []).filter((c) => evaluateCondition(c.when, vars));
 
+/** 条件后继必须恰好命中一路，缺旗标或冲突都不能用默认终幕兜底。 */
+export const resolveNext = (node: SceneNode, vars: StoryVars):
+  { ok: true; target: string } | { ok: false; message: string } => {
+  if (node.next !== undefined) return { ok: true, target: node.next };
+  const matches = (node.nextWhen ?? []).filter(route => evaluateCondition(route.when, vars));
+  if (matches.length !== 1) return { ok: false, message: `节点 ${node.id} 的条件后继命中 ${matches.length} 路，要求恰好一路` };
+  return { ok: true, target: matches[0]!.target };
+};
+
+/** 节点内选择不是图上的自循环；结构检查只跟随离开节点的边。 */
+export const successorIds = (node: DreamNode): string[] => node.kind === 'ending' ? [] :
+  [...new Set([
+    ...(node.next ? [node.next] : []), ...(node.nextWhen ?? []).map(route => route.target),
+    ...(node.choiceAfter ? [] : (node.choices ?? []).map(choice => choice.target)),
+  ])];
+
+const pendingChoice = (node: DreamNode, history: readonly ChoiceRecord[]): boolean =>
+  node.kind === 'scene' && node.choices !== undefined &&
+  (node.choiceAfter === undefined || !history.some(record => record.nodeId === node.id));
+
+const choiceBoundary = (node: DreamNode): number => node.kind === 'scene' && node.choiceAfter !== undefined
+  ? node.beats.findIndex(beat => beat.id === node.choiceAfter) : node.beats.length - 1;
+
 // ---------- 拍游标 ----------
 
 /**
- * 节点内的拍不改变状态（只有选项有 effects），
- * 所以同一节点遍历期间可见性是稳定的。这里仍按索引逐个求值，
- * 以免将来 beats 获得副作用时这里悄悄算错。
+ * 选择前只扫描到选择边界；结算后重新求值后半段，不能提前露出另一侧正文。
  */
-const findVisibleFrom = (node: DreamNode, from: number, vars: StoryVars): number => {
-  for (let i = from; i < node.beats.length; i += 1) {
+const findVisibleFrom = (node: DreamNode, from: number, vars: StoryVars, history: readonly ChoiceRecord[]): number => {
+  const end = pendingChoice(node, history) ? choiceBoundary(node) : node.beats.length - 1;
+  for (let i = from; i <= end; i += 1) {
     const beat = node.beats[i];
     if (beat !== undefined && isBeatVisible(beat, vars)) return i;
   }
@@ -164,12 +188,12 @@ export const nodeVisitOrdinal = (history: readonly ChoiceRecord[], nodeId: strin
 const nodeMapOf = (pkg: DreamPackage): Map<string, DreamNode> =>
   new Map(pkg.nodes.map((n) => [n.id, n]));
 
-const phaseFor = (node: DreamNode, beatIndex: number, vars: StoryVars): Phase => {
-  const later = findVisibleFrom(node, beatIndex + 1, vars);
+const phaseFor = (node: DreamNode, beatIndex: number, vars: StoryVars, history: readonly ChoiceRecord[]): Phase => {
+  const later = findVisibleFrom(node, beatIndex + 1, vars, history);
   if (later !== -1) return 'reading';
   if (node.kind === 'ending') return 'finished';
   // 末拍且有 choices 时进入 choosing；有 next 时仍是 reading，由推进跳转
-  return node.choices !== undefined ? 'choosing' : 'reading';
+  return pendingChoice(node, history) ? 'choosing' : 'reading';
 };
 
 /**
@@ -183,7 +207,7 @@ const phaseFor = (node: DreamNode, beatIndex: number, vars: StoryVars): Phase =>
  */
 const enterNode = (base: SaveState, node: DreamNode): EngineResult => {
   const vars = varsOf(base);
-  const index = findVisibleFrom(node, 0, vars);
+  const index = findVisibleFrom(node, 0, vars, base.choiceHistory);
   if (index === -1) {
     return err('no-visible-beat', `节点 ${node.id} 在当前状态下没有可见拍`);
   }
@@ -206,7 +230,7 @@ const enterNode = (base: SaveState, node: DreamNode): EngineResult => {
     ...base,
     nodeId: node.id,
     beatIndex: index,
-    phase: phaseFor(node, index, vars),
+    phase: phaseFor(node, index, vars, base.choiceHistory),
     readBeatKeys: firstRead ? [...base.readBeatKeys, key] : base.readBeatKeys,
   };
   if (state.phase === 'choosing' && node.kind === 'scene') {
@@ -273,7 +297,7 @@ export const advance = (pkg: DreamPackage, state: SaveState, now: string): Engin
   // phase 是 (node, beatIndex, vars) 的纯函数，存档里那一份只是给 UI 用的缓存。
   // 这里重新推导而不信存档：手改过、迁移过或被旧版本写坏的 phase
   // 否则能把引擎推进错误分支（例如在还有可见拍时就去结算选择）。
-  const phase = phaseFor(node, state.beatIndex, vars);
+  const phase = phaseFor(node, state.beatIndex, vars, state.choiceHistory);
   if (phase === 'finished') {
     return err('wrong-phase', '已在终幕，不能继续推进');
   }
@@ -281,7 +305,7 @@ export const advance = (pkg: DreamPackage, state: SaveState, now: string): Engin
     return err('wrong-phase', '正在等待选择，推进被忽略以免代选');
   }
 
-  const next = findVisibleFrom(node, state.beatIndex + 1, vars);
+  const next = findVisibleFrom(node, state.beatIndex + 1, vars, state.choiceHistory);
 
   if (next !== -1) {
     const beat = node.beats[next] as Beat;
@@ -291,7 +315,7 @@ export const advance = (pkg: DreamPackage, state: SaveState, now: string): Engin
     const newState: SaveState = {
       ...state,
       beatIndex: next,
-      phase: phaseFor(node, next, vars),
+      phase: phaseFor(node, next, vars, state.choiceHistory),
       readBeatKeys: firstRead ? [...state.readBeatKeys, key] : state.readBeatKeys,
       revision: state.revision + 1,
       updatedAt: now,
@@ -306,12 +330,11 @@ export const advance = (pkg: DreamPackage, state: SaveState, now: string): Engin
   if (node.kind === 'ending') {
     return { ok: true, state: { ...state, phase: 'finished', updatedAt: now }, events: [] };
   }
-  if (node.next === undefined) {
-    return err('wrong-phase', `节点 ${node.id} 末拍应展示选项，不应推进`);
-  }
-  const target = nodes.get(node.next);
+  const route = resolveNext(node, vars);
+  if (!route.ok) return err('invalid-route', route.message);
+  const target = nodes.get(route.target);
   if (target === undefined) {
-    return err('unknown-node', `节点 ${node.id} 的 next 指向不存在的 ${node.next}`);
+    return err('unknown-node', `节点 ${node.id} 的后继指向不存在的 ${route.target}`);
   }
   return enterNode({ ...state, revision: state.revision + 1, updatedAt: now }, target);
 };
@@ -349,7 +372,7 @@ export const chooseOption = (
   const vars = varsOf(state);
   // 同样重新推导，不信存档里的 phase：
   // 若还有可见拍就说明尚未读完本节点，此时结算等于代选。
-  const phase = phaseFor(node, state.beatIndex, vars);
+  const phase = phaseFor(node, state.beatIndex, vars, state.choiceHistory);
   if (phase !== 'choosing') {
     return err('wrong-phase', `当前阶段 ${phase}，尚未读完本节点，不能结算选择`);
   }
@@ -394,6 +417,10 @@ export const chooseOption = (
     updatedAt: now,
   };
 
+  if (node.choiceAfter !== undefined) {
+    // 跳过边界前的隐藏拍，不重入节点，也不重播背景/音乐；advance 负责增加本次 revision。
+    return advance(pkg, { ...applied, beatIndex: choiceBoundary(node), revision: state.revision }, now);
+  }
   return enterNode(applied, target);
 };
 
@@ -443,6 +470,36 @@ export interface ReplayView {
   silenced: boolean;
 }
 
+/** 唯一的存档重走路径；展示恢复与存档校验不再各自解释分支图。 */
+export const replayToState = (
+  pkg: DreamPackage,
+  saved: SaveState,
+  consume: (events: readonly EngineEvent[]) => void,
+): EngineResult => {
+  if (saved.packageId !== pkg.packageId || saved.buildId !== pkg.buildId) {
+    return err('save-mismatch', '存档与当前梦包的 packageId/buildId 不一致');
+  }
+  let result = startPackage(pkg, saved.updatedAt);
+  const maxSteps = pkg.nodes.reduce((sum, node) => sum + node.beats.length + 2, 1);
+  for (let steps = 0; steps < maxSteps; steps++) {
+    if (!result.ok) return result;
+    consume(result.events);
+    const state = result.state;
+    if (state.nodeId === saved.nodeId && state.beatIndex === saved.beatIndex &&
+        state.choiceHistory.length === saved.choiceHistory.length) return result;
+    if (state.phase === 'finished') return err('save-mismatch', '存档位置不在所选路线中');
+    if (state.phase === 'choosing') {
+      const record = saved.choiceHistory[state.choiceHistory.length];
+      if (!record || record.nodeId !== state.nodeId) return err('save-mismatch', '选择记录与故事路线不一致');
+      result = chooseOption(pkg, state, {
+        nodeId: state.nodeId, choiceId: record.choiceId, revision: state.revision,
+        nodeVisit: nodeVisitOrdinal(state.choiceHistory, state.nodeId),
+      }, saved.updatedAt);
+    } else result = advance(pkg, state, saved.updatedAt);
+  }
+  return err('save-mismatch', '存档路径过长或包含循环');
+};
+
 /**
  * 从入口按 choiceHistory 重放纯状态与实际可见拍，到当前 beatIndex 为止。
  * 只计算背景、最近曲目与静默状态；不播音效、不写存档、不重复收藏。
@@ -453,84 +510,28 @@ export const replayView = (
   state: SaveState,
   defaultTrack = 'BGM_DREAM',
 ): { ok: true; view: ReplayView } | { ok: false; error: EngineError } => {
-  if (state.packageId !== pkg.packageId || state.buildId !== pkg.buildId) {
-    return {
-      ok: false,
-      error: { code: 'save-mismatch', message: '存档与当前梦包的 packageId/buildId 不一致' },
-    };
-  }
-  const nodes = nodeMapOf(pkg);
-  let vars: StoryVars = initialVars(pkg);
-
-  let nodeId = pkg.entryNodeId;
-  let scene = nodes.get(nodeId)?.scene ?? '';
+  let scene = '';
   let track: string | null = defaultTrack;
   let silenced = false;
-
-  const applyBeats = (node: DreamNode, upto: number) => {
-    for (let i = 0; i <= upto && i < node.beats.length; i += 1) {
-      const beat = node.beats[i];
-      if (beat === undefined || !isBeatVisible(beat, vars)) continue;
-      if (beat.sceneShift !== undefined) scene = beat.sceneShift;
-      if (beat.musicCue !== undefined) {
-        if (beat.musicCue.action === 'silence') {
-          silenced = true;
-        } else if (beat.musicCue.action === 'play') {
-          silenced = false;
-          track = beat.musicCue.track ?? track;
-        } else {
-          silenced = false;
-        }
+  const result = replayToState(pkg, state, events => {
+    for (const event of events) {
+      if (event.type === 'scene') scene = event.assetId;
+      if (event.type === 'music') {
+        if (event.action === 'play') { track = event.track ?? track; silenced = false; }
+        if (event.action === 'silence') silenced = true;
+        if (event.action === 'resume') silenced = false;
       }
     }
-  };
-
-  // 路径同时含 next 与 choices；选择历史不会记录普通节点。
-  let historyIndex = 0;
-  const visited = new Set<string>();
-  while (nodeId !== state.nodeId || historyIndex < state.choiceHistory.length) {
-    const node = nodes.get(nodeId);
-    if (node === undefined || visited.has(nodeId)) {
-      return { ok: false, error: { code: 'save-mismatch', message: '选择路径与梦包结构不一致' } };
-    }
-    visited.add(nodeId);
-    scene = node.scene;
-    applyBeats(node, node.beats.length - 1);
-    if (node.kind === 'scene' && node.next) { nodeId = node.next; continue; }
-    const step = state.choiceHistory[historyIndex++];
-    if (!step || step.nodeId !== node.id) return { ok: false, error: { code: 'save-mismatch', message: '选择历史不完整' } };
-    if (node.kind !== 'scene' || node.choices === undefined) {
-      return { ok: false, error: { code: 'save-mismatch', message: `节点 ${node.id} 没有选项` } };
-    }
-    const choice = node.choices.find((c) => c.id === step.choiceId);
-    if (choice === undefined || !evaluateCondition(choice.when, vars)) {
-      return {
-        ok: false,
-        error: { code: 'unknown-choice', message: `节点 ${node.id} 没有选项 ${step.choiceId}` },
-      };
-    }
-    // 与运行时同一份结算规则。回放本该跟着历史安全走完，
-    // 走不通说明存档与当前梦包不一致——报错，不编造状态。
-    const settled = settleChoice(pkg, vars, choice.effects, `回放选项 ${choice.id}`);
-    if (!settled.ok) {
-      return { ok: false, error: { code: 'save-mismatch', message: settled.message } };
-    }
-    vars = settled.vars;
-    nodeId = choice.target;
-  }
-
-  const current = nodes.get(nodeId);
+  });
+  if (!result.ok) return result;
+  const canonical = result.state;
   const equal = (a: object, b: object) => JSON.stringify(Object.entries(a).sort()) === JSON.stringify(Object.entries(b).sort());
-  if (current === undefined || current.id !== state.nodeId || !current.beats[state.beatIndex] ||
-      !isBeatVisible(current.beats[state.beatIndex]!, vars) || !equal(vars.flags, state.flags) ||
-      !equal(vars.resources, state.resources) || !equal(vars.relationships, state.relationships)) {
+  if (!equal(canonical.flags, state.flags) || !equal(canonical.resources, state.resources) ||
+      !equal(canonical.relationships, state.relationships) || canonical.phase !== state.phase) {
     return {
       ok: false,
-      error: { code: 'save-mismatch', message: '存档 nodeId 与重放结果不一致，保留备份不编造状态' },
+      error: { code: 'save-mismatch', message: '存档状态与重放结果不一致，保留备份不编造状态' },
     };
   }
-  scene = current.scene;
-  applyBeats(current, state.beatIndex);
-
   return { ok: true, view: { scene, track: silenced ? null : track, silenced } };
 };

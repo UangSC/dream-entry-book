@@ -35,7 +35,7 @@ import { AccountButton, AccountPanel } from './components/AccountPanel';
 type Screen = 'home' | 'reading' | 'ending';
 type Panel = 'intro' | 'settings' | 'album' | 'history' | 'chapters' | 'source' | 'restart' | 'save-problem' | 'account' | 'saves' | null;
 interface Preferences { motion: boolean; particles: boolean; audioEnabled: boolean; narrationMode: NarrationMode; textAnimation: 'authored' | 'typewriter' | 'instant'; autoPace: AutoPace; pulse: 'subtle' | 'normal' | 'strong'; fontSize: number; textSpeed: number; master: number; bgm: number; sfx: number; ambience: number }
-const DEFAULTS: Preferences = { motion: true, particles: true, audioEnabled: true, narrationMode: 'fade', textAnimation: 'authored', autoPace: 'normal', pulse: 'normal', fontSize: 22, textSpeed: 24, master: .8, bgm: .75, sfx: .45, ambience: .18 };
+const DEFAULTS: Preferences = { motion: true, particles: true, audioEnabled: true, narrationMode: 'fade', textAnimation: 'authored', autoPace: 'normal', pulse: 'normal', fontSize: 22, textSpeed: 40, master: .8, bgm: .75, sfx: .45, ambience: .18 };
 function preferences(): Preferences {
   try {
     const p = JSON.parse(localStorage.getItem('rumengshu:preferences') ?? '{}');
@@ -43,7 +43,7 @@ function preferences(): Preferences {
       pulse: ['subtle', 'normal', 'strong'].includes(p.pulse) ? p.pulse : 'normal',
       autoPace: ['slow', 'normal', 'fast'].includes(p.autoPace) ? p.autoPace : 'normal',
       narrationMode: p.narrationMode === 'text' ? 'text' : 'fade',
-      fontSize: Math.max(18, Math.min(30, Number(p.fontSize) || 22)), textSpeed: Math.max(10, Math.min(45, Number(p.textSpeed) || 24)),
+      fontSize: Math.max(18, Math.min(30, Number(p.fontSize) || 22)), textSpeed: Math.max(10, Math.min(45, Number(p.textSpeed) || DEFAULTS.textSpeed)),
       ...Object.fromEntries(['master', 'bgm', 'sfx', 'ambience'].map(key => [key, typeof p[key] === 'number' && Number.isFinite(p[key]) ? Math.max(0, Math.min(1, p[key])) : DEFAULTS[key as keyof Preferences]])),
     } as Preferences;
   } catch { return DEFAULTS; }
@@ -153,9 +153,9 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     return () => window.removeEventListener('dream-account-open', open);
   }, [requireLogin]);
   useEffect(() => {
-    if (!pageVisible || panel === 'account' || library.panelOpen) { void audio.pause(); void ambienceAudio.pause(); }
+    if (!sound || !pageVisible || panel === 'account' || library.panelOpen) { void audio.pause(); void ambienceAudio.pause(); }
     else { void audio.resume(); void ambienceAudio.resume(); }
-  }, [pageVisible, panel, library.panelOpen, audio, ambienceAudio]);
+  }, [sound, pageVisible, panel, library.panelOpen, audio, ambienceAudio]);
   useEffect(() => {
     if (!user || !state || screen === 'home') return;
     try { kv.set('rumengshu:run-id', runId.current); } catch { /* 当前会话仍可记录 */ }
@@ -179,12 +179,13 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
 
   useEffect(() => {
     const request = ++musicRequest.current;
-    if (!sound || !activeTrack) { audio.silence(350); return; }
+    if (!sound) { void audio.pause(); return; }
     setSoundState('正在载入配乐');
-    void audio.preload([activeTrack]).then(failures => {
+    // cue 先进入音频引擎的有序队列；请求序号只用于避免旧加载状态覆盖新提示。
+    void audio.requestMusic(activeTrack, activeTrack ? 1000 : 350).then(failures => {
       if (!alive.current || request !== musicRequest.current) return;
-      if (failures.length || audio.getStatus().state !== 'ready') { setSoundState('配乐未能播放，可重试'); return; }
-      audio.playMusic(activeTrack); setSoundState('配乐已开启');
+      if (failures.length) { setSoundState('配乐未能播放，可重试'); return; }
+      setSoundState(activeTrack ? '配乐已开启' : '此处留白');
     });
   }, [activeTrack, sound, audio]);
 
@@ -212,7 +213,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
     const [status] = await Promise.all([audio.unlock(), ambienceAudio.unlock()]);
     if (status.state !== 'ready') { setSoundState('浏览器暂时阻止声音，请再次开启'); return false; }
     audioReady.current = true; setSound(true); setSettings(s => ({ ...s, audioEnabled: true }));
-    void audio.preload(data.audio.assets.filter(a => a.kind === 'sfx').map(a => a.id));
+    void audio.preload(data.audio.assets.filter(a => a.kind === 'sfx' || a.vocal).map(a => a.id));
     return true;
   };
   const rememberSound = (enabled: boolean) => {
@@ -472,7 +473,7 @@ export function Game({ data, library }: { data: GameData; library: LibraryAction
 
     {panel === 'settings' && <Dialog title="让梦适合你的节奏" onClose={() => setPanel(null)}><section className="settings-section"><h3>声音与呼吸</h3><label className="setting-row"><span>播放声音<small>{soundState}</small></span><button className={`switch ${sound ? 'on' : ''}`} role="switch" aria-label="播放声音" aria-checked={sound} onClick={() => void enableSound()}><i /></button></label>{(['master', 'bgm', 'sfx', 'ambience'] as const).map((key, i) => <label className="setting-row" key={key}><span>{['总体音量', '背景音乐', '翻页与互动音效', '夜晚环境声'][i]}</span><input aria-label={['总体音量', '背景音乐', '翻页与互动音效', '夜晚环境声'][i]} type="range" min="0" max="1" step="0.01" value={settings[key]} onChange={e => setPreference(key, Number(e.target.value))} /><output>{Math.round(settings[key] * 100)}%</output></label>)}<label className="setting-row"><span>动态效果<small>{reduced ? '系统已要求减少动态效果，当前全部静止' : '转场、字幕与粒子；画面律动仅在梦斋开启'}</small></span><button className={`switch ${settings.motion ? 'on' : ''}`} role="switch" aria-label="动态效果" aria-checked={settings.motion} onClick={() => setPreference('motion', !settings.motion)}><i /></button></label><label className="setting-row"><span>场景粒子<small>夜间萤火虫，白昼偶尔飘落的叶子</small></span><button className={`switch ${settings.particles ? 'on' : ''}`} role="switch" aria-label="场景粒子" aria-checked={settings.particles} onClick={() => setPreference('particles', !settings.particles)}><i /></button></label><label className="setting-row"><span>梦斋律动强度</span><select value={settings.pulse} onChange={e => setPreference('pulse', e.target.value as Preferences['pulse'])} aria-label="梦斋律动强度"><option value="subtle">轻柔</option><option value="normal">明显</option><option value="strong">鲜明</option></select></label></section><section className="settings-section"><h3>阅读</h3><label className="setting-row"><span>旁白显示<small>心声使用括号，保留主人公立绘</small></span><select aria-label="旁白显示" value={settings.narrationMode} onChange={e => setPreference('narrationMode', e.target.value as NarrationMode)}><option value="fade">立绘渐变</option><option value="text">文本旁白</option></select></label><label className="setting-row"><span>自动语速<small>全文显示后计时，遇到选择停下</small></span><select aria-label="自动语速" value={settings.autoPace} onChange={e => setPreference("autoPace", e.target.value as AutoPace)}><option value="slow">舒缓</option><option value="normal">适中</option><option value="fast">轻快</option></select></label><label className="setting-row"><span>字幕动画</span><select aria-label="字幕动画" value={settings.textAnimation} onChange={e => setPreference('textAnimation', e.target.value as Preferences['textAnimation'])}><option value="authored">原有演出动画</option><option value="typewriter">打字机 · 流式渐显</option><option value="instant">直接显示全文</option></select></label>{settings.textAnimation === 'typewriter' && <label className="setting-row"><span>文字出现速度</span><input aria-label="文字出现速度" type="range" min="10" max="45" value={settings.textSpeed} onChange={e => setPreference('textSpeed', Number(e.target.value))} /><output>{Math.round(1000 / settings.textSpeed)} 字/秒</output></label>}<label className="setting-row"><span>正文字号</span><input aria-label="正文字号" type="range" min="18" max="30" step="1" value={settings.fontSize} onChange={e => setPreference('fontSize', Number(e.target.value))} /><output>{settings.fontSize}</output></label><p className="font-preview" style={{ fontSize: settings.fontSize }}>你为这段故事，留出了一点时间。</p></section><section className="settings-section"><h3>书签与离线</h3><button className="secondary" onClick={() => setPanel('saves')}>自动存档与手动存档 <Icon name="bookmark" size={16} /></button><p className="muted">{offline}。进度只保存在当前浏览器；更换设备或地址前，可以导出备份。</p><div className="button-row"><button className="secondary" onClick={exportBackup}><Icon name="download" size={16} />导出备份</button><label className="secondary file-button">导入备份<input type="file" accept="application/json,.json" onChange={e => { void importBackup(e.target.files?.[0]); e.target.value = ''; }} /></label></div><button className="text-button danger" onClick={() => { const outcome = clearSave(kv, pkg.packageId); if (outcome.ok) { stateRef.current = null; journal.current = null; setState(null); setHoldChoice(false); setScreen('home'); setNotice('当前进度已删除，双存档位与梦册已保留'); } else setNotice(outcome.message); }}>删除当前进度，保留梦册</button></section></Dialog>}
 
-    {panel === 'album' && <Dialog title="你带回来的梦" onClose={() => setPanel(null)}><p className="muted">已收集 {collectionCount} / {endings.length} 枚梦签。重选一段故事，也不会抹去曾经抵达的地方。</p><div className="album-grid">{endings.map((item, index) => { const variants = endingVariants.filter(node => node.ending.title === item.ending.title); const unlocked = variants.filter(node => collection.some(entry => entry.endingId === node.ending.id)); const entry = collection.find(e => variants.some(node => node.ending.id === e.endingId)); return <article key={item.id} className={`album-card ${entry ? 'unlocked' : ''}`}><span className="album-index">梦签 / 0{index + 1}</span><Icon name={entry ? 'spark' : 'bookmark'} size={30} /><h3>{entry ? entry.title : '尚未抵达的梦'}</h3><p>{entry ? unlocked.map(node => node.ending.summary).join(' ／ ') : '留一点未知，给下一次选择。'}</p>{entry && <small>{new Date(entry.collectedAt).toLocaleDateString('zh-CN')}</small>}</article>; })}</div>{!state && <button className="primary full-width" onClick={() => setPanel('intro')}>去遇见第一个结局 <Icon name="arrow" /></button>}</Dialog>}
+    {panel === 'album' && <Dialog title="你带回来的梦" onClose={() => setPanel(null)}><p className="muted">已收集 {collectionCount} / {endings.length} 枚梦签。重选一段故事，也不会抹去曾经抵达的地方。</p><div className="album-grid">{endings.map((item, index) => { const variants = endingVariants.filter(node => node.ending.title === item.ending.title); const unlocked = variants.filter(node => collection.some(entry => entry.endingId === node.ending.id)); const entry = collection.find(e => variants.some(node => node.ending.id === e.endingId)); return <article key={item.id} className={`album-card ${entry ? 'unlocked' : ''}`}><span className="album-index">梦签 / 0{index + 1}</span><Icon name={entry ? 'spark' : 'bookmark'} size={30} /><h3>{item.ending.title}</h3><p>{entry ? unlocked.map(node => node.ending.summary).join(' ／ ') : '尚未抵达。留一点未知，给下一次选择。'}</p>{entry && <small>{new Date(entry.collectedAt).toLocaleDateString('zh-CN')}</small>}</article>; })}</div>{!state && <button className="primary full-width" onClick={() => setPanel('intro')}>去遇见第一个结局 <Icon name="arrow" /></button>}</Dialog>}
 
     {panel === 'history' && <Dialog title="已经走过的书页" onClose={() => setPanel(null)} wide><div className="history-list">{view?.lines.map(item => <div key={item.beat.id}><small>{chapterNames[item.nodeId] ?? '梦中一页'} · {item.beat.speaker === 'narrator' ? '旁白' : pkg.characters.find(c => c.id === item.beat.speaker)?.name}</small><p>{displayBeat(item.beat).text}</p></div>)}</div></Dialog>}
 

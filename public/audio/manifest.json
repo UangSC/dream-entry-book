@@ -637,11 +637,16 @@
         "reference": "用户提供临时素材；合成占位另有标记"
       },
       "loop": {
-        "mode": "fadeLoop",
+        "mode": "once",
         "startSeconds": 0,
         "endSeconds": 52.825397,
-        "overlapMs": 800,
+        "overlapMs": 0,
         "verified": false
+      },
+      "vocal": {
+        "minPlaySeconds": 90,
+        "gapSeconds": 2,
+        "successor": "BGM_COLD_DANGER"
       }
     },
     {
@@ -659,11 +664,16 @@
         "reference": "用户提供临时素材；合成占位另有标记"
       },
       "loop": {
-        "mode": "fadeLoop",
+        "mode": "once",
         "startSeconds": 0,
         "endSeconds": 199.273651,
-        "overlapMs": 800,
+        "overlapMs": 0,
         "verified": false
+      },
+      "vocal": {
+        "minPlaySeconds": 90,
+        "gapSeconds": 2,
+        "successor": "BGM_COLD_DANGER"
       }
     },
     {
@@ -681,11 +691,16 @@
         "reference": "用户提供临时素材；合成占位另有标记"
       },
       "loop": {
-        "mode": "fadeLoop",
+        "mode": "once",
         "startSeconds": 0,
         "endSeconds": 143.2439,
-        "overlapMs": 800,
+        "overlapMs": 0,
         "verified": false
+      },
+      "vocal": {
+        "minPlaySeconds": 90,
+        "gapSeconds": 2,
+        "successor": "BGM_CARE"
       }
     },
     {

@@ -11,7 +11,7 @@ Git 保留可构建的应用源码、必要剧情输入、测试、运行素材�
 
 `docs/` 默认忽略，仅允许 [文档目录](README.md) 及其列出的公开指南。新开发笔记直接放在 `docs/local/` 或 `.work/`；本地旧文档可继续编辑，Git 不再跟踪。
 
-正文编译所需的四份 `content/final/02–05` Markdown 是作品内容，必须保留。`content/drafts/little-demon-legacy.json` 提供构建基础数据；唯一保留的故事节选 JSON 用于来源哈希测试。其余草稿和候选故事不提交。报告由构建与测试自动生成到 `.work/story/`，不依赖本地旧审读报告。
+正文编译所需的四份 `content/final/02–05` Markdown 是作品内容，必须保留。`content/final/sources.json` 登记来源元数据、哈希、逐节点基线和授权修订；构建不再读取旧剧情。已跟踪的 `content/drafts/little-demon-legacy.json` 仅作历史兼容资料保留，唯一保留的故事节选 JSON 用于来源哈希测试。其余草稿和候选故事不提交。报告由构建与测试自动生成到 `.work/story/`，不依赖本地旧审读报告。
 
 ## 提交前检查
 

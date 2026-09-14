@@ -67,10 +67,11 @@ const numericPredicate = z
 
 export const predicateSchema = z.discriminatedUnion('kind', [flagPredicate, numericPredicate]);
 
-/** 首版只有 all，没有 OR；需要择一时增加分支节点。 */
+/** all 全部成立，并且 any（若有）至少一项成立。空条件不得伪装成门控。 */
 export const conditionSchema = z
-  .object({ all: z.array(predicateSchema).min(1).max(8) })
-  .strict();
+  .object({ all: z.array(predicateSchema).max(8), any: z.array(predicateSchema).min(1).max(8).optional() })
+  .strict()
+  .refine((condition) => condition.all.length > 0 || condition.any !== undefined, '条件至少包含一个谓词');
 
 // ---------- 演出 ----------
 
@@ -170,6 +171,7 @@ export const beatSchema = z
     sfx: assetId.optional(),
     sceneShift: assetId.optional(),
     musicCue: musicCueSchema.optional(),
+    textSpeedScale: z.number().min(0.5).max(1).optional(),
     when: conditionSchema.optional(),
   })
   .strict()
@@ -251,7 +253,10 @@ export const sceneNodeSchema = z
     ...nodeBase,
     kind: z.literal('scene'),
     next: contentId.optional(),
+    nextWhen: z.array(z.object({ when: conditionSchema, target: contentId }).strict()).min(2).max(4).optional(),
     choices: z.array(choiceSchema).min(2).max(3).optional(),
+    /** 在此拍后停下来选择；选项指向本节点，结算后继续后半段，再走 next/nextWhen。 */
+    choiceAfter: contentId.optional(),
   })
   .strict();
 
@@ -292,11 +297,18 @@ export const nodeSchema = z
   .discriminatedUnion('kind', [sceneNodeSchema, endingNodeSchema])
   .superRefine((node, ctx) => {
     if (node.kind !== 'scene') return;
-    if ((node.next !== undefined) === (node.choices !== undefined)) {
+    const exits = Number(node.next !== undefined) + Number(node.nextWhen !== undefined);
+    const valid = node.choiceAfter !== undefined
+      ? exits === 1 && node.choices !== undefined && node.choices.every(choice => choice.target === node.id)
+      : exits + Number(node.choices !== undefined) === 1;
+    if (!valid) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: `节点 ${node.id}：scene 必须恰好二选一 next 或 choices`,
+        message: `节点 ${node.id}：必须选择唯一后继方式；节点内选择须指向本节点，并另设 next 或 nextWhen`,
       });
+    }
+    if (node.choiceAfter !== undefined && !node.beats.some(beat => beat.id === node.choiceAfter)) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: `节点 ${node.id}：choiceAfter 指向不存在的拍` });
     }
   });
 

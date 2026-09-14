@@ -2,7 +2,6 @@ import { readFileSync, writeFileSync, mkdirSync, renameSync } from 'node:fs';
 import { packDreamBook, readDreamBook, sha256 } from '../src/books/archive';
 import type { BookManifest, BookAsset } from '../src/books/schema';
 import { createPerformances } from './story-performances';
-import { storyAsides } from './story-asides';
 import { finalPresentation } from './final-presentation';
 
 // 可重复生成的轻声环境层：蟋蟀短鸣、低频蛙声，首尾留白，避免循环接缝。
@@ -34,21 +33,14 @@ const pkg = JSON.parse(readFileSync('public/dreams/little-demon.json', 'utf8'));
 const files: Record<string, Uint8Array> = {}, assets: BookAsset[] = [];
 for (const [folder, source] of [['art', art], ['audio', audio]] as const) for (const a of source.assets) {
   const path = `${folder}/${a.file}`, bytes = readFileSync(`public/${path}`); files[path] = bytes;
-  assets.push({ id: a.id, kind: folder === 'art' ? 'image' : a.kind, path, mime: folder === 'art' ? 'image/webp' : a.file.endsWith('.wav') ? 'audio/wav' : 'audio/mpeg', bytes: bytes.length, sha256: await sha256(bytes), ...(folder === 'art' ? { luminance: a.luminance } : { durationSeconds: a.durationSeconds, ...(a.kind === 'music' && a.loop ? { loop: a.loop } : {}) }), credit: a.source?.name ?? '用户提供素材', rights: `${a.rights?.status ?? 'pending'} · ${a.rights?.reference ?? '使用依据待核对'}` });
+  assets.push({ id: a.id, kind: folder === 'art' ? 'image' : a.kind, path, mime: folder === 'art' ? 'image/webp' : a.file.endsWith('.wav') ? 'audio/wav' : 'audio/mpeg', bytes: bytes.length, sha256: await sha256(bytes), ...(folder === 'art' ? { luminance: a.luminance } : { durationSeconds: a.durationSeconds, ...(a.kind === 'music' && a.loop ? { loop: a.loop } : {}), ...(a.vocal ? { vocal: a.vocal } : {}) }), credit: a.source?.name ?? '用户提供素材', rights: `${a.rights?.status ?? 'pending'} · ${a.rights?.reference ?? '使用依据待核对'}` });
 }
 const manifest: BookManifest = {
   format: 'rumengshu.dreambook', formatVersion: 1, story: 'story.json', storySha256: await sha256(new TextEncoder().encode(JSON.stringify(pkg, null, 2))),
   creator: '入梦书制作组', description: '第一本入梦书：女巫《吃人心的小妖怪》，取材于知乎节选；含完整分支剧情、背景、音乐与音效。', simulation: false,
   presentation: {
-    performances: createPerformances(pkg),
-    asides: storyAsides,
-    choiceMoods: { 'feed-fire': 'warm', 'name-price': 'resolute', 'tell-limit': 'hesitant', 'keep-front': 'guarded', 'stay-tonight': 'bashful', 'return-tomorrow': 'breezy' },
-    cover: 'BG_SHRINE_N', subtitle: '想成为神仙的你，却先学会了怎样做一个小小的妖。', description: '娘说，吃够一万颗人心，就能成仙。可遇见念念以后，你发现事情好像没那么简单。一段关于善意、承诺与自我照顾的山野奇遇。',
-    tags: ['治愈奇幻', '山野来信'], contentNote: '亲人离别、儿童患病、温暖奇幻。对白与新增分支为 AI 衍生，并非原作后续。',
-    chapters: { threshold: '一 · 庙中借宿', fireside: '二 · 火边的人心', warmth: '三 · 一点暖意', promise: '三 · 一桩买卖', 'small-miracle': '四 · 小小的神通', doorstep: '五 · 一扇留着的门', grove: '六 · 山风里的疑问', 'last-light': '七 · 今夜与明日', 'ending-lantern': '终 · 留一盏灯', 'ending-path': '终 · 明日再赴约' },
-    scenes: { BG_GATE: { label: '云上 · 梦斋', time: 'indoor', particles: 'none' }, BG_SHRINE_N: { label: '山顶 · 小土庙', time: 'night', particles: 'fireflies', ambience: 'BGM_NIGHT_AMBIENCE' }, BG_SHRINE_FIRE: { label: '庙中 · 火边', time: 'night', particles: 'fireflies', ambience: 'BGM_NIGHT_AMBIENCE' }, BG_FOREST_D: { label: '山间 · 林径', time: 'day', particles: 'leaves' }, BG_COTTAGE_D: { label: '山下 · 小院', time: 'day', particles: 'leaves' }, BG_SUMMIT_DAWN: { label: '山顶 · 天将明', time: 'dawn', particles: 'leaves' }, BG_END: { label: '云上 · 梦醒', time: 'indoor', particles: 'none' } },
-    dreamMusic: 'BGM_DREAM', endingMusic: 'BGM_LONG_FAREWELL_ALT', endingScene: 'BG_END',
     ...finalPresentation,
+    performances: createPerformances(pkg),
   }, assets,
 };
 const archive = packDreamBook(manifest, pkg, files);

@@ -1,5 +1,5 @@
-import { advance, chooseOption, isBeatVisible, nodeVisitOrdinal, readBeatKey, startPackage } from './engine';
-import type { EngineResult, SaveState } from './engine';
+import { isBeatVisible, readBeatKey, replayToState } from './engine';
+import type { SaveState } from './engine';
 import type { Beat, DreamPackage } from './schema';
 
 export interface ReadingLine { nodeId: string; beat: Beat }
@@ -8,14 +8,10 @@ export interface ReadingLine { nodeId: string; beat: Beat }
 export function reconstruct(pkg: DreamPackage, saved: SaveState):
   | { ok: true; canonical: SaveState; lines: ReadingLine[]; scene: string; track: string; silenced: boolean }
   | { ok: false; message: string } {
-  const fail = (message: string) => ({ ok: false as const, message });
-  if (saved.packageId !== pkg.packageId || saved.buildId !== pkg.buildId) return fail('存档版本与故事不一致');
-  let result = startPackage(pkg, saved.updatedAt);
   let scene = '', track = 'BGM_DREAM', silenced = false;
   const lines: ReadingLine[] = [];
-  const consume = (value: EngineResult) => {
-    if (!value.ok) return;
-    for (const event of value.events) {
+  const result = replayToState(pkg, saved, events => {
+    for (const event of events) {
       if (event.type === 'beat') lines.push({ nodeId: event.nodeId, beat: event.beat });
       if (event.type === 'scene') scene = event.assetId;
       if (event.type === 'music') {
@@ -24,26 +20,9 @@ export function reconstruct(pkg: DreamPackage, saved: SaveState):
         if (event.action === 'resume') silenced = false;
       }
     }
-  };
-  consume(result);
-  for (let steps = 0; steps < 1000; steps++) {
-    if (!result.ok) return fail(result.error.message);
-    const state = result.state;
-    if (state.nodeId === saved.nodeId && state.beatIndex === saved.beatIndex && state.choiceHistory.length === saved.choiceHistory.length) {
-      return { ok: true, canonical: state, lines, scene, track, silenced };
-    }
-    if (state.phase === 'finished') return fail('存档位置不在所选路线中');
-    if (state.phase === 'choosing') {
-      const record = saved.choiceHistory[state.choiceHistory.length];
-      if (!record || record.nodeId !== state.nodeId) return fail('选择记录与故事路线不一致');
-      result = chooseOption(pkg, state, {
-        nodeId: state.nodeId, choiceId: record.choiceId, revision: state.revision,
-        nodeVisit: nodeVisitOrdinal(state.choiceHistory, state.nodeId),
-      }, saved.updatedAt);
-    } else result = advance(pkg, state, saved.updatedAt);
-    consume(result);
-  }
-  return fail('存档路径过长或包含循环');
+  });
+  return result.ok ? { ok: true, canonical: result.state, lines, scene, track, silenced }
+    : { ok: false, message: result.error.message };
 }
 
 const sameMap = (a: object, b: object) => JSON.stringify(Object.entries(a).sort()) === JSON.stringify(Object.entries(b).sort());

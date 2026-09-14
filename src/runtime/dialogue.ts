@@ -16,6 +16,7 @@ export function dialoguePresentation(data: GameData, beat: Beat, lines: ReadingL
   if (mode === 'text' && narrator) return { name, label: name, portrait: undefined, softened: false };
   const cues = presentation.performances ?? {};
   const authored = cues[beat.id];
+  if (authored && !authored.portrait) return { name: authored.label, label: authored.label, portrait: undefined, softened: false };
   const ownCue = authored?.label.split(' · ')[0] === speaker?.name ? authored : undefined;
   const previous = [...lines].reverse().filter(line => line.beat.id !== beat.id);
   const previousCue = previous.map(line => ({ beat: line.beat, cue: cues[line.beat.id] })).find(item =>
