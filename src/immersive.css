@@ -50,6 +50,11 @@
 
 .dialogue-portrait { position: absolute; top: 0; left: 20px; bottom: auto; width: 220px; height: 240px; transform: translateY(-50%); margin: 0; pointer-events: none; z-index: 2; animation: portrait-blend-in 500ms ease both; }
 .dialogue-portrait img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 6px 14px #07152040); mask-image: linear-gradient(#000 82%, transparent 100%); }
+.dialogue-portrait.portrait-narrator::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, #fffdf8a8 0%, #f7f8f5c9 72%, #fffdf8e8 100%); mix-blend-mode: screen; mask-image: linear-gradient(#000 72%, transparent 100%); animation: narrator-haze-in 650ms ease both; }
+.dialogue-portrait.portrait-narrator img { animation: narrator-soft-focus 650ms cubic-bezier(.2,.8,.25,1) both; filter: saturate(.62) brightness(1.14) contrast(.82) blur(1.2px) drop-shadow(0 6px 14px #07152022); }
+.dialogue-portrait.portrait-narrator figcaption { color: #e9e8df; opacity: .78; text-shadow: 0 1px 8px #33404a66; }
+@keyframes narrator-soft-focus { from { transform: scale(1); filter: saturate(.85) brightness(1) contrast(.95) blur(0); } to { transform: scale(.9); filter: saturate(.62) brightness(1.14) contrast(.82) blur(1.2px); } }
+@keyframes narrator-haze-in { from { opacity: 0; } to { opacity: 1; } }
 .dialogue-portrait figcaption { position: absolute; top: 25%; left: -8px; writing-mode: vertical-rl; font-family: 'Dream Names', KaiTi, STKaiti, var(--serif); font-weight: 400; letter-spacing: 6px; font-size: 30px; line-height: 1.2; text-shadow: 0 2px 2px #152332, 0 0 8px #142231b0; color: #fff1d3; }
 .portrait-name-only { display: grid; place-items: center; }
 .portrait-name-only figcaption { position: static; font-size: 46px; letter-spacing: 9px; }
