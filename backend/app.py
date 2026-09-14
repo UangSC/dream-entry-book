@@ -29,7 +29,7 @@ STAGES = ['读一读故事', '理清人物与牵挂', '找到风向改变的地�
 
 @dataclass
 class Settings:
-    database: Path = field(default_factory=lambda: ROOT / 'backend/data/dreams.sqlite3')
+    database: Path = field(default_factory=lambda: Path(os.getenv('RUMENGSHU_DATA_DIR', str(ROOT / 'backend/data'))) / 'dreams.sqlite3')
     origin: str = field(default_factory=lambda: os.getenv('APP_ORIGIN', 'http://127.0.0.1:62560').rstrip('/'))
     mode: str = field(default_factory=lambda: os.getenv('OAUTH_MODE', 'mock'))
     app_id: str = field(default_factory=lambda: os.getenv('ZHIHU_OAUTH_APP_ID', ''))
@@ -150,7 +150,7 @@ def create_app(settings: Settings | None = None):
     def make_result(job):
         result_path = config.database.parent / 'results' / f"{job['id']}.dreambook"
         result_path.parent.mkdir(exist_ok=True)
-        with zipfile.ZipFile(ROOT / 'public/books/little-demon.dreambook') as archive:
+        with zipfile.ZipFile(Path(os.getenv('RUMENGSHU_DEMO_BOOK', str(ROOT / 'public/books/little-demon.dreambook')))) as archive:
             story = json.loads(archive.read('story.json'))
             manifest = json.loads(archive.read('book.json'))
             story['packageId'] = f"weave-demo-{job['id']}"

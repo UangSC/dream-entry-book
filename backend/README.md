@@ -1,5 +1,7 @@
 # 账号与织梦服务
 
+阿里云 FC 的 Python 3.12 代码包、依赖层、素材层与控制台配置见 [FC 部署说明](../docs/FC_DEPLOYMENT.md)。使用 `backend.fc:app` 入口；它禁止读取 dotenv 文件，临时数据写入 `/tmp`。本地启动仍使用下文原入口。
+
 运行命令见根目录 README。数据库默认 `backend/data/dreams.sqlite3`，任务产物位于 `backend/data/results/`，均不提交 Git。SQLite 使用 WAL；记录查询最多返回最近七天每类 100 项，启动时清理过期记录与产物。
 
 ## 模拟授权与任务
