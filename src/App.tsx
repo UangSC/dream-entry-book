@@ -336,7 +336,7 @@ function Game({ data, library }: { data: GameData; library: LibraryActions }) {
       <ChapterTitle key={chapterKey} title={chapterTitle} subtitle={`${presentation.tags[1] ?? "梦中来信"} · ${pkg.title}`} phase={chapterPhase} />
       <section className="reading-dock"><div className="reading-status"><span className="scene-location"><i />{sceneProfile?.label ?? '梦中一隅'}</span><span>{savedOk ? '书签已收好' : '进度尚未保存'} · {String(view?.lines.length ?? 1).padStart(2, '0')}</span></div>
         <div className="dialogue-card" onClick={event => { if (!(event.target as HTMLElement).closest('button, a')) advanceStory(); }}>
-          <DialoguePortrait key={portraitName} portrait={portrait} name={portraitName} label={portraitCue?.label ?? portraitName} motion={motion} />
+          <DialoguePortrait key={portraitName} portrait={portrait} name={portraitName} label={portraitCue?.label ?? portraitName} motion={motion} narrator={beat?.speaker === 'narrator'} />
           <span className="sr-only">{speakerName}{beat.kind === 'thought' ? '的心声' : ''}</span>
           <div className="text-area" role="log" aria-live="polite" aria-atomic="true"><span className="portrait-clearance" aria-hidden="true" /><StoryText key={beat.id} beat={beat} motion={motion} instant={instant} speed={settings.textSpeed} mode={settings.textAnimation} onComplete={completeText} /></div>
           {!(choices.length && ready) && <div className="continue-row"><button className="continue-button" aria-label={!ready ? '显示全文' : state.phase === 'finished' ? '收下这场梦' : '继续'} onClick={advanceStory}>{autoPlay ? <AutoReadRing progress={autoProgress} /> : <Icon name="arrow" size={20} />}</button></div>}
