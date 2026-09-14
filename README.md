@@ -52,4 +52,4 @@ npm run test:offline
 
 构建自动运行 `tools/prepare-story.ts` 与 `tools/prepare-book.ts`。定稿快照和原件哈希位于 `content/final/`，逐行导入审计及 192 条路径报告也在该目录。`tools/prepare-final-assets.py` 加工本轮音画，`tools/story-performances.ts` 编排表情和服装，不改正文。
 
-`dist/` 为静态前端发布产物。部署完整账号服务时，将同源 `/api` 反向代理到 FastAPI，并设置正确 `APP_ORIGIN`。当前后端为单进程本地版本；真实授权尚需平台凭据和用户资料协议确认。资源沿用本地占位件；`check:release -- --public` 的公开发布审读与素材依据是独立检查，本轮未宣称已公网发布。
+`dist/` 为静态前端发布产物。推送到 `main` 后，`.github/workflows/deploy-pages.yml` 会自动构建并发布到 GitHub Pages，预计地址为 `https://UangSC.github.io/dream-entry-book/`。GitHub Pages 只承载前端和浏览器本地存档；知乎登录、搜索、直答及其他 `/api` 功能需要单独的后端服务，不能把密钥放进 Pages。
