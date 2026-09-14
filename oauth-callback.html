@@ -4,10 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f3ed" />
     <title>正在回到入梦书</title>
   </head>
-  <body>
-    <main><h1>回到入梦书</h1><p id="status" role="status">正在确认知乎授权，请稍候……</p><a id="back" href="./" hidden>回到作品页面</a></main>
+  <body data-auth-state="pending">
+    <img class="auth-background" src="/art/bg-gate.webp" alt="" aria-hidden="true" decoding="async" fetchpriority="low" />
+    <header class="auth-header">
+      <a class="auth-brand" href="./" aria-label="返回入梦书首页">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5.5C9.5 3.8 6.5 3.8 3 4.5v14c3.5-.7 6.5-.7 9 1 2.5-1.7 5.5-1.7 9-1v-14c-3.5-.7-6.5-.7-9 1Zm0 0v14" /></svg></span>
+        <span><strong>入梦书</strong><small>读过的故事，值得一活</small></span>
+      </a>
+      <span class="header-note">一场梦，正等你回来</span>
+    </header>
+    <main class="auth-main">
+      <section id="auth-card" class="auth-card" aria-labelledby="auth-title" aria-busy="true">
+        <div class="auth-emblem" aria-hidden="true">
+          <span class="emblem-orbit"></span>
+          <svg class="emblem-book" viewBox="0 0 64 64" fill="none"><path d="M32 22c-6-4-13-5-22-3v28c9-2 16-1 22 3 6-4 13-5 22-3V19c-9-2-16-1-22 3Zm0 0v28M17 28c3-.2 5.8.3 8 1.5M17 35c3-.2 5.8.3 8 1.5M39 29.5c2.2-1.2 5-1.7 8-1.5M39 36.5c2.2-1.2 5-1.7 8-1.5" /><path class="emblem-spark" d="m32 6 1.7 4.3L38 12l-4.3 1.7L32 18l-1.7-4.3L26 12l4.3-1.7L32 6Z" /></svg>
+        </div>
+        <p class="auth-phase"><span class="phase-dot" aria-hidden="true"></span><span id="phase-label">正在确认授权</span></p>
+        <h1 id="auth-title">正在回到入梦书</h1>
+        <p id="status" class="auth-status" role="status" aria-live="polite">正在确认知乎授权，请稍候……</p>
+        <p id="auth-hint" class="auth-hint">登录完成后，会自动返回作品首页。</p>
+        <div class="auth-wait" aria-hidden="true"><span></span><span></span><span></span></div>
+        <a id="back" class="auth-back" href="./" hidden>回到作品页面<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></a>
+        <div class="card-footnote" aria-hidden="true"><span></span>书页之间，总有新的相逢<span></span></div>
+      </section>
+    </main>
+    <footer class="auth-footer"><span>入梦书</span><span aria-hidden="true">·</span><span>给故事一点时间，也给自己一点时间</span></footer>
     <script type="module" src="/src/account/callback.ts"></script>
   </body>
 </html>
